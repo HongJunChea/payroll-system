@@ -3,9 +3,13 @@
 
 ### Assembler ###
 *.exe
+*.EXE
 *.o
+*.O
 *.obj
+*.OBJ
 *.bc
+*.BC
 
 ### VisualStudioCode ###
 .vscode/*
