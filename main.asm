@@ -1,0 +1,26 @@
+.MODEL SMALL
+
+.STACK 100
+
+.DATA
+    
+.CODE
+
+ORG 100H
+
+include macros\io.asm
+
+DEFINE_PRINT_NUM_UNS
+
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV AX, 206 /4
+    CALL PRINT_NUM_UNS
+
+    EXIT 0
+MAIN ENDP
+
+
+END MAIN
