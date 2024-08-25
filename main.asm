@@ -6,11 +6,6 @@
 
 .data
     val dd 123.45
-
-    ten dw 10
-    tmp dw ?
-    thousand dw 1000
-
     
 .code
 include utils/print.asm

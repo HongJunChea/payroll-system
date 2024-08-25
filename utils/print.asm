@@ -20,6 +20,8 @@ print_string macro
 endm
 
 
+
+.ten dw 10
 print_num_unsigned proc near
     push ax 
     push cx
@@ -30,7 +32,7 @@ print_num_unsigned proc near
     .divide:
         xor dx, dx  ; clear remainder
 
-        div ten
+        div .ten
 
         push dx     ; push remainder to print
         inc cx
@@ -81,22 +83,28 @@ print_binary_word proc near
 print_binary_word endp
 
 
+; Params
+;   st(0): float to be printed
+; Returns
+;   none
+.tmp dw ?
+.thousand dw 1000
 print_float proc near
     push ax
     push dx
 
-    fist tmp                 ; load integral part of float
-    mov ax, tmp              
+    fist .tmp                 ; load integral part of float
+    mov ax, .tmp              
     call print_num_unsigned  ; print integral part
 
     mov dx, "."              ; print "."
     print
     
-    fisub tmp                ; remove integer part of float => 123.4567 -> 0.4567
-    fimul thousand           ; move decimal three space left => 0.4567 -> 456.7
+    fisub .tmp                ; remove integer part of float => 123.4567 -> 0.4567
+    fimul .thousand           ; move decimal three space left => 0.4567 -> 456.7
 
-    fistp tmp                ; load integral part and clear stack
-    mov ax, tmp             
+    fistp .tmp                ; load integral part and clear stack
+    mov ax, .tmp             
     call print_num_unsigned  ; print integral part   
 
     pop dx
