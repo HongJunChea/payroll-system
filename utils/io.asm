@@ -281,3 +281,57 @@ PRINT_NUM_UNS ENDP
 skip_proc_print_num_uns:
 
 ENDM
+
+
+print_binary_word proc near
+    push ax
+    push cx
+    push dx
+
+    mov cx, 16
+
+.loop:
+    xor dx, dx
+
+    test ax, 1000000000000000b
+    jz .print
+
+    mov dx, 1
+
+.print:
+    putnum_word dx
+
+    shl ax, 1
+
+    loop .loop
+
+    pop dx
+    pop cx
+    pop ax
+    ret
+
+print_binary_word endp
+
+
+
+print_float proc near
+    push ax
+
+    fist tmp
+    mov ax, tmp
+    call print_num_uns
+
+    fisub tmp
+
+    fimul thousand
+
+    putc "."
+
+    fistp tmp
+    mov ax, tmp
+    call print_num_uns    
+
+    pop ax
+    ret
+
+print_float endp
