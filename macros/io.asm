@@ -20,6 +20,37 @@ PUTC MACRO c
 ENDM
 
 
+PUTNUM MACRO n
+    PUSH AX
+    PUSH DX
+
+    MOV DL, n
+    ADD DL, "0"
+    MOV AH, 02H
+    INT 21H
+
+    POP DX
+    POP AX
+
+ENDM
+
+
+PUTNUM_WORD MACRO n
+    PUSH AX
+    PUSH DX
+
+    MOV DX, n
+    ADD DX, "0"
+    MOV AH, 02H
+    INT 21H
+
+    POP DX
+    POP AX
+
+ENDM
+
+
+
 PUTS MACRO s
     PUSH AX
     PUSH DX
