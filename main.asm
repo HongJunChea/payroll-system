@@ -1,26 +1,29 @@
-.MODEL SMALL
+.model small
 
-.STACK 100
+.386  ; allow eax
 
-.DATA
+.stack 100
+
+.data
+    val dd 123.45
+
+    ten dw 10
+    tmp dw ?
+    thousand dw 1000
+
     
-.CODE
+.code
+include utils/print.asm
+include utils/io.asm
 
-ORG 100H
+main proc
+    mov ax, @data
+    mov ds, ax
 
-include utils\io.asm
+    fld val
+    call print_float
 
-DEFINE_PRINT_NUM_UNS
+    exit 0
+main endp
 
-MAIN PROC
-    MOV AX, @DATA
-    MOV DS, AX
-
-    MOV AX, 206 /4
-    CALL PRINT_NUM_UNS
-
-    EXIT 0
-MAIN ENDP
-
-
-END MAIN
+end main
