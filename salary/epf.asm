@@ -128,4 +128,4 @@ lookup_epf proc far
     pop ax
     ret
 
-calculate_epf endp
+lookup_epf endp
