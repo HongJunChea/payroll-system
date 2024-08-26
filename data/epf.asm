@@ -7,15 +7,14 @@ epf segment public
 ; data is laid out as <1_employee_contrib, 1employer_contrib, 2_employee_contrib, 2_employer_contrib, ..., n_employee_contrib, n_employer_contrib>
 ; each row is a multiple of RM20
 ; TODO: fill data
-b5k_contrib dw 3 dw 3
-            dw 6 dw 5
+b5k_contrib dw 3 dw 3   ; 0 - 20
+            dw 6 dw 5   ; 20 - 40
+                        ; so on
             
 
 ; each row is a multiple of RM100
-b20k_contrib dw 612 dw 561
-
-
-
-
+b20k_contrib dw 612 dw 561  ; 5000 - 5100
+                            ; 5100 - 5200
+                            ; so on
 
 epf ends
