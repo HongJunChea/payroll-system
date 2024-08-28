@@ -10,6 +10,10 @@
 *.OBJ
 *.bc
 *.BC
+*.lst
+*.LST
+*.crf
+*.CRF
 
 ### VisualStudioCode ###
 .vscode/*
@@ -32,4 +36,5 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/assembler,visualstudiocode
 
-!bin/*
+!LINK.EXE
+!MASM.EXE
