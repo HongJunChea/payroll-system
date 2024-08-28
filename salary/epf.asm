@@ -43,8 +43,8 @@ endm
 ;   st(0): current salary       note: wont be popped
 ;                               extra note: salary maximum 546125 due to 12% exceeding word size, can be rewritten to use ebx and ecx
 ; Returns
-;   bx: employee payable
-;   cx: employer payable
+;   bx: employer payable
+;   cx: employee payable
 .tmp_word dw ?
 .five_thousand   dw 5000
 .twenty_thousand dw 20000
@@ -52,7 +52,7 @@ endm
 .twenty          dw 20
 .hundred         dw 100
 
-.four            db 4
+.four            dw 4
 
 .twelve_percent  dd 0.12
 .eleven_percent  dd 0.11
@@ -77,13 +77,13 @@ lookup_above20k proc
     change_rounding .round_up
 
     fld st(0)  ; duplicate current salary
-    fmul .eleven_percent
+    fmul .twelve_percent
     frndint
     fistp .tmp_word
     mov bx, .tmp_word
     
     fld st(0)  ; duplicate current salary
-    fmul .twelve_percent
+    fmul .eleven_percent
     frndint
     fistp .tmp_word
     mov cx, .tmp_word
@@ -105,21 +105,31 @@ lookup_below20k proc
     fist .tmp_word
     mov ax, .tmp_word
 
+    ficom .five_thousand
+    jge .20k
+
 .5k:
+
     div .twenty  ; get floor of n / 20, wont use remainder
     mul .four  ; each epf data section is 4 byte wide
+    mov ax, dx
     
     mov bx, offset b5k_contrib
 
     jmp .calculate
 
 .20k:
+    sub ax, .five_thousand
+   
+
     div .hundred  ; get floor of n / 100, wont use remainder
     mul .four  ; each epf data section is 4 byte wide
+    mov ax, dx
 
     mov bx, offset b20k_contrib
 
 .calculate:
+    
     mov di, ax
 
     mov cx, [bx + di + 2]
