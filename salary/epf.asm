@@ -3,7 +3,7 @@
 
 include ..\data\epf.asm
 
-local .old_round, .current_round, .round_bankers, .round_up, .round_down, .round_to_zero
+; local .old_round, .current_round, .round_bankers, .round_up, .round_down, .round_to_zero
 .old_round     DW ?
 .current_round DW ?
 
@@ -17,9 +17,9 @@ change_rounding macro round_mode
     push ax
 
     fstcw .current_round          
-    mov .old_round, .current_round  ; store for restoring
-
     mov ax, .current_round  ; move to ax for controlling ah
+    mov .old_round, ax      ; store for restoring
+
     and ah, 11110011b       ; clear round control bit
     or  ah, round_mode      ; set round control bit
 
@@ -45,8 +45,7 @@ endm
 ; Returns
 ;   bx: employee payable
 ;   cx: employer payable
-local .tmp, .five_thousand, .twenty_thousand, .twenty, .hundred, .four, .twelve_percent, .eleven_percent
-.tmp dw ?
+.tmp_word dw ?
 .five_thousand   dw 5000
 .twenty_thousand dw 20000
 
@@ -59,73 +58,80 @@ local .tmp, .five_thousand, .twenty_thousand, .twenty, .hundred, .four, .twelve_
 .eleven_percent  dd 0.11
 lookup_epf proc far
 
-    push ax
-    push dx
-    push di
+    ficom .twenty_thousand   ; if <= 20000
+    jbe .below20k
 
-    ficom .five_thousand   ; if <= 5000
-    jbe .5k
+    jmp .above20k
 
-    ficom .twenty_thousand ; if <= 20000
-    jbe .20k
+.below20k:
+    call lookup_below20k
+    ret
 
-    jmp .more             ; > 20000
+.above20k:
+    call lookup_above20k
+    ret
+    
 
-.5k:
-
-    ; formula goes: floor(n / 20) * 20 = index 
-    fist .tmp
-    mov ax, .tmp 
-    div .twenty  ; get floor of n / 20, wont use remainder
-
-    mul .four  ; each epf data section is 4 byte wide
-    mov di, ax
-
-    mov bx, b5k_contrib[di]
-    mov cx, b5k_contrib[di + 2]
-
-    jmp .exit
-
-.20k:
-
-    ; floor(n / 100) * 100 = index  instead here
-    fist .tmp
-    mov ax, .tmp 
-    div .hundred  ; get floor of n / 100, wont use remainder
-
-    mul .four  ; each epf data section is 4 byte wide
-    mov di, ax
-
-    mov bx, b20k_contrib[di]
-    mov cx, b20k_contrib[di + 2]
-
-    jmp .exit
-
-.more:
+lookup_above20k proc
 
     change_rounding .round_up
 
     fld st(0)  ; duplicate current salary
     fmul .eleven_percent
     frndint
-    fistp .tmp
-    mov bx, .tmp
+    fistp .tmp_word
+    mov bx, .tmp_word
     
     fld st(0)  ; duplicate current salary
     fmul .twelve_percent
     frndint
-    fistp .tmp
-    mov cx, .tmp
+    fistp .tmp_word
+    mov cx, .tmp_word
 
     restore_rounding
 
-    jmp .exit
+    ret
 
-.exit:
+lookup_above20k endp
+
+
+lookup_below20k proc
+
+    push ax
+    push dx
+    push di
+
+    ; formula goes: floor(n / 20) * 20 = index 
+    fist .tmp_word
+    mov ax, .tmp_word
+
+.5k:
+    div .twenty  ; get floor of n / 20, wont use remainder
+    mul .four  ; each epf data section is 4 byte wide
+    
+    mov bx, offset b5k_contrib
+
+    jmp .calculate
+
+.20k:
+    div .hundred  ; get floor of n / 100, wont use remainder
+    mul .four  ; each epf data section is 4 byte wide
+
+    mov bx, offset b20k_contrib
+
+.calculate:
+    mov di, ax
+
+    mov cx, [bx + di + 2]
+    mov bx, [bx + di]
 
     pop di
     pop dx
     pop ax
+
     ret
+
+lookup_below20k endp
+
 
 lookup_epf endp
