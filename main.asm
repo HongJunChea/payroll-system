@@ -5,27 +5,17 @@
 .stack 100
 
 .data
-    val dd 2400.10
+    val dw 100
     
 .code
 include utils/print.asm
 include utils/io.asm
-include salary/epf.asm
 
 main proc
     mov ax, @data
     mov ds, ax
 
-    fld val
-    call lookup_epf
-
-    mov ax, bx
-    call print_num_unsigned
-
-    mov dl, 10
-    print
-
-    mov ax, cx
+    mov ax, 100
     call print_num_unsigned
 
     exit 0
