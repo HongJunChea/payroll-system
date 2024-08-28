@@ -20,6 +20,17 @@ print_string macro
 endm
 
 
+print_char macro char
+    push dx
+
+    mov dl, char
+    print
+
+    pop dx
+
+endm
+
+
 
 .ten dw 10
 print_num_unsigned proc near
