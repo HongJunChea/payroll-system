@@ -1,0 +1,92 @@
+.MODEL SMALL
+.STACK 100
+.DATA
+
+	NAME_PROMPT DB 'Enter employee name: $'
+	TYPE_PROMPT DB 'Enter 1 for Part-time or 2 for Full-time: $'
+	HOURLY_PROMPT DB 'Enter hourly wage (for Part-time): $'
+	SALARY_PROMPT DB 'Enter monthly salary (for Full-time): $'
+	HOURS_PROMPT DB 'Enter number of working hours per month: $'
+
+	NL DB 0AH, 0DH, '$'
+
+	EMP_NAME DB 20 DUP('$')		    ;STORE EMP NAME
+	HOURLY_WAGE DB 5 DUP('$')   	;STORE WAGE/H
+	MONTHLY_SALARY DB 5 DUP('$')	;STORE MONTHLY SALARY
+	WORK_HOURS DB 5 DUP('$')	    ;STORE WORK HOURS
+	HOURLY_RATE DB 5 DUP('$')	    ;STORE FT WAGE/H  
+
+
+.CODE
+MAIN PROC
+	MOV AX,@DATA
+	MOV DS,AX
+		
+	
+    MOV AH, 09H	;--------GET EMP NAME
+   	LEA DX, NAME_PROMPT
+   	INT 21H
+		
+	MOV AH, 0AH ;--------INPUT EMP NAME
+	LEA DX, EMP_NAME
+ 	INT 21H
+		
+	MOV AH,09H	；--------NEWLINE
+	LEA DX,NL
+	INT 21H
+
+	MOV AH, 09H	;---------GET JOB TYPE(PT/FT)
+    LEA DX, TYPE_PROMPT
+	INT 21H
+	
+ 	MOV AH, 01H	;---------INPUT JOB TYPE
+  	INT 21H
+  	SUB AL, 30H
+
+	CMP AL, 1	;---------COMPARE
+	JE PT
+	CMP AL, 2
+	JE FT
+	JMP FIN
+
+PT:
+	MOV AH, 09H	;---------GET WAGE/h
+	LEA DX, HOURLY_PROMPT
+   	INT 21H
+	
+	MOV AH,	0AH	;---------GET INPUT
+	LEA DX, HOURLY_WAGE
+	INT 21H
+
+
+FT:
+	MOV AH, 09H	;---------GET MONTHLY SALARY
+	LEA DX, SALARY_PROMPT
+	INT 21H
+
+	MOV AH, 0AH	;---------GET INPUT
+	LEA DX, MONTHLY_SALARY
+	INT 21H
+
+	MOV AH, 09H	;---------GET HOURS PER MONTH
+	LEA DX, HOURS_PROMPT
+	INT 21H
+	
+	MOV AH, 0AH	;---------GET INPUT
+	LEA DX, WORK_HOURS
+	INT 21H
+
+	            ;---------COUNT
+	MOV AX, MONTHLY_SALARY
+	MOV BX, WORK_JOURS
+	DIV BX		;---------AX/BX
+	ADD AL, 30H
+	MOV HOURLY_RATE, AL
+
+
+FIN:
+	
+	MOV AX,4C00H
+	INT 21H
+MAIN ENDP
+END MAIN
