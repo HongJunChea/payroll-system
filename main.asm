@@ -5,20 +5,28 @@
 .stack 100
 
 .data
-    include struct/employee.asm
+    include data/epf.asm
 
-    employee1 employee <, 10.00, 2000.00, 20, 0, 1, 1>
-    
+    val dd 5000.10
+
 .code
 include utils/print.asm
 include utils/io.asm
+include salary/epf.asm
 
 main proc
     mov ax, @data
     mov ds, ax
-    xor ax, ax
 
-    mov al, employee1.pto
+    fld val
+    call lookup_epf
+
+    mov ax, bx
+    call print_num_unsigned
+
+    print_char 10
+
+    mov ax, cx
     call print_num_unsigned
 
     exit 0
