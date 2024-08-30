@@ -22,9 +22,9 @@
 	HOURLY_RATE DB 5 DUP('$')	;STORE FT WAGE/H
 	PTO_HOURS DB 5 DUP('$')
 	PTO_PER_MONTH DB 5 DUP('$')
-    	EPF DB ?
-    	SOCSO DB ?
-    	EIS DB ?
+	EPF DB ?
+    SOCSO DB ?
+   	EIS DB ?
 
 
 .CODE
@@ -185,7 +185,7 @@ EIS:
     	MOV EIS, AL
 
     	MOV AH, 09H	    ;---------NEWLINE
-    	LEA DX, NEWLINE
+    	LEA DX, NL
     	INT 21H
 
 	CMP EIS, 'Y'
