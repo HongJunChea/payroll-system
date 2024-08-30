@@ -21,13 +21,9 @@ main proc
     fld val
     call lookup_epf
 
-    mov ax, bx
-    call print_num_unsigned
-
-    print_char 10
-
-    mov ax, cx
-    call print_num_unsigned
+    putnum bx
+    putc 10
+    putnum cx
 
     exit 0
 main endp
