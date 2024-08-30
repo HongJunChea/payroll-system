@@ -59,8 +59,6 @@ lookup_epf proc far
 
 lookup_above20k proc
 
-    print_char "a"
-
     change_rounding .round_up
 
     fld   st(0)           ; duplicate current salary
