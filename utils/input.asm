@@ -1,6 +1,6 @@
 input_char macro
 
-    mov ah, 07h
+    mov ah, 01h
     int 21h
 
 endm
@@ -18,7 +18,7 @@ input_string macro
 
     push ax 
 
-    mov ah, 09h
+    mov ah, 0Ah
     int 21h
 
     pop ax
@@ -28,25 +28,35 @@ endm
 
 scanc macro b_buffer
 
+    push bx
     push ax
 
     input_char
-    mov b_buffer, al
+    mov bl, al
 
     pop ax
+
+    mov b_buffer, bl
+
+    pop bx
 
 endm
 
 
 scann macro b_buffer
 
+    push bx
     push ax
 
     input_char
     sub al, "0"
-    mov b_buffer, al
+    mov bl, al
 
     pop ax
+
+    mov b_buffer, bl
+
+    pop bx
 
 endm
 
