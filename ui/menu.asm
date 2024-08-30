@@ -26,6 +26,7 @@ MAIN PROC
         PUTS SEL2
         PUTS SEL3
         PUTS SEL4
+        PUTS SEL5
         PUTS PROMPT
         SCANC SEL
         CMP SEL,"1"
@@ -55,7 +56,7 @@ MAIN PROC
         JMP MENU
 
     EMP_PC:
-    
+
         JMP MENU
 
     EXIT:
