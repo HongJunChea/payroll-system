@@ -43,15 +43,20 @@ MAIN PROC
     
     EMP_INFO:
 
+        JMP MENU
     
     EMP_DET:
+
+        JMP MENU
 
     
     EMP_PERF:
 
+        JMP MENU
 
     EMP_PC:
-
+    
+        JMP MENU
 
     EXIT:
         PUTC 10
