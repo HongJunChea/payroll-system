@@ -1,215 +1,165 @@
 .MODEL SMALL
+.386
 .STACK 100
 .DATA
+
+	include ..\struct\employee.asm
 
 	NAME_PROMPT DB 'Enter employee name: $'
 	TYPE_PROMPT DB 'Enter 1 for Part-time or 2 for Full-time: $'
 	HOURLY_PROMPT DB 'Enter hourly wage (for Part-time): $'
 	SALARY_PROMPT DB 'Enter monthly salary (for Full-time): $'
-	HOURS_PROMPT DB 'Enter number of working hours per month: $'
 
 	PTO_PROMPT DB 'Enter total PTO hours per year: $'
 	EPF_PROMPT DB 'Does the employee have EPF? (Y/N): $'
 	SOCSO_PROMPT DB 'Does the employee have SOCSO? (Y/N): $'
 	EIS_PROMPT DB 'Does the employee have EIS? (Y/N): $'
 
-	NL DB 0AH, 0DH, '$'
+	input_tmp dw ?
+	hours_per_months dw 160   ; 8 hours * 5 days * 4 weeks
 
-	EMP_NAME DB 20 DUP('$')		;STORE EMP NAME
-	HOURLY_WAGE DB 5 DUP('$')	;STORE WAGE/H
-	MONTHLY_SALARY DB 5 DUP('$')	;STORE MONTHLY SALARY
-	WORK_HOURS DB 5 DUP('$')	;STORE WORK HOURS
-	HOURLY_RATE DB 5 DUP('$')	;STORE FT WAGE/H
-	PTO_HOURS DB 5 DUP('$')
-	PTO_PER_MONTH DB 5 DUP('$')
-	EPF DB ?
-    SOCSO DB ?
-   	EIS DB ?
+	employee1 employee <,,,,,,>
 
 
 .CODE
+include ..\utils\print.asm
+include ..\utils\io.asm
+include ..\utils\input.asm
+
+handle_part_time proc
+
+	puts HOURLY_PROMPT
+	call input_num
+	mov [employee1.orp], eax
+
+	ret
+
+handle_part_time endp
+
+
+handle_full_time proc
+
+	puts SALARY_PROMPT
+	call input_num
+	
+	mov input_tmp, ax
+	fild input_tmp
+	fidiv hours_per_months
+	fstp employee1.orp
+
+	puts PTO_PROMPT
+	call input_num
+	mov employee1.pto, al
+
+	; TODO: later
+	mov employee1.pto_used, 0
+
+get_epf:
+	puts EPF_PROMPT
+	scanc al
+
+	cmp al, "y"
+	je epf_yes
+	cmp al, "Y"
+	je epf_yes
+
+	cmp al, "n"
+	je epf_no
+	cmp al, "N"
+	je epf_no
+
+	jmp get_epf
+
+epf_yes:
+	mov employee1.has_epf, 1
+	jmp get_socso
+
+epf_no:
+	mov employee1.has_epf, 0
+
+
+get_socso:
+	putc 10
+	puts SOCSO_PROMPT
+	scanc al
+
+	cmp al, "y"
+	je socso_yes
+	cmp al, "Y"
+	je socso_yes
+
+	cmp al, "n"
+	je socso_no
+	cmp al, "N"
+	je socso_no
+
+	jmp get_socso
+
+socso_yes:
+	mov employee1.has_socso, 1
+	jmp get_eis
+
+socso_no:
+	mov employee1.has_socso, 0
+
+
+get_eis:
+	putc 10
+	puts EIS_PROMPT
+	scanc al
+
+	cmp al, "y"
+	je eis_yes
+	cmp al, "Y"
+	je eis_yes
+
+	cmp al, "n"
+	je eis_no
+	cmp al, "N"
+	je eis_no
+
+	jmp get_eis
+
+eis_yes:
+	mov employee1.has_eis, 1
+	ret
+
+eis_no:
+	mov employee1.has_eis, 0
+	ret
+
+handle_full_time endp
+
+
 MAIN PROC
+
 	MOV AX,@DATA
 	MOV DS,AX
-		
-	
-	MOV AH, 09H	;--------GET EMP NAME
-   	LEA DX, NAME_PROMPT
-   	INT 21H
-		
-	MOV AH, 0AH  	;--------INPUT EMP NAME
-    LEA DX, EMP_NAME
-	INT 21H
-		
-	MOV AH,09H	    ;--------NEWLINE
-	LEA DX,NL
-	INT 21H
 
-	MOV AH, 09H	    ;---------GET JOB TYPE(PT/FT)
-    LEA DX, TYPE_PROMPT
-	INT 21H
+	xor eax, eax
 	
- 	MOV AH, 01H	    ;---------INPUT JOB TYPE
-  	INT 21H
-  	SUB AL, 30H
+	puts NAME_PROMPT
+	scans employee1.emp_name		
+	putc 10
+
+get_type:
+	puts TYPE_PROMPT
+	scann al
+	putc 10
 
 	CMP AL, 1	    ;---------COMPARE
-	JE PT
+	JE pt
 	CMP AL, 2
-	JE FT
-	JMP FIN
+	JE ft
+	jmp get_type
 
-PT:
-	MOV AH, 09H	    ;---------GET WAGE/h
-	LEA DX, HOURLY_PROMPT
-   	INT 21H
-	
-	MOV AH,	0AH	    ;---------GET INPUT
-	LEA DX, HOURLY_WAGE
-	INT 21H
+pt:
+	call handle_part_time
+	exit 0
 
-	JMP FIN
-	
-FT:
-	MOV AH, 09H	    ;---------GET MONTHLY SALARY
-	LEA DX, SALARY_PROMPT
-	INT 21H
+ft:
+	call handle_full_time
+	exit 0
 
-	MOV AH, 0AH	    ;---------GET INPUT
-	LEA DX, MONTHLY_SALARY
-	INT 21H
-
-	MOV AH, 09H	    ;---------GET HOURS PER MONTH
-	LEA DX, HOURS_PROMPT
-	INT 21H
-	
-	MOV AH, 0AH	    ;---------GET INPUT
-	LEA DX, WORK_HOURS
-	INT 21H
-
-			        ;---------COUNT
-	MOV AX, MONTHLY_SALARY
-	MOV BX, WORK_JOURS
-	DIV BX		    ;---------AX/BX
-	ADD AL, 30H
-	MOV HOURLY_RATE, AL
-
-	JMP EMP_INFO
-
-
-EMP_INFO:
-
-	MOV AH, 09H	    ;---------PTO 
-	LEA DX, PTO_PROMPT
-	INT 21H
-
-	MOV AH, 0AH	    ;---------GET PTO HOURS
-	LEA DX, PTO_HOURS
-	INT 21H
-		
-			        ;---------COUNT PTO
-	MOV AX, PTO_HOURS
-	MOV BX, 12	    ;---------12 MONTH
-	DIV BX
-	MOV PTO_PER_MONTH, AL
-
-;--------------------------------------------------------------------------------------
-
-	MOV AH, 09H	    ;---------EPF
-	LEA DX, EPF_PROMPT
-	INT 21H
-
-	MOV AH, 01H	    ;---------INPUT EPF
-	INT 21H
-	MOV EPF, AL
-
-	CMP EPF, 'Y'
-	JE EPF_YES
-	CMP EPF, 'N'
-	JE EPF_NO
-	
-	JMP FIN
-
-EMP_YES:
-	
-	;-----COUNT EPF
-	
-	JMP SOCSO
-
-EMP_NO:
-	
-	;-----COUNT EPF
-
-	JMP SOCSO
-	
-SOCSO:
-
-        MOV AH, 09H	 ;---------SOCSO
-    	LEA DX, SOCSO_PROMPT
-    	INT 21H
-
-    	MOV AH, 01H  ;---------INPUT SOCSO
-    	INT 21H
-    	MOV SOCSO, AL
-
-
-	CMP SOCSO, 'Y'
-	JE SOCSO_YES
-	CMP SOCSO, 'N'
-	JE SOCSO_NO
-
-	JMP FIN
-
-SOCSO_YES:
-
-	;-------COUNT
-	
-	JMP EIS
-
-SOCSO_NO:
-
-
-	;-------COUNT
-
-	JMP EIS
-
-
-EIS:
-
-        MOV AH, 09H	    ;---------EIS
-    	LEA DX, EIS_PROMPT
-    	INT 21H
-
-    	MOV AH, 01H  	;---------INPUT EIS
-    	INT 21H
-    	MOV EIS, AL
-
-    	MOV AH, 09H	    ;---------NEWLINE
-    	LEA DX, NL
-    	INT 21H
-
-	CMP EIS, 'Y'
-	JE EIS_YES
-	CMP EIS, 'N'
-	JE EIS_NO
-
-	JMP FIN
-
-EIS_YES:
-
-	;-------COUNT
-	JMP FIN
-
-EIS_NO:
-
-	;-------COUNT
-	JMP FIN
-
-
-
-FIN:
-	
-	MOV AX,4C00H
-	INT 21H
 MAIN ENDP
 END MAIN
