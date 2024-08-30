@@ -1,0 +1,16 @@
+.MODEL SMALL
+.STACK 100
+.DATA
+    STR DB "Menu$"
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+
+
+    EXIT:
+        MOV AX,4C00H
+        INT 21H
+MAIN ENDP
+END MAIN
