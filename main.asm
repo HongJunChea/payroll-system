@@ -8,7 +8,7 @@
     include structs.inc
     include data.inc
 
-    employees employee 20 DUP(<,,,,,,,>)
+    employees employee 20 DUP(<>)
 
 .code
 include utils.inc
@@ -21,14 +21,18 @@ main proc
     mov es, ax
     xor ax, ax  ; clear ax
 
-    call login_menu
+    ; call login_menu
     
-    putc 10
+    ; putc 10
 
     mov bx, offset employees
     call main_menu
 
     putc 10
+
+    putsn employees.emp_id[0] emp_id_length
+    putc 10
+    putsn employees.emp_id[44] emp_id_length
 
     exit 0
 
