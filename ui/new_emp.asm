@@ -138,9 +138,25 @@ handle_full_time endp
 set_emp_id proc
 
 	push ax
+	push dx
+	push si
 
-	
+	mov si, emp_id_length
+	dec si
+	mov al, emp_id_sequence
 
+	set_emp_id_loop:
+		div .ten_b
+		
+		add ah, "0"
+		mov [bx][si], ah
+		dec si
+
+		test al, al
+		jnz set_emp_id_loop
+
+	pop si
+	pop dx
 	pop ax
 	ret
 
