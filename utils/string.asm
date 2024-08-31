@@ -29,7 +29,8 @@ strcmp macro str1, str2, len
     push si
     push di
 
-    mov cx, len
+    xor cx, cx
+    mov cl, len
     lea si, str1
     lea di, str2
     call compare_string
