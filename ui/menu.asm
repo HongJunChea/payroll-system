@@ -2,6 +2,7 @@ MAIN_MENU PROC
 
     MENU:
         PUTC 10
+        PUTC 10
 
         PUTS WELCOME
         PUTS LINE
@@ -13,6 +14,7 @@ MAIN_MENU PROC
         PUTS PROMPT
 
         SCANC SEL
+        PUTC 10
         PUTC 10
 
         CMP SEL,"1"
@@ -34,7 +36,7 @@ MAIN_MENU PROC
         JMP MENU
     
     EMP_INFO:
-
+        CALL create_emp
         JMP MENU
     
     EMP_DET:
