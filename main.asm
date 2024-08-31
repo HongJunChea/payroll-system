@@ -5,27 +5,31 @@
 .stack 100
 
 .data
-    include data/epf.asm
+    include structs.inc
+    include data.inc
 
-    val dd 5000.10
-
+    str1 db "hello$"
+    str2 db "helli$"
+    
 .code
-include utils/print.asm
-include utils/io.asm
-include salary/epf.asm
+include utils.inc
+include methods.inc
+include ui.inc
 
 main proc
     mov ax, @data
     mov ds, ax
+    mov es, ax
+    xor ax, ax  ; clear ax
 
-    fld val
-    call lookup_epf
-
-    putnum bx
+    call login_menu
+    
     putc 10
-    putnum cx
+
+    call main_menu
 
     exit 0
+
 main endp
 
 end main
