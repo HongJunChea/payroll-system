@@ -11,18 +11,6 @@
 .round_to_zero DB 00001100b
 
 
-; lookup_epf
-.tmp_word dw ?
-.five_thousand   dw 5000
-.twenty_thousand dw 20000
-.twenty          dw 20
-.hundred         dw 100
-.four            dw 4
-.twelve_percent  dd 0.12
-.eleven_percent  dd 0.11
-
-
-
 ; data is laid out as <1_employee_contrib, 1employer_contrib, 2_employee_contrib, 2_employer_contrib, ..., n_employee_contrib, n_employer_contrib>
 ; each row is a multiple of RM20
 ; TODO: fill data

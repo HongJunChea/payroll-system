@@ -85,7 +85,6 @@ endm
 
 
 ; result will be in ax
-.input_num_ten db 10
 input_num proc
 
     push bx
@@ -108,7 +107,7 @@ input_num proc
 
         putc bl     ;
 
-        mul .input_num_ten
+        mul .ten_b
         sub bl, "0"
         add ax, bx
         

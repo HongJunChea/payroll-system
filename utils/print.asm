@@ -55,7 +55,6 @@ endm
 
 
 
-.print_num_unsigned_ten dw 10
 print_num_unsigned proc near
     push ax 
     push cx
@@ -66,7 +65,7 @@ print_num_unsigned proc near
     .divide:
         xor dx, dx  ; clear remainder
 
-        div .print_num_unsigned_ten
+        div .ten
 
         push dx     ; push remainder to print
         inc cx
@@ -121,23 +120,21 @@ print_binary_word endp
 ;   st(0): float to be printed
 ; Returns
 ;   none
-.print_float_tmp dw ?
-.print_float_thousand dw 1000
 print_float proc near
     push ax
     push dx
 
-    fist .print_float_tmp        ; load integral part of float
-    mov ax, .print_float_tmp              
+    fist .tmp_word        ; load integral part of float
+    mov ax, .tmp_word              
     call print_num_unsigned      ; print integral part
 
     putc "."
     
-    fisub .print_float_tmp       ; remove integer part of float => 123.4567 -> 0.4567
-    fimul .print_float_thousand  ; move decimal three space left => 0.4567 -> 456.7
+    fisub .tmp_word       ; remove integer part of float => 123.4567 -> 0.4567
+    fimul .thousand  ; move decimal three space left => 0.4567 -> 456.7
 
-    fistp .print_float_tmp       ; load integral part and clear stack
-    mov ax, .print_float_tmp             
+    fistp .tmp_word       ; load integral part and clear stack
+    mov ax, .tmp_word             
     call print_num_unsigned      ; print integral part   
 
     pop dx
