@@ -54,6 +54,37 @@ putnum macro u_num
 endm
 
 
+putsn macro string, len
+
+    push cx
+    push dx
+
+    lea si, string
+    mov cx, len
+    call print_string_numbered
+
+    pop dx
+    pop cx
+
+endm
+
+
+
+; Parameters
+;   cx: string length
+;   si: string pointer
+print_string_numbered proc
+
+    print_string_numbered_loop:
+        lodsb
+        putc al
+        loop print_string_numbered_loop
+
+    ret
+
+print_string_numbered endp  
+
+
 
 print_num_unsigned proc near
     push ax 
