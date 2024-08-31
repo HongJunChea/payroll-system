@@ -1,9 +1,12 @@
+; set information for an employee
+; Parameters
+;	bx: pointer to the employee
 create_emp proc
 
 	xor eax, eax
 	
 	puts NAME_PROMPT
-	scans employee1.emp_name		
+	scans [bx].emp_name		
 	putc 10
 
 get_type:
@@ -30,7 +33,7 @@ handle_part_time proc
 
 	puts HOURLY_PROMPT
 	call input_num
-	mov employee1.orp, eax
+	mov [bx].orp, eax
 
 	ret
 
@@ -45,14 +48,14 @@ handle_full_time proc
 	mov input_tmp, ax
 	fild input_tmp
 	fidiv hours_per_months
-	fstp employee1.orp
+	fstp [bx].orp
 
 	puts PTO_PROMPT
 	call input_num
-	mov employee1.pto, al
+	mov [bx].pto, al
 
 	; TODO: later
-	mov employee1.pto_used, 0
+	mov [bx].pto_used, 0
 
 get_epf:
 	puts EPF_PROMPT
@@ -71,11 +74,11 @@ get_epf:
 	jmp get_epf
 
 epf_yes:
-	mov employee1.has_epf, 1
+	mov [bx].has_epf, 1
 	jmp get_socso
 
 epf_no:
-	mov employee1.has_epf, 0
+	mov [bx].has_epf, 0
 
 
 get_socso:
@@ -96,11 +99,11 @@ get_socso:
 	jmp get_socso
 
 socso_yes:
-	mov employee1.has_socso, 1
+	mov [bx].has_socso, 1
 	jmp get_eis
 
 socso_no:
-	mov employee1.has_socso, 0
+	mov [bx].has_socso, 0
 
 
 get_eis:
@@ -121,11 +124,11 @@ get_eis:
 	jmp get_eis
 
 eis_yes:
-	mov employee1.has_eis, 1
+	mov [bx].has_eis, 1
 	ret
 
 eis_no:
-	mov employee1.has_eis, 0
+	mov [bx].has_eis, 0
 	ret
 
 handle_full_time endp
