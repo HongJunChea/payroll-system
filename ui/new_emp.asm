@@ -1,36 +1,36 @@
-.MODEL SMALL
-.386
-.STACK 100
-.DATA
+create_emp proc
 
-	include ..\struct\employee.asm
+	xor eax, eax
+	
+	puts NAME_PROMPT
+	scans employee1.emp_name		
+	putc 10
 
-	NAME_PROMPT DB 'Enter employee name: $'
-	TYPE_PROMPT DB 'Enter 1 for Part-time or 2 for Full-time: $'
-	HOURLY_PROMPT DB 'Enter hourly wage (for Part-time): $'
-	SALARY_PROMPT DB 'Enter monthly salary (for Full-time): $'
+get_type:
+	puts TYPE_PROMPT
+	scann al
+	putc 10
 
-	PTO_PROMPT DB 'Enter total PTO hours per year: $'
-	EPF_PROMPT DB 'Does the employee have EPF? (Y/N): $'
-	SOCSO_PROMPT DB 'Does the employee have SOCSO? (Y/N): $'
-	EIS_PROMPT DB 'Does the employee have EIS? (Y/N): $'
+	CMP AL, 1	    ;---------COMPARE
+	JE pt
+	CMP AL, 2
+	JE ft
+	jmp get_type
 
-	input_tmp dw ?
-	hours_per_months dw 160   ; 8 hours * 5 days * 4 weeks
+pt:
+	call handle_part_time
+	ret
 
-	employee1 employee <,,,,,,>
+ft:
+	call handle_full_time
+	ret
 
-
-.CODE
-include ..\utils\print.asm
-include ..\utils\io.asm
-include ..\utils\input.asm
 
 handle_part_time proc
 
 	puts HOURLY_PROMPT
 	call input_num
-	mov [employee1.orp], eax
+	mov employee1.orp, eax
 
 	ret
 
@@ -130,36 +130,4 @@ eis_no:
 
 handle_full_time endp
 
-
-MAIN PROC
-
-	MOV AX,@DATA
-	MOV DS,AX
-
-	xor eax, eax
-	
-	puts NAME_PROMPT
-	scans employee1.emp_name		
-	putc 10
-
-get_type:
-	puts TYPE_PROMPT
-	scann al
-	putc 10
-
-	CMP AL, 1	    ;---------COMPARE
-	JE pt
-	CMP AL, 2
-	JE ft
-	jmp get_type
-
-pt:
-	call handle_part_time
-	exit 0
-
-ft:
-	call handle_full_time
-	exit 0
-
-MAIN ENDP
-END MAIN
+create_emp endp
