@@ -93,18 +93,18 @@ input_num proc
     xor ax, ax
     xor bx, bx
 
-    next_digit:
+    .input_num_next_digit:
 
         scanc_no_echo bl
 
         cmp bl, 13 ; "\r"
-        je stop
+        je .input_num_stop
 
         ; if not between 0 - 9
         cmp bl, "0"
-        jb next_digit
+        jb .input_num_next_digit
         cmp bl, "9"
-        ja next_digit
+        ja .input_num_next_digit
 
         putc bl     ;
 
@@ -112,9 +112,9 @@ input_num proc
         sub bl, "0"
         add ax, bx
         
-        jmp next_digit
+        jmp .input_num_next_digit
 
-    stop:
+    .input_num_stop:
         putc 10
 
     pop bx

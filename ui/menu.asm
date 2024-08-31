@@ -1,27 +1,9 @@
-.MODEL SMALL
-.STACK 100
-.DATA
-    WELCOME DB "Welcome to MKH Payroll System", 10, "$"
-    LINE    DB "================================", 10, "$"
-    SEL1    DB "1 - Store employee information", 10, "$"
-    SEL2    DB "2 - View all employees details", 10, "$"
-    SEL3    DB "3 - Set employee monthly performance", 10, "$"
-    SEL4    DB "4 - View all employees monthly paycheck", 10, "$"
-    SEL5    DB "5 - Exit program", 10, "$"
-    PROMPT  DB "Please select (1 - 5): $"
-    WRONG   DB "Incorrect choice, please try again.", 10, "$"
-    LEAVE   DB "Exiting program....", 10, "$"
-    SEL     DB ?
+MAIN_MENU PROC
 
-.CODE
-INCLUDE ..\UTILS\PRINT.ASM
-INCLUDE ..\UTILS\INPUT.ASM
-
-MAIN PROC
-    MOV AX,@DATA
-    MOV DS,AX
-    
     MENU:
+        PUTC 10
+        PUTC 10
+
         PUTS WELCOME
         PUTS LINE
         PUTS SEL1
@@ -30,22 +12,31 @@ MAIN PROC
         PUTS SEL4
         PUTS SEL5
         PUTS PROMPT
+
         SCANC SEL
+        PUTC 10
+        PUTC 10
+
         CMP SEL,"1"
         JE EMP_INFO
+        
         CMP SEL,"2"
         JE EMP_DET
+        
         CMP SEL,"3"
         JE EMP_PERF
+        
         CMP SEL,"4"
         JE EMP_PC
+        
         CMP SEL,"5"
-        JE EXIT
+        JE MAIN_MENU_EXIT
+        
         PUTS WRONG
         JMP MENU
     
     EMP_INFO:
-
+        CALL create_emp
         JMP MENU
     
     EMP_DET:
@@ -61,10 +52,7 @@ MAIN PROC
 
         JMP MENU
 
-    EXIT:
-        PUTC 10
-        PUTS LEAVE
-        MOV AX,4C00H
-        INT 21H
-MAIN ENDP
-END MAIN
+    MAIN_MENU_EXIT:
+        PUTS EXIT_MSG
+        RET
+MAIN_MENU ENDP
