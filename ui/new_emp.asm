@@ -4,9 +4,12 @@
 create_emp proc
 
 	xor eax, eax
+
+	call set_emp_id
+	inc emp_id_sequence
 	
 	puts NAME_PROMPT
-	scans [bx].emp_name		
+	scans [bx].emp_name
 	putc 10
 
 get_type:
@@ -54,12 +57,10 @@ handle_full_time proc
 	call input_num
 	mov [bx].pto, al
 
-	; TODO: later
-	mov [bx].pto_used, 0
-
 get_epf:
 	puts EPF_PROMPT
 	scanc al
+	putc 10
 
 	cmp al, "y"
 	je epf_yes
@@ -82,9 +83,9 @@ epf_no:
 
 
 get_socso:
-	putc 10
 	puts SOCSO_PROMPT
 	scanc al
+	putc 10
 
 	cmp al, "y"
 	je socso_yes
@@ -107,9 +108,9 @@ socso_no:
 
 
 get_eis:
-	putc 10
 	puts EIS_PROMPT
 	scanc al
+	putc 10
 
 	cmp al, "y"
 	je eis_yes
@@ -132,5 +133,17 @@ eis_no:
 	ret
 
 handle_full_time endp
+
+
+set_emp_id proc
+
+	push ax
+
+	
+
+	pop ax
+	ret
+
+set_emp_id endp
 
 create_emp endp
