@@ -8,8 +8,7 @@
     include structs.inc
     include data.inc
 
-    str1 db "hello$"
-    str2 db "helli$"
+    employees employee 20 DUP(<,,,,,,,>)
     
 .code
 include utils.inc

@@ -10,5 +10,3 @@ EIS_PROMPT DB 'Does the employee have EIS? (Y/N): $'
 
 input_tmp dw ?
 hours_per_months dw 160   ; 8 hours * 5 days * 4 weeks
-
-employee1 employee <,,,,,,>
