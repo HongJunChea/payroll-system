@@ -9,7 +9,7 @@
     include data.inc
 
     employees employee 20 DUP(<,,,,,,,>)
-    
+
 .code
 include utils.inc
 include methods.inc
@@ -25,7 +25,10 @@ main proc
     
     putc 10
 
+    mov bx, offset employees
     call main_menu
+
+    putc 10
 
     exit 0
 
