@@ -7,6 +7,7 @@ employee struc
     emp_name_buffer DB 20  ; string length
     emp_name_length DB ?   ; actual string length
     emp_name        DB 20 DUP ("$") 
+    job_type        DB ?   ; 1 = parttime, 2 = fulltime
     orp DD ?        ; ordinary rate of pay
     bonus DD ?
     pto DB ?

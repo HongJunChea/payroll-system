@@ -36,6 +36,8 @@ ft:
 
 handle_part_time proc
 
+	mov [bx][si].job_type, 1
+
 	puts HOURLY_PROMPT
 	call input_num
 	mov [bx][si].orp, eax
@@ -46,6 +48,8 @@ handle_part_time endp
 
 
 handle_full_time proc
+
+	mov [bx][si].job_type, 2
 
 	puts SALARY_PROMPT
 	call input_num
