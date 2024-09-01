@@ -9,13 +9,13 @@ employee struc
     emp_name        DB 20 DUP ("$") 
     job_type        DB ?   ; 1 = parttime, 2 = fulltime
     orp DD ?        ; ordinary rate of pay
-    bonus DD ?
     pto DB ?
     has_epf DB ?
     has_socso DB ?
     has_eis   DB ?
 
     ; monthly reports
+    bonus DD ?
     hours_worked DW ?
     monthly_leaves DB ?
     overtime_hours DB ?
