@@ -1,3 +1,39 @@
+
+
+generate_data proc
+
+strcpy MACRO source, dest 
+    
+    push cx
+    push si
+    push di
+
+    mov cx, length emp_name1
+    lea si, source
+    lea di, dest
+    rep movsb
+
+    pop di
+    pop si
+    pop cx
+
+endm
+
+    lea bx, employees
+    mov si, 0
+
+    call set_emp_id
+    strcpy emp_name1 [bx][si].emp_name
+    mov [bx][si].job_type, 2
+    mov [bx][si].orp, 15.0
+    mov [bx][si].pto, 300
+    mov [bx][si].has_epf, 1
+    mov [bx][si].has_socso, 1
+    mov [bx][si].has_eis, 1
+
+    add bx, size employee
+
+    
     MOV SI,OFFSET EMPLOYEES.emp_name[0], Alice
     MOV EMPLOYEES.job_type[0], 2
     MOV EMPLOYEES.orp[0], 15.0
@@ -93,3 +129,5 @@
     MOV EMPLOYEES.has_epf[385], 1
     MOV EMPLOYEES.has_socso[385], 1
     MOV EMPLOYEES.has_eis[385], 1
+
+generate_data endp
