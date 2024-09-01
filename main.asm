@@ -25,14 +25,40 @@ main proc
     
     ; putc 10
 
-    mov bx, offset employees
-    call main_menu
+    call generate_emp_data
+; 
+    lea bx, employees
+    mov si, 0
+    mov cx, 2
+
+print_all_employee:
+    putsn_b [BX][SI].emp_name [BX][SI].emp_name_length
+
+    putc " "
+
+    putfloat [BX][SI].orp
+
+    putc " "
+
+    putnum_b [bx][si].pto
+
+    putc " "
+
+    putnum_b [bx][si].has_epf
+
+    putc " "
+
+    putnum_b [bx][si].has_socso
+
+    putc " "
+
+    putnum_b [bx][si].has_eis
 
     putc 10
 
-    putsn [bx].emp_id emp_id_length
-    putc 10
-    putsn [bx][44].emp_id emp_id_length
+    add si, size employee
+
+    loop print_all_employee
 
     exit 0
 

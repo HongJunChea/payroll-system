@@ -54,17 +54,59 @@ putnum macro u_num
 endm
 
 
+putnum_b macro u_num_b
+
+    push ax
+
+    xor ax, ax  ; clear ax
+    mov al, u_num_b
+    call print_num_unsigned
+
+    pop ax
+
+endm
+
+
 putsn macro string, len
 
     push cx
     push dx
+    push si
 
     lea si, string
     mov cx, len
     call print_string_numbered
 
+    pop si
     pop dx
     pop cx
+
+endm
+
+
+putsn_b macro string, len_b
+
+    push cx
+    push dx
+    push si
+
+    xor cx, cx ; clear cx
+
+    lea si, string
+    mov cl, len_b
+    call print_string_numbered
+
+    pop si
+    pop dx
+    pop cx
+
+endm
+
+
+putfloat macro float
+
+    fld float
+    call print_float
 
 endm
 

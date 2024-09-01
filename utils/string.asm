@@ -40,13 +40,13 @@ strcmp macro str1, str2, len
 endm
 
 
-strcpy MACRO source, dest 
+strcpy MACRO source, dest, len
     
     push cx
     push si
     push di
 
-    mov cx, length emp_name1
+    mov cx, len
     lea si, source
     lea di, dest
     rep movsb
