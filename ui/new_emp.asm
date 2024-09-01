@@ -11,7 +11,7 @@ create_emp proc
 	call set_emp_id
 	
 	puts NAME_PROMPT
-	scans [bx][si].emp_name
+	scans [bx][si].emp_name_buffer
 	putc 10
 
 get_type:

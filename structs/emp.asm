@@ -4,9 +4,9 @@ emp_id_length DW 5
 employee struc
 
     emp_id DB "E0000"
-    emp_name DB 20  ; string length
-             DB ?   ; actual string length
-             DB 20 DUP ("$") 
+    emp_name_buffer DB 20  ; string length
+    emp_name_length DB ?   ; actual string length
+    emp_name        DB 20 DUP ("$") 
     orp DD ?        ; ordinary rate of pay
     bonus DD ?
     pto DB ?
