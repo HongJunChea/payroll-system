@@ -176,7 +176,6 @@ set_si_to_number_of_employees proc
 
 	mov ax, size employee   ; calculate array offset
 	mul number_of_employees
-	call print_num_unsigned
 	mov si, ax				; move into si to use
 
 	pop ax
