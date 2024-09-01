@@ -30,9 +30,9 @@ main proc
 
     putc 10
 
-    putsn employees.emp_id[0] emp_id_length
+    putsn [bx].emp_id emp_id_length
     putc 10
-    putsn employees.emp_id[44] emp_id_length
+    putsn [bx][44].emp_id emp_id_length
 
     exit 0
 
