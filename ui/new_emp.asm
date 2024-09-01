@@ -5,11 +5,13 @@ create_emp proc
 
 	xor eax, eax
 
+	call set_si_to_number_of_employees
+
+	inc number_of_employees
 	call set_emp_id
-	inc emp_id_sequence
 	
 	puts NAME_PROMPT
-	scans [bx].emp_name
+	scans [bx][si].emp_name
 	putc 10
 
 get_type:
@@ -36,7 +38,7 @@ handle_part_time proc
 
 	puts HOURLY_PROMPT
 	call input_num
-	mov [bx].orp, eax
+	mov [bx][si].orp, eax
 
 	ret
 
@@ -51,11 +53,11 @@ handle_full_time proc
 	mov input_tmp, ax
 	fild input_tmp
 	fidiv hours_per_months
-	fstp [bx].orp
+	fstp [bx][si].orp
 
 	puts PTO_PROMPT
 	call input_num
-	mov [bx].pto, al
+	mov [bx][si].pto, al
 
 get_epf:
 	puts EPF_PROMPT
@@ -75,11 +77,11 @@ get_epf:
 	jmp get_epf
 
 epf_yes:
-	mov [bx].has_epf, 1
+	mov [bx][si].has_epf, 1
 	jmp get_socso
 
 epf_no:
-	mov [bx].has_epf, 0
+	mov [bx][si].has_epf, 0
 
 
 get_socso:
@@ -100,11 +102,11 @@ get_socso:
 	jmp get_socso
 
 socso_yes:
-	mov [bx].has_socso, 1
+	mov [bx][si].has_socso, 1
 	jmp get_eis
 
 socso_no:
-	mov [bx].has_socso, 0
+	mov [bx][si].has_socso, 0
 
 
 get_eis:
@@ -125,25 +127,30 @@ get_eis:
 	jmp get_eis
 
 eis_yes:
-	mov [bx].has_eis, 1
+	mov [bx][si].has_eis, 1
 	ret
 
 eis_no:
-	mov [bx].has_eis, 0
+	mov [bx][si].has_eis, 0
 	ret
 
 handle_full_time endp
 
 
+; Params
+;	bx: employee array pointer
+;	si: employee index offset
 set_emp_id proc
 
 	push ax
 	push dx
 	push si
 
-	mov si, emp_id_length
+	xor ax, ax
+
+	add si, emp_id_length
 	dec si
-	mov al, emp_id_sequence
+	mov al, number_of_employees
 
 	set_emp_id_loop:
 		div .ten_b
@@ -161,5 +168,20 @@ set_emp_id proc
 	ret
 
 set_emp_id endp
+
+
+set_si_to_number_of_employees proc
+
+	push ax
+
+	mov ax, size employee   ; calculate array offset
+	mul number_of_employees
+	call print_num_unsigned
+	mov si, ax				; move into si to use
+
+	pop ax
+	ret
+
+set_si_to_number_of_employees endp
 
 create_emp endp

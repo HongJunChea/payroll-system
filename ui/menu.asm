@@ -37,7 +37,6 @@ MAIN_MENU PROC
     
     EMP_INFO:
         CALL create_emp
-        ADD BX, SIZE EMPLOYEE
         JMP MENU
     
     EMP_DET:
