@@ -1,4 +1,4 @@
-emp_id_sequence DB 1
+number_of_employees DB 0
 emp_id_length DW 5
 
 employee struc
