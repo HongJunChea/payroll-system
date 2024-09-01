@@ -11,7 +11,6 @@ employee struc
     orp DD ?        ; ordinary rate of pay
     bonus DD ?
     pto DB ?
-    monthly_salary DB ?
     has_epf DB ?
     has_socso DB ?
     has_eis   DB ?
