@@ -23,7 +23,6 @@ not_equal:
 compare_string endp
 
 
-
 strcmp macro str1, str2, len
 
     push si
@@ -37,6 +36,24 @@ strcmp macro str1, str2, len
 
     pop di
     pop si
+
+endm
+
+
+strcpy MACRO source, dest 
+    
+    push cx
+    push si
+    push di
+
+    mov cx, length emp_name1
+    lea si, source
+    lea di, dest
+    rep movsb
+
+    pop di
+    pop si
+    pop cx
 
 endm
 
