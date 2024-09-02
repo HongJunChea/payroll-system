@@ -162,7 +162,7 @@ set_emp_id proc
 	push si
 
 	xor ax, ax
-	mov ah, number_of_employees
+	mov al, number_of_employees
 	mov si, emp_id_length
 	dec si
 
@@ -173,6 +173,7 @@ set_emp_id proc
 		mov [bx][si], ah
 		dec si
 
+		xor ah, ah
 		test al, al
 		jnz set_emp_id_loop
 
