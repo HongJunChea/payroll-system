@@ -26,38 +26,10 @@ main proc
     ; putc 10
 
     call generate_emp_data
+
+    call list_all_employee
 ; 
     lea bx, employees
-    mov cx, 2
-
-    print_all_employee:
-        putsn_b [BX].emp_name [BX].emp_name_length
-
-        putc " "
-
-        putfloat [BX].orp
-
-        putc " "
-
-        putnum_b [bx].pto
-
-        putc " "
-
-        putnum_b [bx].has_epf
-
-        putc " "
-
-        putnum_b [bx].has_socso
-
-        putc " "
-
-        putnum_b [bx].has_eis
-
-        putc 10
-
-        add bx, size employee
-
-        loop print_all_employee
 
     exit 0
 
