@@ -5,6 +5,7 @@ generate_emp_data proc
     lea bx, employees
 
     ; call set_emp_id
+    inc number_of_employees
     call set_emp_id
     mov [bx].emp_name_length, 5
     strcpy emp_name1 [bx].emp_name 5 
@@ -17,7 +18,7 @@ generate_emp_data proc
 
     add bx, size employee
 
-    ; call set_emp_id
+    inc number_of_employees
     call set_emp_id
     mov [bx].emp_name_length, 4
     strcpy emp_name2 [bx].emp_name 4 
