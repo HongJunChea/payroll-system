@@ -12,17 +12,20 @@ MAIN_MENU PROC
         
         CMP SEL,"2"
         JE LIST_EMP
-        
+
         CMP SEL,"3"
-        JE ADD_EMP_PERFORMANCE
+        JE EDIT_EMP
         
         CMP SEL,"4"
-        JE LIST_EMP_PAYCHECK
+        JE ADD_EMP_PERFORMANCE
         
         CMP SEL,"5"
+        JE LIST_EMP_PAYCHECK
+        
+        CMP SEL,"6"
         JE VIEW_EMP_DETAIL
 
-        CMP SEL,"6"
+        CMP SEL,"7"
         JE MAIN_MENU_EXIT
         
         PUTS WRONG
@@ -35,17 +38,27 @@ MAIN_MENU PROC
     LIST_EMP:
         CALL list_all_employee
         JMP MENU
+
+    EDIT_EMP:
+        call prompt_employee
+        jne MENU
+        call edit_emp
+        JMP MENU
     
     ADD_EMP_PERFORMANCE:
-
+        call prompt_employee
+        jne MENU
+        ; call
         JMP MENU
 
     LIST_EMP_PAYCHECK:
-
+        ; call 
         JMP MENU
 
     VIEW_EMP_DETAIL:
-
+        call prompt_employee
+        jne MENU
+        ; call
         JMP MENU
 
     MAIN_MENU_EXIT:
@@ -68,6 +81,7 @@ print_menu_options PROC
     PUTS SEL4
     PUTS SEL5
     PUTS SEL6
+    PUTS SEL7
     PUTS PROMPT
 
     ret
