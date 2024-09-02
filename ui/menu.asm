@@ -3,10 +3,6 @@ MAIN_MENU PROC
     MENU:
         call print_menu_options
 
-        SCANC SEL
-        PUTC 10
-        PUTC 10
-
         CMP SEL,"1"
         JE ADD_EMP
         
@@ -84,6 +80,9 @@ print_menu_options PROC
     PUTS SEL7
     PUTS PROMPT
 
+    SCANC SEL
+    PUTC 10
+    PUTC 10
     ret
 
 print_menu_options ENDP
