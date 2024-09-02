@@ -4,17 +4,11 @@
 ;   es:di: pointer to string 2
 ;   cx: string length
 ; Returns
-;   al: boolean
+;   zf: 1 = same
+;       0 = not same
 compare_string proc
 
     repe cmpsb
-    jnz not_equal
-
-    mov al, 1
-    ret
-
-not_equal:
-    mov al, 0
     ret
 
 compare_string endp
@@ -22,10 +16,11 @@ compare_string endp
 
 strcmp macro str1, str2, len
 
+    push cx
     push si
     push di
 
-    xor cx, cx
+    xor ch, ch
     mov cl, len
     lea si, str1
     lea di, str2
@@ -33,6 +28,7 @@ strcmp macro str1, str2, len
 
     pop di
     pop si
+    pop cx
 
 endm
 
