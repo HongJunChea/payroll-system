@@ -1,4 +1,3 @@
-
 ; compare two strings
 ; Parameters
 ;   ds:si: pointer to string 1
@@ -7,8 +6,6 @@
 ; Returns
 ;   al: boolean
 compare_string proc
-
-    xor al, al
 
     repe cmpsb
     jnz not_equal
@@ -39,7 +36,7 @@ strcmp macro str1, str2, len
 
 endm
 
-
+; copy source string to dest
 strcpy MACRO source, dest, len
     
     push cx

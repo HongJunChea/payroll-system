@@ -28,37 +28,36 @@ main proc
     call generate_emp_data
 ; 
     lea bx, employees
-    mov si, 0
     mov cx, 2
 
-print_all_employee:
-    putsn_b [BX][SI].emp_name [BX][SI].emp_name_length
+    print_all_employee:
+        putsn_b [BX].emp_name [BX].emp_name_length
 
-    putc " "
+        putc " "
 
-    putfloat [BX][SI].orp
+        putfloat [BX].orp
 
-    putc " "
+        putc " "
 
-    putnum_b [bx][si].pto
+        putnum_b [bx].pto
 
-    putc " "
+        putc " "
 
-    putnum_b [bx][si].has_epf
+        putnum_b [bx].has_epf
 
-    putc " "
+        putc " "
 
-    putnum_b [bx][si].has_socso
+        putnum_b [bx].has_socso
 
-    putc " "
+        putc " "
 
-    putnum_b [bx][si].has_eis
+        putnum_b [bx].has_eis
 
-    putc 10
+        putc 10
 
-    add si, size employee
+        add bx, size employee
 
-    loop print_all_employee
+        loop print_all_employee
 
     exit 0
 

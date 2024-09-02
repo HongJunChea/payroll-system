@@ -1,17 +1,25 @@
+; create information for an employee, appended to the top
+create_emp proc
+
+	; auto calc offset
+	mov al, number_of_employees
+	mov bl, size employee
+	mul bl
+
+	lea bx, employees
+	add bx, ax
+	inc number_of_employees
+	xor ax, ax
+
+	call set_emp_id
+
 ; set information for an employee
 ; Parameters
 ;	bx: pointer to the employee
-create_emp proc
+edit_emp proc
 
-	xor eax, eax
-
-	call set_si_to_number_of_employees
-
-	inc number_of_employees
-	call set_emp_id
-	
 	puts NAME_PROMPT
-	scans [bx][si].emp_name_buffer
+	scans [bx].emp_name_buffer
 	putc 10
 
 get_type:
@@ -33,14 +41,18 @@ ft:
 	call handle_full_time
 	ret
 
+edit_emp endp
+
+create_emp endp
+
 
 handle_part_time proc
 
-	mov [bx][si].job_type, 1
+	mov [bx].job_type, 1
 
 	puts HOURLY_PROMPT
 	call input_num
-	mov [bx][si].orp, eax
+	mov [bx].orp, eax
 
 	ret
 
@@ -49,7 +61,7 @@ handle_part_time endp
 
 handle_full_time proc
 
-	mov [bx][si].job_type, 2
+	mov [bx].job_type, 2
 
 	puts SALARY_PROMPT
 	call input_num
@@ -57,11 +69,11 @@ handle_full_time proc
 	mov input_tmp, ax
 	fild input_tmp
 	fidiv hours_per_months
-	fstp [bx][si].orp
+	fstp [bx].orp
 
 	puts PTO_PROMPT
 	call input_num
-	mov [bx][si].pto, al
+	mov [bx].pto, al
 
 get_epf:
 	puts EPF_PROMPT
@@ -81,11 +93,11 @@ get_epf:
 	jmp get_epf
 
 epf_yes:
-	mov [bx][si].has_epf, 1
+	mov [bx].has_epf, 1
 	jmp get_socso
 
 epf_no:
-	mov [bx][si].has_epf, 0
+	mov [bx].has_epf, 0
 
 
 get_socso:
@@ -106,11 +118,11 @@ get_socso:
 	jmp get_socso
 
 socso_yes:
-	mov [bx][si].has_socso, 1
+	mov [bx].has_socso, 1
 	jmp get_eis
 
 socso_no:
-	mov [bx][si].has_socso, 0
+	mov [bx].has_socso, 0
 
 
 get_eis:
@@ -131,30 +143,28 @@ get_eis:
 	jmp get_eis
 
 eis_yes:
-	mov [bx][si].has_eis, 1
+	mov [bx].has_eis, 1
 	ret
 
 eis_no:
-	mov [bx][si].has_eis, 0
+	mov [bx].has_eis, 0
 	ret
 
 handle_full_time endp
 
 
+; set employee id in form of E00xx where xx is the number of employees
 ; Params
-;	bx: employee array pointer
-;	si: employee index offset
+;	bx: employee pointer
 set_emp_id proc
 
 	push ax
-	push dx
 	push si
 
 	xor ax, ax
-
-	add si, emp_id_length
+	mov ah, number_of_employees
+	mov si, emp_id_length
 	dec si
-	mov al, number_of_employees
 
 	set_emp_id_loop:
 		div .ten_b
@@ -167,24 +177,7 @@ set_emp_id proc
 		jnz set_emp_id_loop
 
 	pop si
-	pop dx
 	pop ax
 	ret
 
 set_emp_id endp
-
-
-set_si_to_number_of_employees proc
-
-	push ax
-
-	mov ax, size employee   ; calculate array offset
-	mul number_of_employees
-	mov si, ax				; move into si to use
-
-	pop ax
-	ret
-
-set_si_to_number_of_employees endp
-
-create_emp endp
