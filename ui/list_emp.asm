@@ -1,62 +1,63 @@
-.MODEL SMALL
-.STACK 100
-.DATA
-
-    MOV BX, OFFSET EMPLOYEES
-
-    MOV CX, 12
-    MOV SI, 0
-
-
-.CODE
-MAIN PROC
-	MOV AX,@DATA
-	MOV DS,AX
-
+list_all_employee PROC
     
-PRINT ALL:
-    MOV AL, [BX][SI].emp_name
-    PUTS [BX][SI].emp_name 
+    push bx
 
-    putc" "
-    putc" "
+    lea bx, employees
 
-    MOV AL, [BX][SI].orp
-    CALL print_num_unsigned
+    xor ch, ch  ; clear ch for cl
+    mov cl, number_of_employees
+
+
+    PRINT_ALL:
+        call print_emp_row
+        add bx, size employee
+        loop print_all
     
-    putc" "
-    putc" "
+    pop bx
+    ret
 
-    MOV AL, [BX][SI].pto
-    CALL print_num_unsigned
+list_all_employee ENDP
 
-    putc" "
-    putc" "
 
-    MOV AL, [BX][SI].has_epf
-    CALL print_num_unsigned
+; print employee info in a row
+; Params:
+;   bx: pointer to employee
+print_emp_row proc
 
-    putc" "
-    putc" "
+    putsn [bx].emp_id emp_id_length
 
-    MOV AL, [BX][SI].has_socso
-    CALL print_num_unsigned
+    putc " "
+    putc " "
 
-    putc" "
-    putc" "
+    putsn_b [BX].emp_name [BX].emp_name_length
 
-    MOV AL, [BX][SI].has_eis
-    CALL print_num_unsigned
+    putc " "
+    putc " "
+
+    putfloat [BX].orp
+
+    putc " "
+    putc " "
+
+    putnum_b [bx].pto
+
+    putc " "
+    putc " "
+
+    putnum_b [bx].has_epf
+
+    putc " "
+    putc " "
+
+    putnum_b [bx].has_socso
+
+    putc " "
+    putc " "
+
+    putnum_b [bx].has_eis
 
     putc 10
 
-    add si, size employee
-    loop print_all
-    
-    
+    ret
 
-	
-	MOV AX,4C00H
-	INT 21H
-MAIN ENDP
-END MAIN
+print_emp_row endp
