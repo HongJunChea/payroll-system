@@ -25,7 +25,14 @@ main proc
 
     ; call login_menu
     
-    call main_menu
+    ; call main_menu
+
+    call prompt_employee
+    jne skip
+
+    call print_emp_row
+
+skip:
 
     putc 10
 
