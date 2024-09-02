@@ -7,11 +7,10 @@ list_all_employee PROC
     xor ch, ch  ; clear ch for cl
     mov cl, number_of_employees
 
-
-    PRINT_ALL:
+    list_all_employee_print_all:
         call print_emp_row
         add bx, size employee
-        loop print_all
+        loop list_all_employee_print_all
     
     pop bx
     ret
