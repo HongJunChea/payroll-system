@@ -21,15 +21,13 @@ main proc
     mov es, ax
     xor ax, ax  ; clear ax
 
-    ; call login_menu
-    
-    ; putc 10
-
     call generate_emp_data
 
-    call list_all_employee
-; 
-    lea bx, employees
+    ; call login_menu
+    
+    call main_menu
+
+    putc 10
 
     exit 0
 
