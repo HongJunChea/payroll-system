@@ -25,7 +25,7 @@ login_menu proc
 
 	strcmp inp_userid correct_id user_id_length
 	putc 10
-	jz VAL_MSG
+	je VAL_MSG
 
 	INV_MSG:                        ;DISPLAY MESSAGE IF ID INVALID
 		puts INVALID
