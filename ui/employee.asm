@@ -1,6 +1,6 @@
-view_employee_performance proc
+view_emp_perf proc
 
 
     ret
 
-view_employee_performance endp
+view_emp_perf endp

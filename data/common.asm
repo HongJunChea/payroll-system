@@ -1,6 +1,7 @@
 .ten_b           db 10
 
 .four            dw 4
+.eight           dw 8
 .ten             dw 10
 .twenty          dw 20
 .hundred         dw 100

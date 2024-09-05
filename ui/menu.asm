@@ -32,7 +32,7 @@ MAIN_MENU PROC
         JMP MENU
     
     LIST_EMP:
-        CALL list_all_employee
+        CALL ls_emps
         JMP MENU
 
     EDIT_EMP:
@@ -44,17 +44,17 @@ MAIN_MENU PROC
     ADD_EMP_PERFORMANCE:
         call prompt_employee
         jne MENU
-        call enter_emp_monthly_performance
+        call add_emp_perf
         JMP MENU
 
     LIST_EMP_PAYCHECK:
-        call list_all_employee_performance 
+        call ls_emps_perf
         JMP MENU
 
     VIEW_EMP_DETAIL:
         call prompt_employee
         jne MENU
-        call view_employee_performance
+        call view_emp_perf
         JMP MENU
 
     MAIN_MENU_EXIT:

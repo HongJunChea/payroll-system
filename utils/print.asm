@@ -111,6 +111,46 @@ putfloat macro float
 endm
 
 
+putc_n macro char, number_of_times
+
+    mov dl, char
+    mov cx, number_of_times
+    call print_char_numbered
+
+endm
+
+
+; dl: char
+; cx: number_of_times
+print_char_numbered proc
+
+    mov ah, 02h
+
+    putc_n_loop:
+        int 21h
+        loop putc_n_loop
+
+    ret
+
+print_char_numbered endp
+
+
+; bool in al
+print_bool proc
+
+    cmp al, 0
+    je putc_bool_false
+
+    putc_bool_true:
+        putc "Y"
+        ret
+
+    putc_bool_false:
+        putc "N"
+        ret
+
+print_bool endp
+
 
 ; Parameters
 ;   cx: string length
@@ -204,7 +244,7 @@ print_float proc near
     putc "."
     
     fisub .tmp_word       ; remove integer part of float => 123.4567 -> 0.4567
-    fimul .thousand  ; move decimal three space left => 0.4567 -> 456.7
+    fimul .hundred  ; move decimal three space left => 0.4567 -> 456.7
 
     fistp .tmp_word       ; load integral part and clear stack
     mov ax, .tmp_word             

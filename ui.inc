@@ -5,3 +5,4 @@ include ui/list_emp.asm
 include ui/pm_emp.asm
 include ui/in_perf.asm
 include ui/employee.asm
+include ui/calc_pay.asm

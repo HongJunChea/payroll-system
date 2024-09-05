@@ -27,14 +27,20 @@ main proc
     
     ; call main_menu
 
-    call prompt_employee
-    jne skip
-
-    call print_emp_row
-
-skip:
+    call ls_emps
 
     putc 10
+
+    call ls_emps_perf
+
+;     call prompt_employee
+;     jne skip
+
+;     call print_emp_row
+
+; skip:
+
+;     putc 10
 
     exit 0
 

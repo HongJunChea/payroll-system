@@ -15,10 +15,10 @@ employee struc
     has_eis   DB ?
 
     ; monthly reports
-    bonus DD ?
+    filled_performance DB 0    ; boolean to show filled performance
     hours_worked DW ?
-    monthly_leaves DB ?
-    overtime_hours DB ?
-    holiday_hours DB ?
+    monthly_leaves DW ?  ; only used for fulltime
+    overtime_hours DW ?
+    holiday_hours DW ?
     
 employee ENDS
