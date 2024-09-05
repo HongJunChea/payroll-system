@@ -1,5 +1,5 @@
 ; create information for an employee, appended to the top
-create_emp proc
+create_employee proc
 
 	; auto calc offset
 	mov al, number_of_employees
@@ -16,7 +16,7 @@ create_emp proc
 ; set information for an employee
 ; Parameters
 ;	bx: pointer to the employee
-edit_emp proc
+edit_employee proc
 
 	puts NAME_PROMPT
 	scans [bx].emp_name_buffer
@@ -41,9 +41,9 @@ ft:
 	call handle_full_time
 	ret
 
-edit_emp endp
+edit_employee endp
 
-create_emp endp
+create_employee endp
 
 
 handle_part_time proc

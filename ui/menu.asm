@@ -28,7 +28,7 @@ MAIN_MENU PROC
         JMP MENU
     
     ADD_EMP:
-        CALL create_emp
+        CALL create_employee
         JMP MENU
     
     LIST_EMP:
@@ -38,23 +38,23 @@ MAIN_MENU PROC
     EDIT_EMP:
         call prompt_employee
         jne MENU
-        call edit_emp
+        call edit_employee
         JMP MENU
     
     ADD_EMP_PERFORMANCE:
         call prompt_employee
         jne MENU
-        ; call
+        call enter_emp_monthly_performance
         JMP MENU
 
     LIST_EMP_PAYCHECK:
-        ; call 
+        call list_all_employee_performance 
         JMP MENU
 
     VIEW_EMP_DETAIL:
         call prompt_employee
         jne MENU
-        ; call
+        call view_employee_performance
         JMP MENU
 
     MAIN_MENU_EXIT:
