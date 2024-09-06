@@ -1,6 +1,9 @@
 number_of_employees DB 0
 emp_id_length DW 5
 
+overtime_rate DD 3.0
+holiday_rate DD 2.0
+
 employee struc
 
     emp_id DB "E0000"
@@ -9,7 +12,7 @@ employee struc
     emp_name        DB 20 DUP ("$") 
     job_type        DB ?   ; 1 = parttime, 2 = fulltime
     orp DD ?        ; ordinary rate of pay
-    pto DB ?
+    pto DW ?
     has_epf DB ?
     has_socso DB ?
     has_eis   DB ?

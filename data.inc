@@ -7,3 +7,4 @@ include data/emp_data.asm
 include data/pm_emp.asm
 include data/in_perf.asm
 include data/list_emp.asm
+include data/employee.asm

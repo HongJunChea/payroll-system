@@ -48,7 +48,7 @@ dont_pad_emp_name:
 
     putc_n " " 9
 
-    putnum_b [bx].pto
+    putnum [bx].pto
 
     putc "h"
     putc "r"
@@ -149,6 +149,7 @@ dont_pad_emp_name_2:
 
     call calculate_pay
     call print_float
+    fstp st(0)  ; pop
 
     putc 10
 

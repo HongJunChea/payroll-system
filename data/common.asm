@@ -13,3 +13,5 @@
 .eleven_percent  dd 0.11
 
 .tmp_word dw ?
+
+PRESS_ANY_TO_CONTINUE DB "Press any key to continue", 10, "$"

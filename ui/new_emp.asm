@@ -73,7 +73,7 @@ handle_full_time proc
 
 	puts PTO_PROMPT
 	call input_num
-	mov [bx].pto, al
+	mov [bx].pto, ax
 
 get_epf:
 	puts EPF_PROMPT
