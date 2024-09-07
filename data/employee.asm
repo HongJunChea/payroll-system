@@ -17,7 +17,7 @@ EMP_PERF_PH          DB "Public Holiday     $"
 EMP_PERF_EARN_TOTAL  DB "Total Earning      $"
 
 EMP_PERF_DEDUC_HEADER DB "Deductions        RM", 10, "$"
-EMP_PERF_DEDUC_SOSCO  DB "SOSCO Employee    -$"
+EMP_PERF_DEDUC_SOCSO  DB "SOSCO Employee    -$"
 EMP_PERF_DEDUC_EPF    DB "EPF Employee      -$"
 EMP_PERF_DEDUC_EIS    DB "EIS Employee      -$"
 EMP_PERF_DEDUC_TOTAL  DB "Total Deduction   -$"

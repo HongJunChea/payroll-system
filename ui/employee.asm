@@ -18,20 +18,20 @@ view_emp_perf proc
 
     putc 10
 
-    mov al, [bx].has_sosco
-    puts EMP_PERF_SOCSO
+    mov al, [bx].has_socso
+    puts EMP_PERF_DEDUC_SOCSO
     call print_bool
 
     putc_n " " 3
 
     mov al, [bx].has_epf
-    puts EMP_PERF_EPF
+    puts EMP_PERF_DEDUC_EPF
     call print_bool
 
     putc_n " " 3
 
-    mov al, [bx].has_eif
-    puts EMP_PERF_EIS
+    mov al, [bx].has_eis
+    puts EMP_PERF_DEDUC_EIS
     call print_bool
 
     putc 10
@@ -55,7 +55,7 @@ view_emp_perf proc
 
     putc 10
 
-    puts PRESS_ANY_KEY_CONTINUE
+    puts PRESS_ANY_TO_CONTINUE
     input_char_no_echo
 
     putc 10
