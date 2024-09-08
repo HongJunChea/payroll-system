@@ -29,6 +29,11 @@ generate_emp_data proc
     mov [bx].has_socso, 0
     mov [bx].has_eis, 0
 
+    mov [bx].filled_performance, 1
+    mov [bx].hours_worked, 160
+    mov [bx].overtime_hours, 8
+    mov [bx].holiday_hours, 8
+
     add bx, size employee
 
     pop bx

@@ -19,28 +19,14 @@ main proc
     mov ax, @data
     mov ds, ax
     mov es, ax
+
     xor ax, ax  ; clear ax
 
     call generate_emp_data
 
-    ; call login_menu
+    call login_menu
     
-    ; call main_menu
-
-    call ls_emps
-
-    putc 10
-
-    call ls_emps_perf
-
-;     call prompt_employee
-;     jne skip
-
-;     call print_emp_row
-
-; skip:
-
-;     putc 10
+    call main_menu
 
     exit 0
 

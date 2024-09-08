@@ -1,6 +1,6 @@
 INP_USERID db 10 dup(?)
 user_id_length db 7
-correct_id db "2203876"
+correct_id db "1234567"
 
 ;LOGIN MESSAGE
 LOGIN1 db 'Welcome to the payroll system!!!!!',10,'$'

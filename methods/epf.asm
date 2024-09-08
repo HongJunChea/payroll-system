@@ -37,16 +37,33 @@ endm
 ;   cx: employee payable
 lookup_epf proc far
 
-    ficom .twenty_thousand ; if <= 20000
+    ficom .ten ; if > 10
 
     ; https://stackoverflow.com/questions/33755275/compare-instruction-not-working-correctly
     fstsw ax  ; load fpu comp
     fwait
     sahf
 
-    jbe   .below20k
+    ja .above10
+
+    mov bx, 0
+    mov cx, 0
+    ret
+
+.above10:
+
+    ficom .twenty_thousand ; if <= 20000
+
+    fstsw ax  ; load fpu comp
+    fwait
+    sahf
+
+    jbe .below20k
 
     jmp .above20k
+    ret
+
+
 
 .below20k:
     call lookup_below20k

@@ -237,6 +237,8 @@ print_float proc near
     push ax
     push dx
 
+    fld st(0)  ; duplicates it
+
     fist .tmp_word        ; load integral part of float
     mov ax, .tmp_word              
     call print_num_unsigned      ; print integral part
@@ -246,7 +248,7 @@ print_float proc near
     fisub .tmp_word       ; remove integer part of float => 123.4567 -> 0.4567
     fimul .hundred  ; move decimal three space left => 0.4567 -> 456.7
 
-    fist .tmp_word       ; load integral part
+    fistp .tmp_word       ; load integral part
     mov ax, .tmp_word             
     call print_num_unsigned      ; print integral part   
 

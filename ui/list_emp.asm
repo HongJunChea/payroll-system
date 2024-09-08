@@ -13,7 +13,10 @@ ls_emps PROC
         call print_emp_row
         add bx, size employee
         loop ls_emps_print_all
-    
+
+    puts PRESS_ANY_TO_CONTINUE
+    input_char_no_echo
+
     pop bx
     ret
 
