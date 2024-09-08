@@ -103,14 +103,6 @@ putsn_b macro string, len_b
 endm
 
 
-putfloat macro float
-
-    fld float
-    call print_float
-
-endm
-
-
 putc_n macro char, number_of_times
 
     mov dl, char
@@ -229,31 +221,3 @@ print_binary_word proc near
 print_binary_word endp
 
 
-; Params
-;   st(0): float to be printed
-; Returns
-;   none
-print_float proc near
-    push ax
-    push dx
-
-    fld st(0)  ; duplicates it
-
-    fist .tmp_word        ; load integral part of float
-    mov ax, .tmp_word              
-    call print_num_unsigned      ; print integral part
-
-    putc "."
-    
-    fisub .tmp_word       ; remove integer part of float => 123.4567 -> 0.4567
-    fimul .hundred  ; move decimal three space left => 0.4567 -> 456.7
-
-    fistp .tmp_word       ; load integral part
-    mov ax, .tmp_word             
-    call print_num_unsigned      ; print integral part   
-
-    pop dx
-    pop ax
-    ret
-
-print_float endp

@@ -1,35 +1,24 @@
 .model big
 
-.386  ; allow eax
-
 .stack 100
 
 .data
-    include structs.inc
-    include data.inc
-
-    employees employee 20 DUP(<>)
+    var1 db "c", "d", "e"
 
 .code
-include utils.inc
-include methods.inc
-include ui.inc
 
 main proc
     mov ax, @data
     mov ds, ax
     mov es, ax
 
-    xor ax, ax  ; clear ax
+    mov ah, 02h
+    mov dl, var1
+    int 21h
 
-    call generate_emp_data
-
-    call login_menu
-    
-    call main_menu
-
-    exit 0
-
+    mov ah, 4ch
+    mov al, 0
+    int 21h
 main endp
 
 end main
