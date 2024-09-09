@@ -170,7 +170,7 @@ print_num_unsigned proc near
     .divide:
         xor dx, dx  ; clear remainder
 
-        div .ten
+        div TEN_W
 
         push dx     ; push remainder to print
         inc cx

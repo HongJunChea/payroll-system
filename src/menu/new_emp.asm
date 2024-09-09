@@ -167,7 +167,7 @@ set_emp_id proc
 	dec si
 
 	set_emp_id_loop:
-		div .ten_b
+		div TEN_B
 		
 		add ah, "0"
 		mov [bx][si], ah

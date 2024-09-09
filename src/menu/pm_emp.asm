@@ -63,26 +63,3 @@ prompt_employee_get_id endp
 
 
 
-; find employee pointer to given the employee id
-; Params
-;   prompt_emp_id: filled id string
-; Returns
-;   bx: the employee pointer
-;   zf: 1 = not found
-;       0 = found
-find_employee proc
-
-    lea bx, employees
-    
-    xor ch, ch
-    mov cl, number_of_employees
-
-    sub bx, size employee       ; offset the initial add in the loop
-    find_employee_loop:
-        add bx, size employee   ; add sets zf, no good
-        strcmp prompt_emp_id [bx].emp_id 5
-        loopne find_employee_loop
-
-    ret
-
-find_employee endp

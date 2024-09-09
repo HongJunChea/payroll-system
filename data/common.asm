@@ -1,17 +1,20 @@
-.ten_b           db 10
+TEN_B           db 10
 
-.four            dw 4
-.eight           dw 8
-.ten             dw 10
-.twenty          dw 20
-.hundred         dw 100
-.thousand        dw 1000
-.five_thousand   dw 5000
-.twenty_thousand dw 20000
+FOUR_W            dw 4
+EIGHT_W           dw 8
+TEN_W             dw 10
+TWENTY_W          dw 20
+HUNDRED_W         dw 100
+; THOUSAND_W        dw 1000  ; unused for now
+FIVE_THOUSAND_W   dw 5000
+TWENTY_THOUSAND_W dw 20000
 
-.twelve_percent  dd 0.12
-.eleven_percent  dd 0.11
+TWELVE_PERCENT_W  dd 0.12
+ELEVEN_PERCENT_W  dd 0.11
+
+TRUE  db 1
+FALSE db 0
+
+PRESS_ANY_KEY DB "Press any key to continue", 10, "$"
 
 .tmp_word dw ?
-
-PRESS_ANY_TO_CONTINUE DB "Press any key to continue", 10, "$"

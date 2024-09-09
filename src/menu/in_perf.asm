@@ -31,7 +31,7 @@ handle_ft_perf proc
 
     puts PROMPT_LEAVES
     call input_num
-    mul .eight
+    mul EIGHT_W
     mov [bx].monthly_leaves, ax
 
     puts PROMPT_OT

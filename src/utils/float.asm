@@ -17,7 +17,7 @@ print_float proc near
     putc "."                 ; print decimal seperator
 
     fisub .tmp_word          ; remove integer part of float => 123.4567 -> 0.4567
-    fimul .hundred           ; move decimal point two space left => 0.4567 -> 456.7
+    fimul HUNDRED_W           ; move decimal point two space left => 0.4567 -> 456.7
 
     fistp .tmp_word          ; load integral part
     mov ax, .tmp_word
@@ -30,6 +30,27 @@ print_float proc near
 print_float endp
 
 
+; Accumulate and sum all the floating points in the stack
+; Params
+;   cx: number of floats
+; Returns
+;   st(0): accumulates and pop all floats into the sum
+accumulate_sum proc
+
+    dec cx
+    cmp cx, 0
+    jbe end_accumulate
+
+    accumulate_sum_loop:
+        faddp st(1), st(0)
+        loop loop_calc_earn_total
+
+    end_accumulate:
+        ret
+
+calculate_subtotal endp
+
+
 ;
 ; Macros
 ;
@@ -37,6 +58,14 @@ putfloat macro float
 
     fld float
     call print_float
+    fpop
+
+endm
+
+
+fpop macro
+
+    fstp st(0)
 
 endm
 
@@ -74,5 +103,13 @@ store_fpu_flags macro
     fstsw ax
     fwait
     sahf      ; store ah flags
+
+endm
+
+
+fsum macro n
+
+    mov cx, n
+    call accumulate_sum
 
 endm

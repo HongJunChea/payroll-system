@@ -107,7 +107,7 @@ input_num proc
 
         putc bl     ;
 
-        mul .ten_b
+        mul TEN_B
         sub bl, "0"
         add ax, bx
         

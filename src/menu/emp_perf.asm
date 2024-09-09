@@ -13,7 +13,7 @@ view_emp_perf proc
     puts THIN_BORDER
 
     putc 10
-    puts PRESS_ANY_TO_CONTINUE
+    puts PRESS_ANY_KEY
     input_char_no_echo
     putc 10
 
@@ -29,7 +29,7 @@ view_emp_perf proc
 
     putc 10
 
-    puts PRESS_ANY_TO_CONTINUE
+    puts PRESS_ANY_KEY
     input_char_no_echo
 
     putc 10
