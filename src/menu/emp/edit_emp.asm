@@ -1,18 +1,3 @@
-; create information for an employee, appended to the top
-create_employee proc
-
-	; auto calc offset
-	mov al, number_of_employees
-	mov bl, size employee
-	mul bl
-
-	lea bx, employees
-	add bx, ax
-	inc number_of_employees
-	xor ax, ax
-
-	call set_emp_id
-
 ; set information for an employee
 ; Parameters
 ;	bx: pointer to the employee
@@ -41,10 +26,6 @@ ft:
 	call handle_full_time
 	ret
 
-edit_employee endp
-
-create_employee endp
-
 
 handle_part_time proc
 
@@ -65,7 +46,7 @@ handle_full_time proc
 
 	puts SALARY_PROMPT
 	call input_num
-	
+
 	mov input_tmp, ax
 	fild input_tmp
 	fidiv hours_per_months
@@ -152,33 +133,4 @@ eis_no:
 
 handle_full_time endp
 
-
-; set employee id in form of E00xx where xx is the number of employees
-; Params
-;	bx: employee pointer
-set_emp_id proc
-
-	push ax
-	push si
-
-	xor ax, ax
-	mov al, number_of_employees
-	mov si, emp_id_length
-	dec si
-
-	set_emp_id_loop:
-		div TEN_B
-		
-		add ah, "0"
-		mov [bx][si], ah
-		dec si
-
-		xor ah, ah
-		test al, al
-		jnz set_emp_id_loop
-
-	pop si
-	pop ax
-	ret
-
-set_emp_id endp
+edit_employee endp

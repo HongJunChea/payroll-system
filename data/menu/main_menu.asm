@@ -1,6 +1,5 @@
-
 WELCOME  DB "Welcome to MKH Payroll System", 10, "$"
-LINE     DB "================================", 10, "$"
+
 SEL1     DB "1 - Add new employee information", 10, "$"
 SEL2     DB "2 - View all employees details", 10, "$"
 SEL3     DB "3 - Edit specified employee details", 10, "$"

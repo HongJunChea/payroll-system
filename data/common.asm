@@ -16,5 +16,8 @@ TRUE  db 1
 FALSE db 0
 
 PRESS_ANY_KEY DB "Press any key to continue", 10, "$"
+DLINE_BORDER  DB "================================", 10, "$"
+SLINE_BORDER  DB "--------------------------------", 10, "$"
+
 
 .tmp_word dw ?
