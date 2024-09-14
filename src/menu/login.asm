@@ -1,17 +1,17 @@
 
 login_menu proc
 ;------------------------------------------LOGIN MODULE-----------------------------------------------------
-	puts LOGIN1
+	puts LOGIN_MSG
 	puts LOGIN2
 
 	ask_id:
 		xor ax, ax ; IF JUMP BACK AGAIN,CLEAR THE PREVIOUS AX DATA
-		puts ID_ENT
+		puts PROMPT_PASS
 
 ;--------------------------------------LET USER ENTER ID----------------------------------------------------
 	xor cx, cx
-	mov cl, user_id_length
-	lea di, INP_USERID
+	mov cl, .user_id_length
+	lea di, .user_id_input
 
 	ACCEPT_ID:
 		input_char_no_echo
@@ -23,16 +23,16 @@ login_menu proc
 
 ;----------------------------------CHECK AND COMPARE ID ENTERED-------------------------------------------------------
 
-	strcmp inp_userid correct_id user_id_length
+	strcmp .user_id_input .correct_id .user_id_length
 	putc 10
 	je VAL_MSG
 
 	INV_MSG:                        ;DISPLAY MESSAGE IF ID INVALID
-		puts INVALID
+		puts INVALID_PASS
 		jmp ASK_ID
 
 	VAL_MSG:                        ;DISPLAY MESSAGE IF ID VALID
-		puts VALID
+		puts INVALID_PASS
 		ret
 
 login_menu endp

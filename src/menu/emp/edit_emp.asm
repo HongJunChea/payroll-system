@@ -47,9 +47,9 @@ handle_full_time proc
 	puts SALARY_PROMPT
 	call input_num
 
-	mov input_tmp, ax
-	fild input_tmp
-	fidiv hours_per_months
+	mov .tmp_word, ax
+	fild .tmp_word
+	fidiv HOURS_PER_MONTHS
 	fstp [bx].orp
 
 	puts PTO_PROMPT

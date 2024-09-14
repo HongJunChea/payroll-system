@@ -6,13 +6,13 @@
 create_employee proc
 
 	; auto calc offset
-	mov al, number_of_employees
+	mov al, .number_of_emps
 	mov bl, size employee
 	mul bl
 
 	lea bx, employees
 	add bx, ax
-	inc number_of_employees
+	inc .number_of_emps
 	xor ax, ax
 
 	call set_emp_id
@@ -30,8 +30,8 @@ set_emp_id proc
 	push si
 
 	xor ax, ax
-	mov al, number_of_employees
-	mov si, emp_id_length
+	mov al, .number_of_emps
+	mov si, EMP_ID_LEN
 	dec si
 
 	set_emp_id_loop:

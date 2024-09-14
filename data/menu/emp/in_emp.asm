@@ -8,5 +8,4 @@ EPF_PROMPT DB 'Does the employee have EPF? (Y/N): $'
 SOCSO_PROMPT DB 'Does the employee have SOCSO? (Y/N): $'
 EIS_PROMPT DB 'Does the employee have EIS? (Y/N): $'
 
-input_tmp dw ?
-hours_per_months dw 160   ; 8 hours * 5 days * 4 weeks
+HOURS_PER_MONTHS dw 160   ; 8 hours * 5 days * 4 weeks

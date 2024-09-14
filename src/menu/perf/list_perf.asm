@@ -7,7 +7,7 @@ ls_emps_perf proc
     lea bx, employees
 
     xor ch, ch  ; clear ch for cl
-    mov cl, number_of_employees
+    mov cl, .number_of_emps
 
     print_perfs:
         cmp [bx].filled_performance, 0
@@ -36,7 +36,7 @@ print_emp_perf_row proc
     push cx
     push dx
 
-    putsn [bx].emp_id emp_id_length  ; 5 char long
+    putsn [bx].emp_id EMP_ID_LEN  ; 5 char long
 
     putc_n " " 9  ; 6 + 3
 
@@ -87,7 +87,7 @@ print_emp_perf_inval_row proc
     push cx
     push dx
 
-    putsn [bx].emp_id emp_id_length  ; 5 char long
+    putsn [bx].emp_id EMP_ID_LEN  ; 5 char long
 
     putc_n " " 9  ; 6 + 3
 

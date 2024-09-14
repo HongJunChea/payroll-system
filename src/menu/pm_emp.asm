@@ -45,7 +45,7 @@ prompt_employee_get_id proc
 
     push ax
 
-    mov cx, emp_id_length
+    mov cx, EMP_ID_LEN
     lea di, prompt_emp_id 
     prompt_employee_get_id_loop:
         input_char

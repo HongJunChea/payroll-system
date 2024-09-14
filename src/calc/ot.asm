@@ -8,7 +8,7 @@ calculate_ot proc
 
     fld [bx].orp
     fimul [bx].overtime_hours
-    fmul overtime_rate
+    fmul OVERTIME_RATE
     ret
 
 calculate_ot endp

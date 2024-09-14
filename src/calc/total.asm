@@ -5,7 +5,7 @@ calculate_total proc
     call calculate_ph
 
     fsum 3
-    fst emp_perf_earn_total_tmp
+    fst .emp_perf_earn_total_tmp
 
     call calculate_socso
     call calculate_epf

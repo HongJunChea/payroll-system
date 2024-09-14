@@ -6,11 +6,11 @@ generate_emp_data proc
     lea bx, employees
 
     ; call set_emp_id
-    inc number_of_employees
+    inc .number_of_emps
     insert_emp EMP_NAME1 5 JOB_FULLTIME ORP_FULLTIME 160 TRUE TRUE TRUE
     add bx, size employee
 
-    inc number_of_employees
+    inc .number_of_emps
     insert_emp EMP_NAME2 4 JOB_PARTTIME ORP_PARTTIME 0 FALSE FALSE FALSE
     add bx, size employee
 
@@ -32,7 +32,7 @@ find_employee proc
     lea bx, employees
 
     xor ch, ch
-    mov cl, number_of_employees
+    mov cl, .number_of_emps
 
     sub bx, size employee       ; offset the initial add in the loop
     find_employee_loop:

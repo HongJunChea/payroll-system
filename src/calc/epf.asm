@@ -40,7 +40,7 @@ is_below20k:
 
 lookup_epf_above20k proc
 
-    change_rounding .round_up
+    change_rounding ROUND_UP
 
     fld   st(0)           ; duplicate current salary
     fmul  TWELVE_PERCENT_W ; x 12%
@@ -122,7 +122,7 @@ calculate_epf proc
     push ax
     push dx
 
-    fld emp_perf_earn_total_tmp
+    fld .emp_perf_earn_total_tmp
     call calculate_epf
     fpop
 

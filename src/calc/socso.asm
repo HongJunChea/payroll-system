@@ -26,7 +26,7 @@ calculate_socso proc
     push bx
     push cx
 
-    fld emp_perf_earn_total_tmp
+    fld .emp_perf_earn_total_tmp
     call calculate_epf
     fpop
 

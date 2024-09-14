@@ -1,14 +1,9 @@
-INP_USERID db 10 dup(?)
-user_id_length db 7
-correct_id db "1234567"
+.user_id_input db 10 dup(?)
 
-;LOGIN MESSAGE
-LOGIN1 db 'Welcome to the payroll system!!!!!',10,'$'
-LOGIN2 db '------------------------------------',10,'$'
-ID_ENT db 'Please enter your ID: $'
+.correct_pass_len db 7
+.correct_pass     db "1234567"
 
-;INVALID ID MESSAGE
-INVALID db 'Invalid ID, please try again!!!',10,'$'
-
-;VALID ID MESSAGE
-VALID db 'Valid ID, you may proceed to MENU!!!',10,'$'
+LOGIN_MSG    db 'Welcome to the payroll system!!!!!',10,'$'
+PROMPT_PASS  db 'Please enter your ID: $'
+INVALID_PASS db 'Invalid ID, please try again!!!',10,'$'
+INVALID_PASS db 'Valid ID, you may proceed to MENU!!!',10,'$'

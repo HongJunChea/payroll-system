@@ -8,7 +8,7 @@ calculate_ph proc
 
     fld [bx].orp
     fimul [bx].holiday_hours
-    fmul holiday_rate
+    fmul HOLIDAY_RATE
     ret
 
 calculate_ph endp

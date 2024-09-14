@@ -47,7 +47,7 @@ print_perf_dets proc
     putc_n " " 3
 
     puts EMP_PERF_ID
-    putsn [bx].emp_id emp_id_length
+    putsn [bx].emp_id EMP_ID_LEN
 
     putc 10
 
@@ -83,7 +83,7 @@ print_perf_earnings proc
     puts EMP_PERF_EARN_HEADER
 
     call calculate_basic
-    fst emp_perf_basic_tmp
+    fst .emp_perf_basic_tmp
 
         puts EMP_PERF_BASIC
         call print_float
@@ -91,7 +91,7 @@ print_perf_earnings proc
         putc 10
     ; skip_calc_basic:
     call calculate_ot
-    fst emp_perf_ot_tmp
+    fst .emp_perf_basic_tmp
 
     cmp [bx].overtime_hours, 0
     jbe skip_calc_ot
@@ -102,7 +102,7 @@ print_perf_earnings proc
         putc 10
     skip_calc_ot:
     call calculate_ph
-    fst emp_perf_ph_tmp
+    fst .emp_perf_ph_tmp
 
     cmp [bx].holiday_hours, 0
     jbe skip_calc_ph
@@ -118,7 +118,7 @@ print_perf_earnings proc
     puts EMP_PERF_EARN_TOTAL
     call print_float
 
-    fstp emp_perf_earn_total_tmp
+    fstp .emp_perf_earn_total_tmp
 
     putc 10
     ret
@@ -131,7 +131,7 @@ print_perf_deducts proc
     puts EMP_PERF_DEDUC_HEADER
 
     call calculate_socso
-    fst emp_perf_socso_tmp
+    fst .emp_perf_socso_tmp
 
     cmp [bx].has_socso, 0
     je skip_calc_socso
@@ -142,7 +142,7 @@ print_perf_deducts proc
         putc 10
     skip_calc_socso:
     call calculate_epf
-    fst emp_perf_epf_tmp
+    fst .emp_perf_epf_tmp
 
     cmp [bx].has_epf, 0
     je skip_calc_epf
@@ -153,7 +153,7 @@ print_perf_deducts proc
         putc 10
     skip_calc_epf:
     call calculate_eis
-    fst emp_perf_eis_tmp
+    fst .emp_perf_eis_tmp
 
     cmp [bx].has_eis, 0
     je skip_calc_eis
@@ -169,7 +169,7 @@ print_perf_deducts proc
     puts EMP_PERF_DEDUC_TOTAL
     call print_float
 
-    fstp emp_perf_ded_total_tmp
+    fstp .emp_perf_ded_total_tmp
 
     putc 10
     ret
@@ -180,13 +180,13 @@ print_perf_deducts endp
 print_perf_total proc
 
     puts EMP_PERF_EARN_TOTAL
-    fld emp_perf_earn_total_tmp
+    fld .emp_perf_earn_total_tmp
     call print_float
 
     putc 10
 
     puts EMP_PERF_DEDUC_TOTAL
-    fld emp_perf_ded_total_tmp
+    fld .emp_perf_ded_total_tmp
     call print_float
 
     putc 10

@@ -7,7 +7,7 @@ ls_emps PROC
     lea bx, employees
 
     xor ch, ch  ; clear ch for cl
-    mov cl, number_of_employees
+    mov cl, .number_of_emps
 
     ls_emps_print_all:
         call print_emp_row
@@ -32,7 +32,7 @@ print_emp_row proc
     push cx
     push dx
 
-    putsn [bx].emp_id emp_id_length  ; 5 char long
+    putsn [bx].emp_id EMP_ID_LEN  ; 5 char long
    
     putc_n " " 9  ; 6 + 3
 

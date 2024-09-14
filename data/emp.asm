@@ -1,8 +1,9 @@
-number_of_employees DB 0
-emp_id_length DW 5
+EMP_ID_LEN DW 5
 
-overtime_rate DD 2.0
-holiday_rate DD 3.0
+OVERTIME_RATE DD 2.0
+HOLIDAY_RATE DD 3.0
+
+.number_of_emps DB 0
 
 employee struc
 
