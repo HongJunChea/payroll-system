@@ -4,12 +4,12 @@
 edit_employee proc
 
 	puts NAME_PROMPT
-	scans [bx].emp_name_buffer
+	gets [bx].emp_name_buffer
 	putc 10
 
 get_type:
 	puts TYPE_PROMPT
-	scann al
+	getd al
 	putc 10
 
 	CMP AL, 1	    ;---------COMPARE
@@ -58,7 +58,7 @@ handle_full_time proc
 
 get_epf:
 	puts EPF_PROMPT
-	scanc al
+	getc al
 	putc 10
 
 	cmp al, "y"
@@ -83,7 +83,7 @@ epf_no:
 
 get_socso:
 	puts SOCSO_PROMPT
-	scanc al
+	getc al
 	putc 10
 
 	cmp al, "y"
@@ -108,7 +108,7 @@ socso_no:
 
 get_eis:
 	puts EIS_PROMPT
-	scanc al
+	getc al
 	putc 10
 
 	cmp al, "y"

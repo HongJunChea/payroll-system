@@ -80,7 +80,7 @@ print_menu_options PROC
     PUTS SEL7
     PUTS PROMPT
 
-    SCANC SEL
+    getc SEL
     PUTC 10
     PUTC 10
     ret

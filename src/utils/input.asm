@@ -26,7 +26,7 @@ input_string macro
 endm
 
 
-scanc macro b_buffer
+getc macro b_buffer
 
     push bx
     push ax
@@ -43,7 +43,19 @@ scanc macro b_buffer
 endm
 
 
-scann macro b_buffer
+getc_no_echo macro b_buffer
+
+    push ax
+
+    input_char_no_echo
+    mov b_buffer, al
+
+    pop ax
+
+endm
+
+
+getd macro b_buffer
 
     push bx
     push ax
@@ -60,19 +72,8 @@ scann macro b_buffer
 
 endm
 
-scanc_no_echo macro b_buffer
-    push ax
 
-    input_char_no_echo
-    mov b_buffer, al
-
-    pop ax
-
-endm
-
-
-
-scans macro buffer
+gets macro buffer
 
     push dx
 
