@@ -29,9 +29,11 @@ set_emp_id proc
 	push ax
 	push si
 
-	xor ax, ax
+	xor ah, ah
+	mov al, EMP_ID_LEN
+	mov si, ax
+
 	mov al, .number_of_emps
-	mov si, EMP_ID_LEN
 	dec si
 
 	set_emp_id_loop:
