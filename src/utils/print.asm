@@ -1,4 +1,8 @@
-print macro
+; Invoke the DOS print char interrupt.
+; Print out a single character
+; Params
+;   dl: ascii character
+print proc
     push ax
 
     mov ah, 02h
@@ -6,9 +10,13 @@ print macro
 
     pop ax
 
-endm
+print endp
 
 
+; Invoke the DOS print buffer interrupt.
+; Print "$" terminated string
+; Params
+;   dx: pointer to the string
 print_string macro
     push ax
 
@@ -18,6 +26,94 @@ print_string macro
     pop ax
 
 endm
+
+
+; Repeat print a character for cx times
+; Params
+;   dl: char
+;   cx: number_of_times
+print_char_repeat proc
+
+    mov ah, 02h
+
+print_loop:
+    int 21h
+    loop print_loop
+
+    ret
+
+print_char_repeat endp
+
+
+; Print out a boolean value as Y or N
+; Params
+;   al: boolean value
+print_bool proc
+
+    cmp al, 0
+    je is_false
+
+    ; is true
+    putc "Y"
+    ret
+
+is_false:
+    putc "N"
+    ret
+
+print_bool endp
+
+
+; Print string without terminator given length
+; Params
+;   si: string pointer
+;   cx: string length
+printn_string proc
+
+print_loop:
+    lodsb
+    putc al
+    loop print_loop
+
+    ret
+
+printn_string endp
+
+
+; Print the number in ax
+; Params
+;   ax: number
+print_num proc near
+    push ax
+    push cx
+    push dx
+
+    xor cx, cx      ; set cx = 0
+
+    divide:
+        xor dx, dx  ; clear remainder
+
+        div TEN_W
+
+        push dx     ; push remainder to print
+        inc cx
+
+        test ax, ax ; if ax > 0
+        jnz .divide ; continue
+
+    print_loop:
+        pop dx
+        add dx, "0"
+        call print
+
+        loop .print_loop
+
+    pop dx
+    pop cx
+    pop ax
+    ret
+
+print_num endp
 
 
 ; Prints float currently on the top of the stack.
@@ -50,6 +146,11 @@ print_float proc near
     ret
 
 print_float endp
+
+
+;
+; Macros
+;
 putc macro char
     push dx
 
@@ -72,7 +173,7 @@ puts macro string
 endm
 
 
-putnum macro u_num
+putn macro u_num
 
     push ax
 
@@ -84,7 +185,7 @@ putnum macro u_num
 endm
 
 
-putnum_b macro u_num_b
+putn_b macro u_num_b
 
     push ax
 
@@ -103,28 +204,10 @@ putsn macro string, len
     push dx
     push si
 
+    xor ch, ch
+    mov cl, len
     lea si, string
-    mov cx, len
-    call print_string_numbered
-
-    pop si
-    pop dx
-    pop cx
-
-endm
-
-
-putsn_b macro string, len_b
-
-    push cx
-    push dx
-    push si
-
-    xor cx, cx ; clear cx
-
-    lea si, string
-    mov cl, len_b
-    call print_string_numbered
+    call printn_string
 
     pop si
     pop dx
@@ -137,117 +220,15 @@ putc_n macro char, number_of_times
 
     mov dl, char
     mov cx, number_of_times
-    call print_char_numbered
+    call print_char_repeat
 
 endm
 
 
-; dl: char
-; cx: number_of_times
-print_char_numbered proc
+putf macro float
 
-    mov ah, 02h
+    fld float
+    call print_float
+    fpop
 
-    putc_n_loop:
-        int 21h
-        loop putc_n_loop
-
-    ret
-
-print_char_numbered endp
-
-
-; bool in al
-print_bool proc
-
-    cmp al, 0
-    je putc_bool_false
-
-    putc_bool_true:
-        putc "Y"
-        ret
-
-    putc_bool_false:
-        putc "N"
-        ret
-
-print_bool endp
-
-
-; Parameters
-;   cx: string length
-;   si: string pointer
-print_string_numbered proc
-
-    print_string_numbered_loop:
-        lodsb
-        putc al
-        loop print_string_numbered_loop
-
-    ret
-
-print_string_numbered endp  
-
-
-
-print_num_unsigned proc near
-    push ax 
-    push cx
-    push dx
-
-    xor cx, cx      ; set cx = 0
-
-    .divide:
-        xor dx, dx  ; clear remainder
-
-        div TEN_W
-
-        push dx     ; push remainder to print
-        inc cx
-
-        test ax, ax ; if ax > 0
-        jnz .divide ; continue
-
-    .print_all:
-        pop dx 
-        add dx, "0"
-        print
-
-        loop .print_all
-
-    pop dx
-    pop cx
-    pop ax
-    ret
-
-print_num_unsigned endp
-
-
-print_binary_word proc near
-    push ax
-    push cx
-    push dx
-
-    mov cx, 16      ; 16 bits in a word
-
-    .loop:
-        xor dx, dx      ; set dx = 0
-
-        test ax, 32768  ; if ax & 2^15
-        jz .print       ; print 0
-        mov dx, 1       ; else print 1
-
-    .print:
-        print
-
-        shl ax, 1
-        loop .loop
-
-    pop dx
-    pop cx
-    pop ax
-    ret
-
-print_binary_word endp
-
-
+endm
