@@ -21,3 +21,4 @@ SLINE_BORDER  DB "--------------------------------", 10, "$"
 
 
 .tmp_word dw ?
+.input_buffer db 20 dup(?)
