@@ -1,3 +1,41 @@
+input_num proc
+
+    push dx
+
+    xor ax, ax
+
+    .input_num_next_digit:
+        input_char_no_echo
+
+        cmp dl, 13 ; "\r"
+        je .input_num_stop
+
+        cmp dl, 8  ; "\b"
+
+        ; if not between 0 - 9
+        call
+        ja .input_num_next_digit
+
+        putc bl     ;
+
+        mul TEN_B
+        sub bl, "0"
+        add ax, bx
+
+        jmp .input_num_next_digit
+
+    .input_num_stop:
+        putc 10
+
+    pop dx
+    ret
+
+input_num endp
+
+
+;
+; Macros
+;
 input_char macro
 
     mov ah, 01h
@@ -16,12 +54,8 @@ endm
 
 input_string macro
 
-    push ax 
-
     mov ah, 0Ah
     int 21h
-
-    pop ax
 
 endm
 
@@ -84,40 +118,3 @@ gets macro buffer
 
 endm
 
-
-; result will be in ax
-input_num proc
-
-    push bx
-
-    xor ax, ax
-    xor bx, bx
-
-    .input_num_next_digit:
-
-        scanc_no_echo bl
-
-        cmp bl, 13 ; "\r"
-        je .input_num_stop
-
-        ; if not between 0 - 9
-        cmp bl, "0"
-        jb .input_num_next_digit
-        cmp bl, "9"
-        ja .input_num_next_digit
-
-        putc bl     ;
-
-        mul TEN_B
-        sub bl, "0"
-        add ax, bx
-        
-        jmp .input_num_next_digit
-
-    .input_num_stop:
-        putc 10
-
-    pop bx
-    ret
-
-input_num endp
