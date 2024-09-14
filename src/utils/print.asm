@@ -20,6 +20,36 @@ print_string macro
 endm
 
 
+; Prints float currently on the top of the stack.
+; *No side effects
+; Params
+;   st(0): float to be printed
+; Returns
+;   none
+print_float proc near
+    push ax
+    push dx
+
+    fld st(0)                ; duplicates top float
+
+    fist .tmp_word           ; load integral part of float
+    mov ax, .tmp_word
+    call print_num_unsigned  ; print integral part
+
+    putc "."                 ; print decimal seperator
+
+    fisub .tmp_word          ; remove integer part of float => 123.4567 -> 0.4567
+    fimul HUNDRED_W           ; move decimal point two space left => 0.4567 -> 456.7
+
+    fistp .tmp_word          ; load integral part
+    mov ax, .tmp_word
+    call print_num_unsigned  ; print integral part
+
+    pop dx
+    pop ax
+    ret
+
+print_float endp
 putc macro char
     push dx
 
