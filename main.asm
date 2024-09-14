@@ -13,13 +13,18 @@ main proc
     mov ds, ax
     mov es, ax
 
-    mov ah, 02h
-    mov dl, var1
-    int 21h
+    call generate_emp_data
 
-    mov ah, 4ch
-    mov al, 0
-    int 21h
+    call login_menu
+    jne finish
+
+    call clear_screen
+
+    call main_menu
+
+finish:
+    exit 0
+
 main endp
 
 end main
