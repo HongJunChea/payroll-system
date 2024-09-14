@@ -1,19 +1,40 @@
 ; Check if an ascii is a number
 ; Params
-;   dl: character
+;   al: character
 ; Returns
 ;   zf: 1 - equals
 ;       0 - not equals
-is_num proc
+is_digit proc
 
-    cmp dl, "0"     ; if dl < "0"
+    cmp al, "0"     ; if dl < "0"
     jb is_not_num
-    cmp dl, "9"     ; if dl > "9"
+    cmp al, "9"     ; if dl > "9"
     ja is_not_num
-    cmp dl, dl      ; set zf = 0
+    cmp al, al      ; set zf = 1
     ret
 
 is_not_num:
     ret
 
-is_num endp
+is_digit endp
+
+
+; Check if an ascii is a printable character. ASCII of " " to "~"
+; Params
+;   al: character
+; Returns
+;   zf: 1 - equals
+;       0 - not equals
+is_printable proc
+
+    cmp al, " "
+    jb is_not_printable
+    cmp al, "~"
+    ja is_not_printable
+    cmp al, al          ; set zf = 1
+    ret
+
+is_not_printable:
+    ret
+
+is_printable endp

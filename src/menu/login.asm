@@ -54,10 +54,8 @@ input_loop:
     jae input_loop
 
     ; check within ascii of " " and "~"
-    cmp al, " "
-    jb input_loop
-    cmp al, "~"
-    ja input_loop
+    call is_printable
+    jne input_loop
 
     stosb
     inc cl
