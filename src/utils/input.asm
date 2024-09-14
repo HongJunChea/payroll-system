@@ -1,36 +1,51 @@
-input_num proc
+; gather string inputs. End the buffer with "$". Does not include "\n" and "\r"
+; Params:
+;   di: string buffer
+;   ch: max number of chars, including "$"
+; Returns:
+;   cl: number of characters
+input_text proc
 
-    push dx
+    push ax
+    xor cl, cl  ; set cl = 0
+    dec ch      ; to offset the "$" length
 
-    xor ax, ax
+input_loop:
+    input_char
 
-    .input_num_next_digit:
-        input_char_no_echo
+    cmp al, 8    ; \b
+    je backspace
 
-        cmp dl, 13 ; "\r"
-        je .input_num_stop
+    cmp al, 13   ; \r
+    je finish
 
-        cmp dl, 8  ; "\b"
+    cmp cl, ch   ; if input_length >= max_length - 1
+    jae input_loop
 
-        ; if not between 0 - 9
-        call
-        ja .input_num_next_digit
+    ; check within ascii of " " and "~"
+    cmp al, " "
+    jb input_loop
+    cmp al, "~"
+    ja input_loop
 
-        putc bl     ;
+    stosb
+    inc cl
+    putc al
 
-        mul TEN_B
-        sub bl, "0"
-        add ax, bx
+backspace:
+    putc 8
+    dec cl
+    dec di
+    jmp input_loop
 
-        jmp .input_num_next_digit
+finish:
+    mov [di], "$"
 
-    .input_num_stop:
-        putc 10
-
-    pop dx
+    inc ch     ; restore ch
+    pop ax
     ret
 
-input_num endp
+input_text endp
 
 
 ;
@@ -52,12 +67,13 @@ input_char_no_echo macro
 endm
 
 
-input_string macro
-
-    mov ah, 0Ah
-    int 21h
-
-endm
+; not good lol
+; input_string macro
+;
+;     mov ah, 0Ah
+;     int 21h
+;
+; endm
 
 
 getc macro b_buffer
