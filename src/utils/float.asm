@@ -48,7 +48,7 @@ accumulate_sum proc
     end_accumulate:
         ret
 
-calculate_subtotal endp
+accumulate_sum endp
 
 
 ;
