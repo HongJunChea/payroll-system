@@ -3,9 +3,10 @@
 .stack 100
 
 .data
-    var1 db "c", "d", "e"
+include inc/data.inc
 
 .code
+include inc/src.inc
 
 main proc
     mov ax, @data
