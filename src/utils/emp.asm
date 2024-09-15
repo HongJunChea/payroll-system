@@ -22,7 +22,7 @@ generate_emp_data endp
 
 ; find employee pointer to given the employee id
 ; Params
-;   prompt_emp_id: filled id string
+;   si: employee id
 ; Returns
 ;   bx: the employee pointer
 ;   zf: 1 = not found
@@ -35,15 +35,63 @@ find_employee proc
     mov cl, .number_of_emps
 
     sub bx, size employee       ; offset the initial add in the loop
-    find_employee_loop:
+    loop_emps:
         add bx, size employee   ; add sets zf, no good
-        strcmp prompt_emp_id [bx].emp_id 5
-        loopne find_employee_loop
+
+        push si  ; si is consumed by compare_string
+        lea di, [bx].emp_name
+        call compare_string
+        pop si
+
+        loopne emps
 
     ret
 
 find_employee endp
 
+
+; prompt user to select an employee with id
+; Returns
+;   bx: the employee pointer
+;   zf: 1 = not found
+;       0 = found
+prompt_employee proc
+
+prompt_loop:
+    puts PROMPT_EMP_MSG
+
+    mov ch, length .input_buffer
+    lea di, .input_buffer
+    call input_string
+
+    ; check if input was terminated early
+    cmp dl, 1
+    je ctrlc
+
+    ; check valid id
+    cmp .input_buffer[0], "E"
+    jne not_valid_id
+
+    ; check can find employee
+    call find_employee
+    jne emp_not_found
+
+    ret  ; leave
+
+ctrlc:
+    cmp prompt_emp_id[0], "0"  ; set zf = 1
+    ret
+
+not_valid_id:
+    puts NOT_VALID_ID_MSG
+    jmp prompt_employee_start
+
+emp_not_found:
+    puts EMP_NOT_FOUND_MSG
+    jmp prompt_employee_start
+
+
+prompt_employee endp
 
 ;
 ; Macros
