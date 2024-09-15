@@ -2,8 +2,8 @@
 ; Params:
 ;
 ; Returns:
-;   zf: 1 - login
-;       0 - failed
+;   zf: 0 - login
+;       1 - failed
 login_menu proc
 	puts LOGIN_MSG
 
