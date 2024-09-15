@@ -1,4 +1,5 @@
-TEN_B           db 10
+EIGHT_B           db 8
+TEN_B             db 10
 
 FOUR_W            dw 4
 EIGHT_W           dw 8
