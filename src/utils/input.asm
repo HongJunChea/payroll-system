@@ -28,7 +28,6 @@ input_string proc
     xor cl, cl  ; set cl = 0
 
     dec ch      ; to offset the "$" length
-    mov ah, 02h ; print signal
 
 input_string_loop:
     input_char_no_echo
@@ -50,20 +49,22 @@ input_string_loop:
     jae input_string_loop
 
     ; check within ascii of " " and "~"
-    cmp al, " "
-    jb input_string_loop
-    cmp al, "~"
-    ja input_string_loop
+    call is_printable
+    jne input_string_loop
 
     stosb
     inc cl
 
+    mov ah, 02h
     mov dl, al    ; echo entered char
     int 21h
 
     jmp input_string_loop
 
 input_string_backspace:
+    cmp cl, 0     ; make sure have characters to backspace
+    jbe input_string_loop
+
     call delete_last_char
     dec cl
     dec di
@@ -73,11 +74,12 @@ input_string_ctrlc:
     mov dl, 1
 
 input_string_finish:
+    mov ah, 02h
     mov dl, 10     ; print newline
     int 21h
 
     mov byte ptr [di], "$"  ; terminates string
-    mov dl, 0
+    mov dl, 0      ; leave ok status
 
     inc ch         ; restore ch
     pop ax

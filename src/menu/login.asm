@@ -12,15 +12,21 @@ login_ask_id:    ; loop when fail login
 
     lea di, .input_pass
     mov ch, length .input_pass
+
     call input_password
+    cmp dl, 1            ; check ctrl + c exit
+    je login_failure
 
 	strcmp .input_pass .correct_pass
-	putc 10
 	je login_success
 
     ; invalid password
     puts INVALID_PASS
     jmp login_ask_id
+
+login_failure:
+    test dl, dl   ; set zf = 0
+    ret
 
 login_success:
     puts VALID_PASS
@@ -35,42 +41,68 @@ login_menu endp
 ;   ch: max number of chars, including "$"
 ; Returns:
 ;   cl: number of characters
+;   dl: status code. (0 - ok, 1 - ctrl c)
+; See input_string
 input_password proc
 
     push ax
     xor cl, cl  ; set cl = 0
+
     dec ch      ; to offset the "$" length
 
-password_loop:
+input_password_loop:
     input_char_no_echo
 
+    ; if input = input_string_backspace
     cmp al, 8    ; \b
     je password_backspace
 
+    ; if input = ctrl c
+    cmp al, 3    ; ctrl c
+    je input_string_ctrlc
+
+    ; if input = \r
     cmp al, 13   ; \r
     je password_finish
 
-    cmp cl, ch   ; if input_length >= max_length - 1
-    jae password_loop
+    ; if input_length >= max_length - 1
+    cmp cl, ch
+    jae input_password_loop
 
     ; check within ascii of " " and "~"
     call is_printable
-    jne password_loop
+    jne input_password_loop
 
     stosb
     inc cl
-    putc "*"
+
+    mov ah, 02h
+    mov dl, "*"
+    int 21h
+    
+    jmp input_password_loop
 
 password_backspace:
-    putc 8
+    cmp cl, 0     ; make sure have characters to backspace
+    jbe input_password_loop
+
+    call delete_last_char
     dec cl
     dec di
-    jmp password_loop
+    jmp input_password_loop
+
+password_ctrlc:
+    mov dl, 1
 
 password_finish:
-    mov byte ptr [di], "$"
+    mov ah, 02h
+    mov dl, 10    ; print newline
+    int 21h
 
-    inc ch     ; restore ch
+    mov byte ptr [di], "$"  ; terminates string
+    mov dl, 0     ; leave ok status
+
+    inc ch        ; restore ch
     pop ax
     ret
 
