@@ -45,7 +45,7 @@ print_pay_row proc
     call set_cursor_pos
 
     ; print employee name
-    putsn [bx].emp_name 14
+    puts [bx].emp_name
 
     add dl, 15
     call set_cursor_pos
