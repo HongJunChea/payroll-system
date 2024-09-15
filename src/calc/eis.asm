@@ -9,26 +9,33 @@
 lookup_eis proc
 
     ; TODO:
+    xor ax, ax  ; set ax - 0
+    xor dx, dx  ; set dx - 0
     ret
 
 lookup_eis endp
 
 
+; Calculate employee's EIS contribution
+; *No side effects
+; Params
+;   st(0): Earning total
+; Returns
+;   st(0): Employee EIS payable
 calculate_eis proc
 
     cmp [bx].has_eis, 0
-    jne .calc_eis_yes
+    jne calc_eis
 
+    ; no eis\
     fldz
     ret
 
-.calc_eis_yes:
+calc_eis:
     push bx
     push cx
 
-    fld .emp_perf_earn_total_tmp
-    call calculate_eis
-    fpop
+    call lookup_eis
 
     mov .tmp_word, dx
     fild .tmp_word

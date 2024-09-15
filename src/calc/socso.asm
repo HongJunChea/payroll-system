@@ -9,26 +9,33 @@
 lookup_socso proc
 
     ; TODO:
+    xor ax, ax  ; set ax = 0
+    xor dx, dx  ; set dx = 0
     ret
 
 lookup_socso endp
 
 
+; Calculate employee's SOCSO contribution
+; *No side effects
+; Params
+;   st(0): Earning total
+; Returns
+;   st(0): Employee SOCSO payable
 calculate_socso proc
 
     cmp [bx].has_socso, 0
-    jne .calc_socso_yes
+    jne calc_socso
 
+    ; no socso
     fldz
     ret
 
-.calc_socso_yes:
+calc_socso:
     push bx
     push cx
 
-    fld .emp_perf_earn_total_tmp
     call calculate_epf
-    fpop
 
     mov .tmp_word, dx
     fild .tmp_word

@@ -109,22 +109,26 @@ lookup_epf_below20k endp
 lookup_epf      endp
 
 
-
+; Calculate employee's EPF contribution
+; *No side effects
+; Params
+;   st(0): Earning total
+; Returns
+;   st(0): Employee EPF payable
 calculate_epf proc
 
     cmp [bx].has_epf, 0
-    jne .calc_epf_yes
+    jne calc_epf
 
+    ; no epf
     fldz
     ret
 
-.calc_epf_yes:
+calc_epf:
     push ax
     push dx
 
-    fld .emp_perf_earn_total_tmp
     call calculate_epf
-    fpop
 
     mov .tmp_word, dx
     fild .tmp_word
