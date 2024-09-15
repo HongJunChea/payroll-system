@@ -67,6 +67,8 @@ print_emp_menu_options proc
 
     input_char
     mov .sel, al
+    putc 10
+
     ret
 
 print_emp_menu_options endp
