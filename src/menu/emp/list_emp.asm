@@ -1,3 +1,11 @@
+; Lists all employees information in a tabular form
+;   - Employee ID
+;   - Employee name
+;   - Employee Ordinary Rate of Pay
+;   - Number of PTO hours
+;   - EPF status
+;   - SOCSO status
+;   - EIS status
 list_employees PROC
     
     push bx
@@ -24,7 +32,7 @@ list_employees PROC
 list_employees ENDP
 
 
-; print employee info in a row
+; Print employee info in a row. Used with list_employees
 ; Params:
 ;   bx: pointer to employee
 print_employee_row proc
