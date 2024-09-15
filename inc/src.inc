@@ -6,11 +6,15 @@ include src/calc/ph.asm
 include src/calc/socso.asm
 include src/calc/total.asm
 include src/menu/emp/edit_emp.asm
+include src/menu/emp/emp_menu.asm
 include src/menu/emp/in_emp.asm
 include src/menu/emp/list_emp.asm
+include src/menu/pay/list_pay.asm
+include src/menu/pay/pay_menu.asm
+include src/menu/pay/view_pay.asm
 include src/menu/perf/in_perf.asm
 include src/menu/perf/list_perf.asm
-include src/menu/perf/view_perf.asm
+include src/menu/perf/perf_menu.asm
 include src/menu/login.asm
 include src/menu/main_menu.asm
 include src/menu/pm_emp.asm

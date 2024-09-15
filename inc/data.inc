@@ -1,10 +1,14 @@
 include data/calc/epf.asm
+include data/menu/emp/emp_menu.asm
 include data/menu/emp/in_emp.asm
 include data/menu/emp/list_emp.asm
+include data/menu/pay/list_pay.asm
+include data/menu/pay/pay_menu.asm
+include data/menu/pay/tmp_pay.asm
+include data/menu/pay/view_pay.asm
 include data/menu/perf/in_perf.asm
 include data/menu/perf/list_perf.asm
-include data/menu/perf/tmp_pay.asm
-include data/menu/perf/view_perf.asm
+include data/menu/perf/perf_menu.asm
 include data/menu/login.asm
 include data/menu/main_menu.asm
 include data/menu/pm_emp.asm
