@@ -1,25 +1,36 @@
-; gather string inputs. End the buffer with "$". Does not include "\n" and "\r"
+; gather string inputs. End the buffer with "$". Does not include "\n" and "\r".
+; Ctrl + C terminates early and set dl = 1
 ; Params:
 ;   di: string buffer
 ;   ch: max number of chars, including "$"
 ; Returns:
 ;   cl: number of characters
+;   dl: status code. (0 - ok, 1 - ctrl c)
 input_string proc
 
     push ax
     xor cl, cl  ; set cl = 0
+
     dec ch      ; to offset the "$" length
+    mov ah, 02h ; print signal
 
 input_loop:
-    input_char
+    input_char_no_echo
 
+    ; if input = backspace
     cmp al, 8    ; \b
     je backspace
 
+    ; if input = ctrl c
+    cmp al, 3    ; ctrl c
+    je ctrlc
+
+    ; if input = \r
     cmp al, 13   ; \r
     je finish
 
-    cmp cl, ch   ; if input_length >= max_length - 1
+    ; if input_length >= max_length - 1
+    cmp cl, ch
     jae input_loop
 
     ; check within ascii of " " and "~"
@@ -30,18 +41,29 @@ input_loop:
 
     stosb
     inc cl
-    putc al
+
+    mov dl, al    ; echo entered char
+    int 21h
+
+    jmp input_loop
 
 backspace:
-    putc 8
+    call delete_last_char
     dec cl
     dec di
     jmp input_loop
 
-finish:
-    mov [di], "$"
+ctrlc:
+    mov dl, 1
 
-    inc ch     ; restore ch
+finish:
+    mov dl, 10     ; print newline
+    int 21h
+
+    mov [di], "$"  ; terminates string
+    mov dl, 0
+
+    inc ch         ; restore ch
     pop ax
     ret
 
