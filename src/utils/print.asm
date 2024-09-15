@@ -237,6 +237,7 @@ endm
 ; Works by moving cursor back 1 character, printing whitespace, and moving cursor back 1 character again.
 delete_last_char proc
 
+    push ax
     push dx
 
     mov ah, 02h
@@ -249,6 +250,7 @@ delete_last_char proc
     int 21h
 
     pop dx
+    pop ax
 
 delete_last_char endp
 
