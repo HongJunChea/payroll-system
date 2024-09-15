@@ -211,7 +211,7 @@ print_job_type proc
     cmp [bx].job_type, 2
     je perf_job_ft
 
-    puts EMPLOYEE_JOB_TYPE_INVALID_MESSAGE
+    puts EMP_JOB_TYPE_INVALID_MSG
     ret
 
 perf_job_pt:

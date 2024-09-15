@@ -9,7 +9,7 @@ add_emp_perf proc
     cmp [bx].job_type, 2
     je add_emp_perf_ft
 
-    puts EMPLOYEE_JOB_TYPE_INVALID_MESSAGE
+    puts EMP_JOB_TYPE_INVALID_MSG
     ret
 
 add_emp_perf_pt:
