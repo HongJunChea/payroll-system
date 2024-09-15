@@ -21,8 +21,6 @@ main proc
     call login_menu
     jne finish
 
-    call clear_screen
-
     call main_menu
 
 finish:
