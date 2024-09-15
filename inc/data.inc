@@ -1,6 +1,6 @@
 include data/calc/epf.asm
+include data/menu/emp/edit_emp.asm
 include data/menu/emp/emp_menu.asm
-include data/menu/emp/in_emp.asm
 include data/menu/emp/list_emp.asm
 include data/menu/pay/list_pay.asm
 include data/menu/pay/pay_menu.asm
