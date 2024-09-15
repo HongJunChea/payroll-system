@@ -9,6 +9,7 @@ print proc
     int 21h
 
     pop ax
+    ret
 
 print endp
 
@@ -24,6 +25,7 @@ print_string proc
     int 21h
 
     pop ax
+    ret
 
 print_string endp
 
