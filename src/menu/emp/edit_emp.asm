@@ -87,7 +87,7 @@ input_loop:
     call input_string
 
     lea si, .input_buffer
-    call strtof
+    call strtol
 
     cmp dl, 0      ; check strtof error
     je no_error
@@ -142,7 +142,7 @@ input_loop:
     call input_string
 
     lea si, .input_buffer
-    call strtod
+    call strtof
 
     cmp dl, 0
     je no_error
