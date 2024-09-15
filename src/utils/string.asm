@@ -8,7 +8,13 @@
 ;       0 = not same
 compare_string_numbered proc
 
+    push si
+    push di
+
     repe cmpsb
+
+    pop di
+    pop si
     ret
 
 compare_string_numbered endp
@@ -23,6 +29,8 @@ compare_string_numbered endp
 ;       0 = not same
 compare_string proc
 
+    push si
+    push di
 cmp_string_loop:
     cmp byte ptr [si], "$"
     je cmp_string_terminator
@@ -31,10 +39,16 @@ cmp_string_loop:
 
     cmpsb
     je cmp_string_loop
+
+    pop di
+    pop si
     ret
 
 cmp_string_terminator:    ; check if str1[i] = str2[i] if either is "$".
     cmpsb
+
+    pop di
+    pop si
     ret
 
 compare_string endp
