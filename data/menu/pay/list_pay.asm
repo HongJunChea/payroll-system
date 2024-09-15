@@ -1,0 +1,1 @@
+LIST_PAY_HEADER db "Employee ID  Employee Name  Rate  Salary", 10, "$"

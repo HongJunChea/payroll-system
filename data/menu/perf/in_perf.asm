@@ -1,0 +1,5 @@
+PROMPT_HOURS_WORKED db "Enter hours worked (include OT and PH): $"
+PROMPT_DAYS_WORKED  db "Enter days worked (include OT and PH): $"
+PROMPT_LEAVES       db "Enter days of leaves taken: $"
+PROMPT_OT           db "Enter overtime hours worked: $"
+PROMPT_PH           db "Enter public holiday hours worked: $"

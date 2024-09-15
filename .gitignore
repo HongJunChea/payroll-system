@@ -38,3 +38,6 @@
 
 !LINK.EXE
 !MASM.EXE
+
+# Jetbrains
+.idea/

@@ -1,0 +1,22 @@
+EMP_PAY_HEADER DB "Employee Paycheck Details", 10, "$"
+EMP_PAY_NAME   DB "Name: $"
+EMP_PAY_ID     DB "Employee No: $"
+EMP_PAY_JOB    DB "Job Type: $"
+EMP_FT_MSG     DB "Fulltime$"
+EMP_PT_MSG     DB "Parttime$"
+EMP_PAY_SOCSO  DB "SOCSO: $"
+EMP_PAY_EPF    DB "EPF: $"
+EMP_PAY_EIS    DB "EIS: $"
+
+EMP_PAY_EARN_HEADER  DB "Earnings       RM$"
+EMP_PAY_EARN_BASIC   DB "Basic          $"
+EMP_PAY_EARN_OT      DB "Overtime       $"
+EMP_PAY_EARN_PH      DB "Public Holiday $"
+EMP_PAY_TOTAL        DB "Total          $"
+
+EMP_PAY_DEDUC_HEADER DB "Deductions  RM", 10, "$"
+EMP_PAY_DEDUC_SOCSO  DB "SOCSO       -$"
+EMP_PAY_DEDUC_EPF    DB "EPF         -$"
+EMP_PAY_DEDUC_EIS    DB "EIS         -$"
+
+EMP_PAY_NET_TOTAL        DB "Net Total - $"
