@@ -117,9 +117,9 @@ process_fractional:
 
     xor ch, ch
     mov cl, dl          ; divide by 10 ^ number of digits
-    div_10:
-        fidiv TEN_W
-        loop div_10
+div_10:
+    fidiv TEN_W
+    loop div_10
 
     faddp st(1), st(0)  ; add integral and fractional part
 
