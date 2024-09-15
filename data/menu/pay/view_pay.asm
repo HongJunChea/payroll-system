@@ -19,4 +19,4 @@ EMP_PAY_DEDUC_SOCSO  DB "SOCSO       -$"
 EMP_PAY_DEDUC_EPF    DB "EPF         -$"
 EMP_PAY_DEDUC_EIS    DB "EIS         -$"
 
-EMP_PAY_TOTAL        DB "Net Total - $"
+EMP_PAY_NET_TOTAL        DB "Net Total - $"

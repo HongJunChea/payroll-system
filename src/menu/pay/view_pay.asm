@@ -17,7 +17,7 @@ view_pay proc
     call print_pay_details
     puts THIN_BORDER
 
-    puts EMP_PAY_TOTAL
+    puts EMP_PAY_NET_TOTAL
     putf payroll.total
     putc 10
 
@@ -74,7 +74,7 @@ print_pay_employee_details endp
 
 move_right macro
 
-    add dl, 18
+    add dl, 21
     call set_cursor_pos
 
     putc "|"
@@ -144,6 +144,7 @@ print_pay_details endp
 ;   payroll.basic
 print_pay_basic proc
 
+    puts EMP_PAY_EARN_BASIC
     putf payroll.basic
     ret
 
@@ -160,6 +161,7 @@ print_pay_ot proc
     cmp [bx].overtime_hours, 0  ; if no overtime hours
     jbe skip
 
+    puts EMP_PAY_EARN_OT
     putf payroll.ot
 
 skip:
@@ -178,6 +180,7 @@ print_pay_ph proc
     cmp [bx].holiday_hours, 0  ; if no public holiday hours
     jbe skip
 
+    puts EMP_PAY_EARN_PH
     putf payroll.ph
 
 skip:
@@ -192,6 +195,7 @@ print_pay_ph endp
 ;   payroll.earn_total
 print_pay_earn_subtotal proc
 
+    puts EMP_PAY_TOTAL
     putf payroll.earn_total
     ret
 
@@ -208,6 +212,7 @@ print_pay_socso proc
     cmp [bx].has_socso, 0  ; if no socso
     je skip
 
+    puts EMP_PAY_DEDUC_SOCSO
     putf payroll.socso
 
 skip:
@@ -226,6 +231,7 @@ print_pay_epf proc
     cmp [bx].has_epf, 0  ; if no epf
     je skip
 
+    puts EMP_PAY_DEDUC_EPF
     putf payroll.epf
 
 skip:
@@ -244,6 +250,7 @@ print_pay_eis proc
     cmp [bx].has_eis, 0  ; if no eis
     je skip
 
+    puts EMP_PAY_DEDUC_EIS
     putf payroll.eis
 
 skip:
