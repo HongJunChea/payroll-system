@@ -58,12 +58,17 @@ strtol_loop:       ; loop throught each characters
     je strtol_finish
 
     push ax        ; is_digit uses al
+
     mov al, dl
     call is_digit  ; make sure is digits
-    jne strtol_error
+
     pop ax
 
-    mul ten_b      ; shift previous to the left by 10
+    jne strtol_error
+
+    push dx
+    mul TEN_W      ; shift previous to the left by 10
+    pop dx
 
     sub dl, "0"    ; convert ascii digit to number
     add al, dl     ; add onto ax
@@ -100,6 +105,7 @@ strtof proc
     ret
 
 process_fractional:
+    dec si
     cmp byte ptr [si], "."  ; check if the stopped point in on a decimal point
     jne strtof_error        ; if not, means its something else than "."
 
@@ -107,12 +113,18 @@ process_fractional:
     call strtol             ; read fractional part as integer
     jne strtof_error
 
-    push cx
+    putn ax
 
     call count_digits
 
+    putc 10
+
+    putn_b dl
+
     mov .tmp_word, ax        ; load fractional part as integer
     fild .tmp_word
+
+    push cx
 
     xor ch, ch
     mov cl, dl               ; divide by 10 ^ number of digits
