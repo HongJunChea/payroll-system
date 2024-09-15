@@ -1,4 +1,4 @@
-payroll struc
+payroll_data struc
     ; earnings
     basic      dd 0
     ot         dd 0
@@ -13,4 +13,6 @@ payroll struc
 
     total       dd 0
 
-payroll ends
+payroll_data ends
+
+payroll payroll_data <>
