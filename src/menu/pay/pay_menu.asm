@@ -5,7 +5,7 @@
 ;   - Exit menu
 pay_menu proc
 
-menu_loop:
+pay_menu_loop:
     call clear_screen
     call print_pay_menu_option
 
@@ -16,25 +16,25 @@ menu_loop:
     je view_pay_opt
 
     cmp .sel, "3"
-    je exit_menu_choice
+    je exit_pay_menu_choice
 
     puts WRONG
     call press_any_key_to_continue
-    jmp menu_loop
+    jmp pay_menu_loop
 
 list_pay_choice:
     call clear_screen
     call list_pay
-    jmp menu_loop
+    jmp pay_menu_loop
 
 view_pay_opt:
     call clear_screen
     call prompt_employee
-    jne menu_loop        ; if emp not found
+    jne pay_menu_loop        ; if emp not found
     call view_pay
-    jmp menu_loop
+    jmp pay_menu_loop
 
-exit_menu_choice:
+exit_pay_menu_choice:
     puts EXIT_MSG
     ret
 

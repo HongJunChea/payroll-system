@@ -23,17 +23,17 @@ compare_string_numbered endp
 ;       0 = not same
 compare_string proc
 
-cmp_loop:
+cmp_string_loop:
     cmp [si], "$"
-    je terminator
+    je cmp_string_terminator
     cmp [di], "$"
-    je terminator
+    je cmp_string_terminator
 
     cmpsb
-    je cmp_loop
+    je cmp_string_loop
     ret
 
-terminator:    ; check if str1[i] = str2[i] if either is "$".
+cmp_string_terminator:    ; check if str1[i] = str2[i] if either is "$".
     cmpsb
     ret
 
@@ -52,29 +52,29 @@ strtol proc
     xor ax, ax     ; set ax = 0
     xor dl, dl     ; set dl = 0
 
-read_loop:
+strtol_loop:       ; loop throught each characters
     mov dl, [si]   ; move each char to dl
     inc si
 
     cmp dl, "$"    ; terminate
-    je finish
+    je strtol_finish
 
     call is_digit  ; make sure is digits
-    jne error
+    jne strtol_error
 
     mul ten_b      ; shift previous to the left by 10
 
     sub dl, "0"    ; convert ascii digit to number
     add al, dl     ; add onto ax
 
-    jmp read_loop
+    jmp strtol_loop
 
-finish:
+strtol_finish:
     pop ax
     mov dl, 0  ; ok
     ret
 
-error:
+strtol_error:
     pop ax
     mov dl, 1  ; error
     ret
@@ -102,11 +102,11 @@ strtof proc
 
 process_fractional:
     cmp [si], "."       ; check if the stopped point in on a decimal point
-    jne error           ; if not, means its something else than "."
+    jne strtof_error    ; if not, means its something else than "."
 
     inc si
     call strtol         ; read fractional part as integer
-    jne error
+    jne strtof_error
 
     push cx
 
@@ -117,9 +117,9 @@ process_fractional:
 
     xor ch, ch
     mov cl, dl          ; divide by 10 ^ number of digits
-div_10:
-    fidiv TEN_W
-    loop div_10
+    strtof_div_ten:
+        fidiv TEN_W
+        loop strtof_div_ten
 
     faddp st(1), st(0)  ; add integral and fractional part
 
@@ -128,7 +128,7 @@ div_10:
     mov dl, 0
     ret
 
-error:
+strtof_error:
     fpop
     mov dl, 1
     ret

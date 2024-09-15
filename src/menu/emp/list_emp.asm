@@ -18,10 +18,10 @@ list_employees PROC
     xor ch, ch  ; clear ch for cl
     mov cl, .number_of_emps
 
-    print_all:
+    list_all_employee:
         call print_employee_row
         add bx, size employee
-        loop print_all
+        loop list_all_employee
 
     call press_any_key_to_continue
 

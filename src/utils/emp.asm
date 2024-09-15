@@ -35,7 +35,7 @@ find_employee proc
     mov cl, .number_of_emps
 
     sub bx, size employee       ; offset the initial add in the loop
-    loop_emps:
+    find_employee_loop:
         add bx, size employee   ; add sets zf, no good
 
         push si  ; si is consumed by compare_string
@@ -43,7 +43,7 @@ find_employee proc
         call compare_string
         pop si
 
-        loopne emps
+        loopne find_employee_loop
 
     ret
 
@@ -57,7 +57,7 @@ find_employee endp
 ;       0 = found
 prompt_employee proc
 
-prompt_loop:
+prompt_employee_loop:
     puts PROMPT_EMP_MSG
 
     mov ch, length .input_buffer
@@ -66,7 +66,7 @@ prompt_loop:
 
     ; check if input was terminated early
     cmp dl, 1
-    je ctrlc
+    je prompt_employee_ctrlc
 
     ; check valid id
     cmp .input_buffer[0], "E"
@@ -76,19 +76,20 @@ prompt_loop:
     call find_employee
     jne emp_not_found
 
+    ; employee found
     ret  ; leave
 
-ctrlc:
+prompt_employee_ctrlc:
     cmp prompt_emp_id[0], "0"  ; set zf = 1
     ret
 
 not_valid_id:
     puts NOT_VALID_ID_MSG
-    jmp prompt_employee_start
+    jmp prompt_employee_loop
 
 emp_not_found:
     puts EMP_NOT_FOUND_MSG
-    jmp prompt_employee_start
+    jmp prompt_employee_loop
 
 
 prompt_employee endp

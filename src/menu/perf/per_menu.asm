@@ -5,7 +5,7 @@
 ;   - Exit menu
 perf_menu proc
 
-menu_loop:
+perf_menu_loop:
     call clear_screen
     call print_perf_menu_option
 
@@ -16,25 +16,25 @@ menu_loop:
     je add_perf_opt
 
     cmp .sel, "3"
-    je exit_menu_choice
+    je exit_perf_menu_choice
 
     puts WRONG
     call press_any_key_to_continue
-    jmp menu_loop
+    jmp perf_menu_loop
 
 list_perf_opt:
     call clear_screen
     call list_performance
-    jmp menu_loop
+    jmp perf_menu_loop
 
 add_perf_opt:
     call clear_screen
     call prompt_employee
-    jne menu_loop        ; if emp not found
+    jne perf_menu_loop        ; if emp not found
     call set_performance
-    jmp menu_loop
+    jmp perf_menu_loop
 
-exit_menu_choice:
+exit_perf_menu_choice:
     puts EXIT_MSG
     ret
 

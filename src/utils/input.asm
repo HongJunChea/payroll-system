@@ -14,30 +14,30 @@ input_string proc
     dec ch      ; to offset the "$" length
     mov ah, 02h ; print signal
 
-input_loop:
+input_string_loop:
     input_char_no_echo
 
-    ; if input = backspace
+    ; if input = input_string_backspace
     cmp al, 8    ; \b
-    je backspace
+    je input_string_backspace
 
     ; if input = ctrl c
     cmp al, 3    ; ctrl c
-    je ctrlc
+    je input_string_ctrlc
 
     ; if input = \r
     cmp al, 13   ; \r
-    je finish
+    je input_string_finish
 
     ; if input_length >= max_length - 1
     cmp cl, ch
-    jae input_loop
+    jae input_string_loop
 
     ; check within ascii of " " and "~"
     cmp al, " "
-    jb input_loop
+    jb input_string_loop
     cmp al, "~"
-    ja input_loop
+    ja input_string_loop
 
     stosb
     inc cl
@@ -45,18 +45,18 @@ input_loop:
     mov dl, al    ; echo entered char
     int 21h
 
-    jmp input_loop
+    jmp input_string_loop
 
-backspace:
+input_string_backspace:
     call delete_last_char
     dec cl
     dec di
-    jmp input_loop
+    jmp input_string_loop
 
-ctrlc:
+input_string_ctrlc:
     mov dl, 1
 
-finish:
+input_string_finish:
     mov dl, 10     ; print newline
     int 21h
 

@@ -13,10 +13,10 @@ list_pay proc
     xor ch, ch  ; clear ch for cl
     mov cl, .number_of_emps
 
-    print_all:
+    list_all_pay:
         call print_pay_row
         add bx, size employee
-        loop print_all
+        loop list_all_pay
 
     call press_any_key_to_continue
 
@@ -72,13 +72,13 @@ print_pay_row endp
 print_pay_row_salary proc
 
     cmp [bx].filled_performance, 0
-    je is_na
+    je pay_is_na
 
     call calculate_total
     putf payroll.total
     ret
 
-is_na:
+pay_is_na:
     puts NA
     ret
 

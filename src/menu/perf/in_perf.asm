@@ -4,15 +4,15 @@
 set_performance proc
 
     cmp [bx].job_type, 2
-    je is_ft
+    je set_perf_is_ft
 
     call prompt_performance_hours
-    jmp continue
+    jmp set_perf_continue
 
-is_ft:
+set_perf_is_ft:
     call prompt_performance_days
 
-continue:
+set_perf_continue:
 
     call prompt_performance_leaves
     call prompt_performance_ot
@@ -31,7 +31,7 @@ set_performance endp
 ;   bx: pointer to the employee
 prompt_performance_hours proc
 
-input_loop:
+prompt_perf_hrs_loop:
     puts PROMPT_HOURS_WORKED
 
     lea di, .input_buffer
@@ -42,12 +42,12 @@ input_loop:
     call strtol
 
     cmp dl, 0
-    je no_error
+    je prompt_perf_hrs_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_perf_hrs_loop
 
-no_error:
+prompt_perf_hrs_no_error:
     mov [bx].pto, ax
     ret
 
@@ -59,7 +59,7 @@ prompt_performance_hours endp
 ;   bx: pointer to the employee
 prompt_performance_days proc
 
-input_loop:
+prompt_perf_days_loop:
     puts PROMPT_DAYS_WORKED
 
     lea di, .input_buffer
@@ -70,12 +70,12 @@ input_loop:
     call strtol
 
     cmp dl, 0
-    je no_error
+    je prompt_perf_days_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_perf_days_loop
 
-no_error:
+prompt_perf_days_no_error:
     mul EIGHT_B
     mov [bx].pto, ax
     ret
@@ -88,7 +88,7 @@ prompt_performance_days endp
 ;   bx: pointer to the employee
 prompt_performance_leaves proc
 
-input_loop:
+prompt_perf_leaves_loop:
     puts PROMPT_LEAVES
 
     lea di, .input_buffer
@@ -99,12 +99,12 @@ input_loop:
     call strtol
 
     cmp dl, 0
-    je no_error
+    je prompt_perf_leaves_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_perf_leaves_loop
 
-no_error:
+prompt_perf_leaves_no_error:
     mul EIGHT_B
     mov [bx].pto, ax
     ret
@@ -117,7 +117,7 @@ prompt_performance_leaves endp
 ;   bx: pointer to the employee
 prompt_performance_ot proc
 
-input_loop:
+prompt_perf_ot_loop:
     puts PROMPT_OT
 
     lea di, .input_buffer
@@ -128,12 +128,12 @@ input_loop:
     call strtol
 
     cmp dl, 0
-    je no_error
+    je prompt_perf_ot_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_perf_ot_loop
 
-no_error:
+prompt_perf_ot_no_error:
     mov [bx].pto, ax
     ret
 
@@ -145,7 +145,7 @@ prompt_performance_ot endp
 ;   bx: pointer to the employee
 prompt_performance_ph proc
 
-input_loop:
+prompt_perf_ph_loop:
     puts PROMPT_PH
 
     lea di, .input_buffer
@@ -156,12 +156,12 @@ input_loop:
     call strtol
 
     cmp dl, 0
-    je no_error
+    je prompt_perf_ph_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_perf_ph_loop
 
-no_error:
+prompt_perf_ph_no_error:
     mov [bx].pto, ax
     ret
 
@@ -184,10 +184,10 @@ process_employee_performance proc
     sub ax, [bx].overtime_hours
     sub ax, [bx].holiday_hours
 
-    jno no_overflow  ; if number overflowed, set to 0
+    jno hours_no_overflow  ; if number overflowed, set to 0
     xor ax, ax
 
-no_overflow:
+hours_no_overflow:
     mov [bx].hours_worked, ax
 
     ; Calculate claimed pto

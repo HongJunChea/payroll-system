@@ -18,10 +18,10 @@ list_performance proc
     xor ch, ch  ; clear ch for cl
     mov cl, .number_of_emps
 
-    print_all:
+    list_all_performance:
         call print_performance_row
         add bx, size employee
-        loop print_all
+        loop list_all_performance
 
     call press_any_key_to_continue
 
@@ -89,12 +89,12 @@ print_performance_row endp
 print_performance_row_hrs proc
 
     cmp [bx].filled_performance, 0
-    je is_na
+    je hrs_is_na
 
     putn [bx].hours_worked
     ret
 
-is_na:
+hrs_is_na:
     puts NA
     ret
 
@@ -104,12 +104,12 @@ print_performance_row_hrs endp
 print_performance_row_ot proc
 
     cmp [bx].filled_performance, 0
-    je is_na
+    je ot_is_na
 
     putn [bx].overtime_hours
     ret
 
-is_na:
+ot_is_na:
     puts NA
     ret
 
@@ -119,12 +119,12 @@ print_performance_row_ot endp
 print_performance_row_ph proc
 
     cmp [bx].filled_performance, 0
-    je is_na
+    je ph_is_na
 
     putn [bx].holiday_hours
     ret
 
-is_na:
+ph_is_na:
     puts NA
     ret
 

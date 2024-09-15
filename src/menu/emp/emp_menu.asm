@@ -6,7 +6,7 @@
 ;   - Exit menu
 emp_menu proc
 
-menu_loop:
+emp_menu_loop:
     call clear_screen
     call print_emp_menu_option
 
@@ -20,30 +20,30 @@ menu_loop:
     je edit_emp_choice
 
     cmp .sel, "4"
-    je exit_menu_choice
+    je exit_emp_menu_choice
 
     puts WRONG
     call press_any_key_to_continue
-    jmp menu_loop
+    jmp emp_menu_loop
 
 list_emp_choice:
     call clear_screen
     call list_employees
-    jmp menu_loop
+    jmp emp_menu_loop
 
 add_emp_choice:
     call clear_screen
     call create_employee
-    jmp menu_loop
+    jmp emp_menu_loop
 
 edit_emp_choice:
     call clear_screen
     call prompt_employee
-    jne menu_loop        ; if emp not found
+    jne emp_menu_loop        ; if emp not found
     call edit_employee
-    jmp menu_loop
+    jmp emp_menu_loop
 
-exit_menu_choice:
+exit_emp_menu_choice:
     puts EXIT_MSG
     ret
 

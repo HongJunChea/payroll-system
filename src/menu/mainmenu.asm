@@ -7,7 +7,7 @@
 ; Program is exited when returned from procedure
 main_menu PROC
 
-menu_loop:
+main_menu_loop:
     call clear_screen
     call print_main_menu_options
 
@@ -21,28 +21,28 @@ menu_loop:
     je pay_menu_choice
 
     cmp .sel, "4"
-    je exit_menu_choice
+    je exit_main_menu_choice
 
     puts WRONG
     call press_any_key_to_continue
-    jmp menu_loop
+    jmp main_menu_loop
 
 emp_menu_choice:
     call clear_screen
     call emp_menu
-    jmp menu_loop
+    jmp main_menu_loop
 
 perf_menu_choice:
     call clear_screen
     call perf_menu
-    jmp menu_loop
+    jmp main_menu_loop
 
 pay_menu_choice:
     call clear_screen
     call pay_menu
-    jmp menu_loop
+    jmp main_menu_loop
 
-exit_menu_choice:
+exit_main_menu_choice:
     puts EXIT_MSG
     ret
 

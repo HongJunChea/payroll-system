@@ -7,7 +7,7 @@
 login_menu proc
 	puts LOGIN_MSG
 
-ask_id:    ; loop when fail login
+login_ask_id:    ; loop when fail login
     puts PROMPT_PASS
 
     mov di, .input_pass
@@ -20,7 +20,7 @@ ask_id:    ; loop when fail login
 
     ; invalid password
     puts INVALID_PASS
-    jmp ask_id
+    jmp login_ask_id
 
 login_success:
     puts VALID_PASS
@@ -41,33 +41,33 @@ input_password proc
     xor cl, cl  ; set cl = 0
     dec ch      ; to offset the "$" length
 
-input_loop:
+password_loop:
     input_char_no_echo
 
     cmp al, 8    ; \b
-    je backspace
+    je password_backspace
 
     cmp al, 13   ; \r
-    je finish
+    je password_finish
 
     cmp cl, ch   ; if input_length >= max_length - 1
-    jae input_loop
+    jae password_loop
 
     ; check within ascii of " " and "~"
     call is_printable
-    jne input_loop
+    jne password_loop
 
     stosb
     inc cl
     putc "*"
 
-backspace:
+password_backspace:
     putc 8
     dec cl
     dec di
-    jmp input_loop
+    jmp password_loop
 
-finish:
+password_finish:
     mov [di], "$"
 
     inc ch     ; restore ch

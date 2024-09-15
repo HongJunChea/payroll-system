@@ -7,13 +7,13 @@
 is_digit proc
 
     cmp al, "0"     ; if dl < "0"
-    jb is_not_num
+    jb is_not_digit
     cmp al, "9"     ; if dl > "9"
-    ja is_not_num
+    ja is_not_digit
     cmp al, al      ; set zf = 1
     ret
 
-is_not_num:
+is_not_digit:
     ret
 
 is_digit endp

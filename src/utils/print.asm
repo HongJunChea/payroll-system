@@ -36,9 +36,9 @@ print_char_repeat proc
 
     mov ah, 02h
 
-print_loop:
+print_char_repeat_loop:
     int 21h
-    loop print_loop
+    loop print_num_digits
 
     ret
 
@@ -51,13 +51,13 @@ print_char_repeat endp
 print_bool proc
 
     cmp al, 0
-    je is_false
+    je print_bool_is_false
 
     ; is true
     putc "Y"
     ret
 
-is_false:
+print_bool_is_false:
     putc "N"
     ret
 
@@ -70,10 +70,10 @@ print_bool endp
 ;   cx: string length
 printn_string proc
 
-print_loop:
+printn_string_loop:
     lodsb
     putc al
-    loop print_loop
+    loop print_num_digits
 
     ret
 
@@ -90,7 +90,7 @@ print_num proc near
 
     xor cx, cx      ; set cx = 0
 
-    divide:
+    print_num_divide:
         xor dx, dx  ; clear remainder
 
         div TEN_W
@@ -99,14 +99,14 @@ print_num proc near
         inc cx
 
         test ax, ax ; if ax > 0
-        jnz .divide ; continue
+        jnz print_num_divide ; continue
 
-    print_loop:
+    print_num_loop:
         pop dx
         add dx, "0"
         call print
 
-        loop .print_loop
+        loop print_num_loop
 
     pop dx
     pop cx

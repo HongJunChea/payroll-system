@@ -159,12 +159,12 @@ print_pay_basic endp
 print_pay_ot proc
 
     cmp [bx].overtime_hours, 0  ; if no overtime hours
-    jbe skip
+    jbe skip_pay_ot
 
     puts EMP_PAY_EARN_OT
     putf payroll.ot
 
-skip:
+skip_pay_ot:
     ret
 
 print_pay_ot endp
@@ -178,12 +178,12 @@ print_pay_ot endp
 print_pay_ph proc
 
     cmp [bx].holiday_hours, 0  ; if no public holiday hours
-    jbe skip
+    jbe skip_pay_ph
 
     puts EMP_PAY_EARN_PH
     putf payroll.ph
 
-skip:
+skip_pay_ph:
     ret
 
 print_pay_ph endp
@@ -210,12 +210,12 @@ print_pay_earn_subtotal endp
 print_pay_socso proc
 
     cmp [bx].has_socso, 0  ; if no socso
-    je skip
+    je skip_pay_socso
 
     puts EMP_PAY_DEDUC_SOCSO
     putf payroll.socso
 
-skip:
+skip_pay_socso:
     ret
 
 print_pay_socso endp
@@ -229,12 +229,12 @@ print_pay_socso endp
 print_pay_epf proc
 
     cmp [bx].has_epf, 0  ; if no epf
-    je skip
+    je skip_pay_epf
 
     puts EMP_PAY_DEDUC_EPF
     putf payroll.epf
 
-skip:
+skip_pay_epf:
     ret
 
 print_pay_epf endp
@@ -248,12 +248,12 @@ print_pay_epf endp
 print_pay_eis proc
 
     cmp [bx].has_eis, 0  ; if no eis
-    je skip
+    je skip_pay_eis
 
     puts EMP_PAY_DEDUC_EIS
     putf payroll.eis
 
-skip:
+skip_pay_eis:
     ret
 
 print_pay_eis endp
@@ -277,18 +277,18 @@ print_pay_deduc_subtotal endp
 print_job_type proc
 
     cmp [bx].job_type, 1
-    je perf_job_pt
+    je job_type_is_pt
     cmp [bx].job_type, 2
-    je perf_job_ft
+    je job_type_is_ft
 
     puts EMP_JOB_TYPE_INVALID_MSG
     ret
 
-is_pt:
+job_type_is_pt:
     puts EMP_PT_MSG
     ret
 
-is_ft:
+job_type_is_ft:
     puts EMP_FT_MSG
     ret
 

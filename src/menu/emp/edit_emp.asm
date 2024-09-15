@@ -8,10 +8,10 @@ edit_employee proc
     call prompt_employee_salary
 
     cmp [bx].job_type, 2
-    jne not_ft
+    jne edit_emp_not_ft
 
     call prompt_employee_pto
-not_ft:
+edit_emp_not_ft:
     call prompt_employee_epf
     call prompt_employee_socso
     call prompt_employee_eis
@@ -40,15 +40,15 @@ prompt_employee_name endp
 ;   bx: pointer to the employee
 prompt_employee_type proc
 
-input_loop:
+prompt_emp_type_loop:
     puts TYPE_PROMPT
     input_char
     putc 10
 
     cmp al, "1"
-    jb input_loop
+    jb prompt_emp_type_loop
     cmp al, "2"
-    ja input_loop
+    ja prompt_emp_type_loop
 
     mov [bx].job_type, al
     ret
@@ -62,24 +62,24 @@ prompt_employee_type endp
 prompt_employee_salary proc
 
     cmp [bx].job_type, 1
-    je is_pt
+    je prompt_emp_is_pt
     cmp [bx].job_type, 2
-    je is_ft
+    je prompt_emp_is_ft
 
     puts EMP_JOB_TYPE_INVALID_MSG
     ret
 
-is_pt:
+prompt_emp_is_pt:
     call prompt_employee_hourly
     ret
 
-is_ft:
+prompt_emp_is_ft:
     call prompt_employee_monthly
     ret
 
 prompt_employee_hourly proc
 
-input_loop:
+prompt_emp_hourly_loop:
     puts HOURLY_PROMPT
 
     lea di, .input_buffer
@@ -90,12 +90,12 @@ input_loop:
     call strtol
 
     cmp dl, 0      ; check strtof error
-    je no_error
+    je hourly_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_emp_hourly_loop
 
-no_error:
+hourly_no_error:
     fstp [bx].orp
     ret
 
@@ -103,7 +103,7 @@ prompt_employee_hourly endp
 
 prompt_employee_monthly proc
 
-input_loop:
+prompt_emp_monthly_loop:
     puts SALARY_PROMPT
 
     lea di, .input_buffer
@@ -114,12 +114,12 @@ input_loop:
     call strtof
 
     cmp dl, 0
-    je no_error
+    je monthly_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_emp_monthly_loop
 
-no_error:
+monthly_no_error:
     fidiv HOURS_PER_MONTH
     fstp [bx].orp
     ret
@@ -134,7 +134,7 @@ prompt_employee_salary endp
 ;   bx: pointer to the employee
 prompt_employee_pto proc
 
-input_loop:
+prompt_emp_pto_loop:
     puts PTO_PROMPT
 
     lea di, .input_buffer
@@ -145,12 +145,12 @@ input_loop:
     call strtof
 
     cmp dl, 0
-    je no_error
+    je pto_no_error
 
     puts INVALID_VALUE_MSG
-    jmp input_loop
+    jmp prompt_emp_pto_loop
 
-no_error:
+pto_no_error:
     mov [bx].pto, ax
     ret
 
@@ -162,29 +162,29 @@ prompt_employee_pto endp
 ;   bx: pointer to the employee
 prompt_employee_epf proc
 
-input_loop:
+prompt_emp_epf_loop:
     puts EPF_PROMPT
 
     input_char
     putc 10
 
     cmp al, "y"
-    je is_true
+    je prompt_epf_is_true
     cmp al, "Y"
-    je is_true
+    je prompt_epf_is_true
 
     cmp al, "n"
-    je is_false
+    je prompt_epf_is_false
     cmp al, "N"
-    je is_false
+    je prompt_epf_is_false
 
-    jmp input_loop
+    jmp prompt_emp_epf_loop
 
- is_true:
+ prompt_epf_is_true:
 	mov [bx].has_epf, 1
     ret
 
- is_false:
+ prompt_epf_is_false:
 	mov [bx].has_epf, 0
     ret
 
@@ -196,30 +196,30 @@ prompt_employee_epf endp
 ;   bx: pointer to the employee
 prompt_employee_socso proc
 
-input_loop:
+prompt_emp_socso_loop:
     puts SOCSO_PROMPT
 
     input_char
     putc 10
 
     cmp al, "y"
-    je is_true
+    je prompt_socso_is_true
     cmp al, "Y"
-    je is_true
+    je prompt_socso_is_true
 
     cmp al, "n"
-    je is_false
+    je prompt_socso_is_false
     cmp al, "N"
-    je is_false
+    je prompt_socso_is_false
 
-    jmp input_loop
+    jmp prompt_emp_socso_loop
 
- is_true:
+prompt_socso_is_true:
 	mov [bx].has_socso, 1
     ret
 
- is_false:
-	mov [bx].has_socso, 0
+prompt_socso_is_false:
+    mov [bx].has_socso, 0
     ret
 
 prompt_employee_socso endp
@@ -230,29 +230,29 @@ prompt_employee_socso endp
 ;   bx: pointer to the employee
 prompt_employee_eis proc
 
-input_loop:
+prompt_emp_eis_loop:
     puts EIS_PROMPT
 
     input_char
     putc 10
 
     cmp al, "y"
-    je is_true
+    je prompt_eis_is_true
     cmp al, "Y"
-    je is_true
+    je prompt_eis_is_true
 
     cmp al, "n"
-    je is_false
+    je prompt_eis_is_false
     cmp al, "N"
-    je is_false
+    je prompt_eis_is_false
 
-    jmp input_loop
+    jmp prompt_emp_eis_loop
 
- is_true:
+prompt_eis_is_true:
 	mov [bx].has_eis, 1
     ret
 
- is_false:
+prompt_eis_is_false:
 	mov [bx].has_eis, 0
     ret
 
