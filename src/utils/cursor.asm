@@ -18,6 +18,7 @@ get_cursor_pos proc
 
     pop bx
     pop ax
+    ret
 
 get_cursor_pos endp
 
@@ -39,6 +40,7 @@ set_cursor_pos proc
 
     pop bx
     pop ax
+    ret
 
 set_cursor_pos endp
 
@@ -61,6 +63,7 @@ scroll_down proc
     int 10h
 
     pop ax
+    ret
 
 scroll_down endp
 
@@ -70,10 +73,11 @@ clear_screen proc
 
     push ax
 
-    mov ah, 0
-    mov al, 3
+    mov ah, 0   ; set video mode
+    mov al, 3   ; https://mendelson.org/wpdos/videomodes.txt
     int 10h
 
     pop ax
+    ret
 
 clear_screen endp
