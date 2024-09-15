@@ -31,7 +31,7 @@ add_perf_opt:
     call clear_screen
     call prompt_employee
     jne menu_loop        ; if emp not found
-    call add_emp_perf
+    call set_performance
     jmp menu_loop
 
 exit_menu_choice:

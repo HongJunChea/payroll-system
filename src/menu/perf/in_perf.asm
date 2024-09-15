@@ -1,7 +1,7 @@
 ; set information for an employee
 ; Parameters
 ;	bx: pointer to the employee
-add_emp_perf proc
+set_performance proc
 
     cmp [bx].job_type, 1
     je add_emp_perf_pt
@@ -20,7 +20,7 @@ add_emp_perf_ft:
     call handle_ft_perf
     ret
 
-add_emp_perf endp
+set_performance endp
 
 
 handle_ft_perf proc
