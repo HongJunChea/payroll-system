@@ -198,7 +198,7 @@ putn macro u_num
     push ax
 
     mov ax, u_num
-    call print_num_unsigned
+    call print_num
 
     pop ax
 
@@ -211,7 +211,7 @@ putn_b macro u_num_b
 
     xor ax, ax  ; clear ax
     mov al, u_num_b
-    call print_num_unsigned
+    call print_num
 
     pop ax
 
