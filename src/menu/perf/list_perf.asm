@@ -62,19 +62,19 @@ print_performance_row proc
     call set_cursor_pos
 
     ; print work hours
-    putn [bx].hours_worked
+    call print_performance_row_hrs
 
     add dl, 10
     call set_cursor_pos
 
     ; print overtime hours
-    putn [bx].overtime_hours
+    call print_performance_row_ot
 
     add dl, 8
     call set_cursor_pos
 
     ; print public holiday hours
-    putn [bx].holiday_hours
+    call print_performance_row_ph
 
     putc 10
 
@@ -84,3 +84,48 @@ print_performance_row proc
     ret
 
 print_performance_row endp
+
+
+print_performance_row_hrs proc
+
+    cmp [bx].filled_performance, 0
+    je is_na
+
+    putn [bx].hours_worked
+    ret
+
+is_na:
+    puts NA
+    ret
+
+print_performance_row_hrs endp
+
+
+print_performance_row_ot proc
+
+    cmp [bx].filled_performance, 0
+    je is_na
+
+    putn [bx].overtime_hours
+    ret
+
+is_na:
+    puts NA
+    ret
+
+print_performance_row_ot endp
+
+
+print_performance_row_ph proc
+
+    cmp [bx].filled_performance, 0
+    je is_na
+
+    putn [bx].holiday_hours
+    ret
+
+is_na:
+    puts NA
+    ret
+
+print_performance_row_ph endp
