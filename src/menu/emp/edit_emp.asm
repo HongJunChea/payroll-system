@@ -50,6 +50,7 @@ prompt_emp_type_loop:
     cmp al, "2"
     ja prompt_emp_type_loop
 
+    sub al, "0"   ; convert ascii to digit
     mov [bx].job_type, al
     ret
 
