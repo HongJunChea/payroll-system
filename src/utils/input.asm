@@ -4,7 +4,7 @@
 ;   ch: max number of chars, including "$"
 ; Returns:
 ;   cl: number of characters
-input_text proc
+input_string proc
 
     push ax
     xor cl, cl  ; set cl = 0
@@ -45,7 +45,7 @@ finish:
     pop ax
     ret
 
-input_text endp
+input_string endp
 
 
 ; A util for pausing and waiting for user input before proceeding
