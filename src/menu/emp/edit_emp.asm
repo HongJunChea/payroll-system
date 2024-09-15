@@ -1,136 +1,260 @@
-; set information for an employee
-; Parameters
+; Prompt user for information for an employee
+; Params
 ;	bx: pointer to the employee
 edit_employee proc
 
-	puts NAME_PROMPT
-	gets [bx].emp_name_buffer
-	putc 10
+	call prompt_employee_name
+	call prompt_employee_type
+    call prompt_employee_salary
 
-get_type:
-	puts TYPE_PROMPT
-	getd al
-	putc 10
+    cmp [bx].job_type, "2"
+    jne not_ft
 
-	CMP AL, 1	    ;---------COMPARE
-	JE pt
-	CMP AL, 2
-	JE ft
-	jmp get_type
-
-pt:
-	call handle_part_time
-	ret
-
-ft:
-	call handle_full_time
-	ret
-
-
-handle_part_time proc
-
-	mov [bx].job_type, 1
-
-	puts HOURLY_PROMPT
-	call input_num
-	mov [bx].orp, eax
-
-	ret
-
-handle_part_time endp
-
-
-handle_full_time proc
-
-	mov [bx].job_type, 2
-
-	puts SALARY_PROMPT
-	call input_num
-
-	mov .tmp_word, ax
-	fild .tmp_word
-	fidiv HOURS_PER_MONTHS
-	fstp [bx].orp
-
-	puts PTO_PROMPT
-	call input_num
-	mov [bx].pto, ax
-
-get_epf:
-	puts EPF_PROMPT
-	getc al
-	putc 10
-
-	cmp al, "y"
-	je epf_yes
-	cmp al, "Y"
-	je epf_yes
-
-	cmp al, "n"
-	je epf_no
-	cmp al, "N"
-	je epf_no
-
-	jmp get_epf
-
-epf_yes:
-	mov [bx].has_epf, 1
-	jmp get_socso
-
-epf_no:
-	mov [bx].has_epf, 0
-
-
-get_socso:
-	puts SOCSO_PROMPT
-	getc al
-	putc 10
-
-	cmp al, "y"
-	je socso_yes
-	cmp al, "Y"
-	je socso_yes
-
-	cmp al, "n"
-	je socso_no
-	cmp al, "N"
-	je socso_no
-
-	jmp get_socso
-
-socso_yes:
-	mov [bx].has_socso, 1
-	jmp get_eis
-
-socso_no:
-	mov [bx].has_socso, 0
-
-
-get_eis:
-	puts EIS_PROMPT
-	getc al
-	putc 10
-
-	cmp al, "y"
-	je eis_yes
-	cmp al, "Y"
-	je eis_yes
-
-	cmp al, "n"
-	je eis_no
-	cmp al, "N"
-	je eis_no
-
-	jmp get_eis
-
-eis_yes:
-	mov [bx].has_eis, 1
-	ret
-
-eis_no:
-	mov [bx].has_eis, 0
-	ret
-
-handle_full_time endp
+    call prompt_employee_pto
+not_ft:
+    call prompt_employee_epf
+    call prompt_employee_socso
+    call prompt_employee_eis
+    ret
 
 edit_employee endp
+
+
+; Prompt user to enter name for employee
+; Params
+;   bx: pointer to the employee
+prompt_employee_name proc
+
+    puts NAME_PROMPT
+
+    lea di, [bx].emp
+    mov ch, 20
+    call input_string
+    ret
+
+prompt_employee_name endp
+
+
+; Prompt user to enter type for employee
+; Params
+;   bx: pointer to the employee
+prompt_employee_type proc
+
+input_loop:
+    puts TYPE_PROMPT
+    input_char
+    putc 10
+
+    cmp al, "1"
+    jb input_loop
+    cmp al, "2"
+    ja input_loop
+
+    mov [bx].job_type, al
+    ret
+
+prompt_employee_type endp
+
+
+; Prompt user to enter salary depending on their job type for employee
+; Params
+;   bx: pointer to the employee
+prompt_employee_salary proc
+
+    cmp [bx].job_type, "1"
+    je is_pt
+    cmp [bx].job_type, "2"
+    je is_ft
+
+    puts EMP_JOB_TYPE_INVALID_MSG
+    ret
+
+is_pt:
+    call prompt_employee_hourly
+    ret
+
+is_ft:
+    call prompt_employee_monthly
+    ret
+
+prompt_employee_hourly proc
+
+input_loop:
+    puts HOURLY_PROMPT
+
+    lea di, .input_buffer
+    mov ch, length .input_buffer
+    call input_string
+
+    lea si, .input_buffer
+    call strtof
+
+    cmp dl, 0      ; check strtof error
+    je no_error
+
+    puts INVALID_VALUE_MSG
+    jmp input_loop
+
+no_error:
+    fstp [bx].orp
+    ret
+
+prompt_employee_hourly endp
+
+prompt_employee_monthly proc
+
+input_loop:
+    puts SALARY_PROMPT
+
+    lea di, .input_buffer
+    mov ch, length .input_buffer
+    call input_string
+
+    lea si, .input_buffer
+    call strtof
+
+    cmp dl, 0
+    je no_error
+
+    puts INVALID_VALUE_MSG
+    jmp input_loop
+
+no_error:
+    fidiv HOURS_PER_MONTH
+    fstp [bx].orp
+    ret
+
+prompt_employee_monthly endp
+
+prompt_employee_salary endp
+
+
+; Prompt user to enter pto hours
+; Params
+;   bx: pointer to the employee
+prompt_employee_pto proc
+
+input_loop:
+    puts PTO_PROMPT
+
+
+    lea di, .input_buffer
+    mov ch, length .input_buffer
+    call input_string
+
+    lea si, .input_buffer
+    call strtod
+
+    cmp dl, 0
+    je no_error
+
+    puts INVALID_VALUE_MSG
+    jmp input_loop
+
+no_error:
+    mov [bx].pto, ax
+    ret
+
+prompt_employee_pto endp
+
+
+; Prompt user to enter epf yes or no
+; Params
+;   bx: pointer to the employee
+prompt_employee_epf proc
+
+input_loop:
+    puts EPF_PROMPT
+
+    input_char
+    putc 10
+
+    cmp al, "y"
+    je is_true
+    cmp al, "Y"
+    je is_true
+
+    cmp al, "n"
+    je is_false
+    cmp al, "N"
+    je is_false
+
+    jmp input_loop
+
+ is_true:
+	mov [bx].has_epf, 1
+    ret
+
+ is_false:
+	mov [bx].has_epf, 0
+    ret
+
+prompt_employee_epf endp
+
+
+; Prompt user to enter socso yes or no
+; Params
+;   bx: pointer to the employee
+prompt_employee_socso proc
+
+input_loop:
+    puts SOCSO_PROMPT
+
+    input_char
+    putc 10
+
+    cmp al, "y"
+    je is_true
+    cmp al, "Y"
+    je is_true
+
+    cmp al, "n"
+    je is_false
+    cmp al, "N"
+    je is_false
+
+    jmp input_loop
+
+ is_true:
+	mov [bx].has_socso, 1
+    ret
+
+ is_false:
+	mov [bx].has_socso, 0
+    ret
+
+prompt_employee_socso endp
+
+
+; Prompt user to enter eis yes or no
+; Params
+;   bx: pointer to the employee
+prompt_employee_eis proc
+
+input_loop:
+    puts EIS_PROMPT
+
+    input_char
+    putc 10
+
+    cmp al, "y"
+    je is_true
+    cmp al, "Y"
+    je is_true
+
+    cmp al, "n"
+    je is_false
+    cmp al, "N"
+    je is_false
+
+    jmp input_loop
+
+ is_true:
+	mov [bx].has_eis, 1
+    ret
+
+ is_false:
+	mov [bx].has_eis, 0
+    ret
+
+prompt_employee_eis endp
