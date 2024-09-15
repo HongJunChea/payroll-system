@@ -88,7 +88,7 @@ prompt_emp_hourly_loop:
     call input_string
 
     lea si, .input_buffer
-    call strtol
+    call strtof
 
     cmp dl, 0      ; check strtof error
     je hourly_no_error
