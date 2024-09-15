@@ -1,73 +1,79 @@
-ls_emps PROC
+list_employees PROC
     
     push bx
+    push cx
 
-    puts LS_EMPS_HEADER
+    puts LIST_EMP_HEADER
 
     lea bx, employees
 
     xor ch, ch  ; clear ch for cl
     mov cl, .number_of_emps
 
-    ls_emps_print_all:
-        call print_emp_row
+    print_all:
+        call print_employee_row
         add bx, size employee
-        loop ls_emps_print_all
+        loop print_all
 
-    puts PRESS_ANY_KEY
-    input_char_no_echo
+    call press_any_key_to_continue
 
+    pop cx
     pop bx
     ret
 
-ls_emps ENDP
+list_employees ENDP
 
 
 ; print employee info in a row
 ; Params:
 ;   bx: pointer to employee
-print_emp_row proc
+print_employee_row proc
 
     push ax
     push cx
     push dx
 
-    putsn [bx].emp_id EMP_ID_LEN  ; 5 char long
-   
-    putc_n " " 9  ; 6 + 3
+    call get_cursor_pos
 
-    putsn_b [BX].emp_name [BX].emp_name_length
-    
-    mov cx, 18   ; header width
-    sub cl, [bx].emp_name_length
-    cmp cl, 0
-    jle dont_pad_emp_name
+    ; print employee id
+    puts [bx].emp_id
 
-    putc_n " " cx
+    add dl, 13
+    call set_cursor_pos
 
-dont_pad_emp_name:
+    ; print employee name
+    putsn [bx].emp_name 14
 
-    putfloat [BX].orp
+    add dl, 15
+    call set_cursor_pos
 
-    putc_n " " 9
+    ; print rate
+    putf [bx].orp
 
-    putnum [bx].pto
+    add dl, 6
+    call set_cursor_pos
 
-    putc "h"
-    putc "r"
+    ; print pto
+    putn [bx].pto
 
-    putc_n " " 3
+    add dl, 6
+    call set_cursor_pos
 
+    ; print epf
     mov al, [bx].has_epf
     call print_bool
-    
-    putc_n " " 5
 
+    add dl, 5
+    call set_cursor_pos
+
+    ; print socso
     mov al, [bx].has_socso
     call print_bool
 
-    putc_n " " 7
+    add dl, 7
+    call set_cursor_pos
 
+    ; print eis
     mov al, [bx].has_eis
     call print_bool
 
@@ -78,5 +84,5 @@ dont_pad_emp_name:
     pop ax
     ret
 
-print_emp_row endp
+print_employee_row endp
 

@@ -28,7 +28,7 @@ menu_loop:
 
 list_emp_choice:
     call clear_screen
-    call ls_emps
+    call list_employees
     jmp menu_loop
 
 add_emp_choice:
