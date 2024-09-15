@@ -6,15 +6,17 @@ set_performance proc
     cmp [bx].job_type, 2
     je set_perf_is_ft
 
+    ; parttime
     call prompt_performance_hours
+
     jmp set_perf_continue
 
 set_perf_is_ft:
     call prompt_performance_days
+    call prompt_performance_leaves
 
 set_perf_continue:
 
-    call prompt_performance_leaves
     call prompt_performance_ot
     call prompt_performance_ph
 
