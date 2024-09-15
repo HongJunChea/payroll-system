@@ -24,7 +24,7 @@ menu_loop:
 
 list_perf_opt:
     call clear_screen
-    call ls_emps_perf
+    call list_performance
     jmp menu_loop
 
 add_perf_opt:

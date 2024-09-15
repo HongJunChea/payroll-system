@@ -1,8 +1,8 @@
-ls_emps_perf proc
+list_performance proc
 
     push bx
 
-    puts LS_EMPS_PERF_HEADER
+    puts LIST_PERFORMANCE_HEADER
 
     lea bx, employees
 
@@ -26,7 +26,7 @@ ls_emps_perf proc
     pop bx
     ret
 
-ls_emps_perf endp
+list_performance endp
 
 
 
