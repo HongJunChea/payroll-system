@@ -15,3 +15,4 @@ include data/menu/login.asm
 include data/menu/mainmenu.asm
 include data/utils/emp.asm
 include data/utils/float.asm
+include data/utils/math.asm
