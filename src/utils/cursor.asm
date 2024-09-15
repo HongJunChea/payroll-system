@@ -1,6 +1,6 @@
 ; Get cursor current position
 ; Params
-;   bh: page number
+;   ~~bh: page number~~ not used
 ; Returns
 ;   ch: start scan line
 ;   cl: end scan line
@@ -9,11 +9,14 @@
 get_cursor_pos proc
 
     push ax
+    push bx
+    xor bx, bx
 
     xor al, al
     mov ah, 03h
     int 10h
 
+    pop bx
     pop ax
 
 get_cursor_pos endp
@@ -21,17 +24,20 @@ get_cursor_pos endp
 
 ; Set cursor position
 ; Params:
-;   bh: page number
+;   ~~bh: page number.~~ not used
 ;   dh: cursor row
 ;   dl: cursor col
 set_cursor_pos proc
 
     push ax
+    push bx
+    xor bx, bx
 
     xor al, al
     mov ah, 02h
     int 10h
 
+    pop bx
     pop ax
 
 set_cursor_pos endp
