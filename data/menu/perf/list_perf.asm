@@ -1,1 +1,1 @@
-LIST_PERFORMANCE_HEADER db "Employee ID   Employee Name     Rate of Pay   Hours Worked   OT Hours   PH Hours", 10, "$"
+LIST_PERFORMANCE_HEADER db "Employee ID  Employee Name  Rate  Work Hrs  OT Hrs  PH Hrs", 10, "$"
