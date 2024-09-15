@@ -5,7 +5,6 @@ view_pay proc
 
     ; calculate before printing
     call calculate_total
-    fpop
 
     puts EMP_PAY_HEADER
     puts BOLD_BORDER

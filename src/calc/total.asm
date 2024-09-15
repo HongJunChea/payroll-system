@@ -3,7 +3,6 @@
 ; Params
 ;   bx: pointer to employee
 ; Returns
-;   st(0): total salary
 ;   values set in payroll struct
 calculate_total proc
 
@@ -36,7 +35,7 @@ calculate_total proc
     fst payroll.deduc_total
 
     fsubp st(1), st(0)
-    fst payroll.total
+    fstp payroll.total
 
     ret
 
