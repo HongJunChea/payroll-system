@@ -1,4 +1,4 @@
-view_emp_perf proc
+view_pay proc
 
     puts EMP_PERF_HEADER
     puts BOLD_BORDER
@@ -36,7 +36,7 @@ view_emp_perf proc
 
     ret
 
-view_emp_perf endp
+view_pay endp
 
 
 print_perf_dets proc
