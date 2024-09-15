@@ -8,4 +8,7 @@ EPF_PROMPT DB 'Does the employee have EPF? (Y/N): $'
 SOCSO_PROMPT DB 'Does the employee have SOCSO? (Y/N): $'
 EIS_PROMPT DB 'Does the employee have EIS? (Y/N): $'
 
-HOURS_PER_MONTHS dw 160   ; 8 hours * 5 days * 4 weeks
+EMP_JOB_TYPE_INVALID_MSG db "Employee doesn't have a job type.", 10, "$"
+INVALID_VALUE_MSG        db "Invalid value. Please enter again", 10, "$"
+
+HOURS_PER_MONTH dw 160   ; 8 hours * 5 days * 4 weeks
