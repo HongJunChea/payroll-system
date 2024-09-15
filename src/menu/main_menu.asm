@@ -1,3 +1,10 @@
+; Program main menu
+; Consists of 4 options
+;   - Employee menu
+;   - Employee performance menu
+;   - Employee pay menu
+;   - Exit program
+; Program is exited when returned from procedure
 main_menu PROC
 
 menu_loop:
@@ -40,6 +47,7 @@ exit_menu_choice:
     ret
 
 main_menu ENDP
+
 
 print_main_menu_options PROC
 

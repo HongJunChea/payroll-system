@@ -1,3 +1,8 @@
+; Employee payroll menu
+; Consists of 3 options
+;   - List a summary of all employee payroll
+;   - View full summary of a employee payroll
+;   - Exit menu
 pay_menu proc
 
 menu_loop:

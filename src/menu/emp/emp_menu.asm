@@ -1,3 +1,9 @@
+; Employee menu loop
+; Consists of 4 options
+;   - List all employees
+;   - Add an employee detail
+;   - Edit an employee detail
+;   - Exit menu
 emp_menu proc
 
 menu_loop:

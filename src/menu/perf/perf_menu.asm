@@ -1,3 +1,8 @@
+; Employee monthly performance menu
+; Consists of 3 options
+;   - List all employee monthly performances. Missing info is filled as N/A
+;   - Add employee monthly performance details.
+;   - Exit menu
 perf_menu proc
 
 menu_loop:
