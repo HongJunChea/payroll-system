@@ -48,6 +48,22 @@ finish:
 input_text endp
 
 
+; A util for pausing and waiting for user input before proceeding
+press_any_key_to_continue proc
+
+    push ax
+    push dx
+
+    putc 10
+    puts PRESS_ANY_KEY
+    input_char_no_echo
+    putc 10
+
+    pop dx
+    pop ax
+
+press_any_key_to_continue endp
+
 ;
 ; Macros
 ;
