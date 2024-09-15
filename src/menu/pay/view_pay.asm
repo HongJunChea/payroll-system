@@ -7,15 +7,15 @@ view_pay proc
     call calculate_total
 
     puts EMP_PAY_HEADER
-    puts BOLD_BORDER
+    puts DLINE_BORDER
     call print_pay_employee_details
-    puts THIN_BORDER
+    puts SLINE_BORDER
 
     call press_any_key_to_continue
 
-    puts THIN_BORDER
+    puts SLINE_BORDER
     call print_pay_details
-    puts THIN_BORDER
+    puts SLINE_BORDER
 
     puts EMP_PAY_NET_TOTAL
     putf payroll.total
@@ -95,7 +95,7 @@ print_pay_details proc
 
     move_right
 
-    call EMP_PAY_DEDUC_HEADER
+    puts EMP_PAY_DEDUC_HEADER
 
     ; Row 1
     call get_cursor_pos

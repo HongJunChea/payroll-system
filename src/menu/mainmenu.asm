@@ -64,7 +64,8 @@ print_main_menu_options PROC
 
     puts PROMPT_OPT
 
-    getc .sel
+    input_char
+    mov .sel, al
     ret
 
 print_main_menu_options ENDP

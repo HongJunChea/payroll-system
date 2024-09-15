@@ -6,7 +6,7 @@ HOLIDAY_RATE DD 3.0
 employee struc
 
     emp_id     DB "E0000$"
-    emp_name   DB 19 DUP (?), "$"
+    emp_name   DB 20 DUP ("$")
     job_type   DB ?   ; 1 = parttime, 2 = fulltime
     orp        DD ?   ; ordinary rate of pay
     pto        DW ?   ; paid time off, in hours

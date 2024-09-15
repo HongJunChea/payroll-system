@@ -7,13 +7,13 @@ pay_menu proc
 
 pay_menu_loop:
     call clear_screen
-    call print_pay_menu_option
+    call print_pay_menu_options
 
     cmp .sel, "1"
     je list_pay_choice
 
     cmp .sel, "2"
-    je view_pay_opt
+    je view_pay_choice
 
     cmp .sel, "3"
     je exit_pay_menu_choice
@@ -27,7 +27,7 @@ list_pay_choice:
     call list_pay
     jmp pay_menu_loop
 
-view_pay_opt:
+view_pay_choice:
     call clear_screen
     call prompt_employee
     jne pay_menu_loop        ; if emp not found
@@ -55,7 +55,8 @@ print_pay_menu_options proc
 
     puts PROMPT_PERF_OPT   ; reuse, since same as perf 3 options
 
-    getc .sel
+    input_char
+        mov .sel, al
     ret
 
 print_pay_menu_options endp

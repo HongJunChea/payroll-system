@@ -34,8 +34,10 @@ is_above10:
     ret
 
 is_below20k:
-    call lookup_below20k
+    call lookup_epf_below20k
     ret
+
+lookup_epf      endp
 
 
 lookup_epf_above20k proc
@@ -47,7 +49,7 @@ lookup_epf_above20k proc
     frndint               ; round up to nearest int
     fistp .tmp_word       ; store result
     mov   ax, .tmp_word
-    
+
     fld   st(0)           ; duplicate current salary
     fmul  ELEVEN_PERCENT_W ; x 11%
     frndint               ; round up to nearest int
@@ -89,7 +91,7 @@ is_above_5k:
 
     ; formula goes: floor(salary / 100) * 100 = index
     sub ax, FIVE_THOUSAND_W  ; offset the value by 5000
-   
+
     div HUNDRED_W            ; get floor of salary / 100, wont use remainder
     mul FOUR_W               ; each epf data section is 4 byte wide
 
@@ -105,8 +107,6 @@ lookup_epf_below20k_calc:
     ret
 
 lookup_epf_below20k endp
-
-lookup_epf      endp
 
 
 ; Calculate employee's EPF contribution

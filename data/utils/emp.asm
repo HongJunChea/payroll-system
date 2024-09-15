@@ -1,8 +1,8 @@
-EMP_NAME1 db "Alice"
-EMP_NAME2 db "Alex"
+EMP_NAME1 db "Alice$"
+EMP_NAME2 db "Alex$"
 
 JOB_FULLTIME db 2
-JOB_PARTIME  db 1
+JOB_PARTTIME db 1
 ORP_FULLTIME dd 15.0
 ORP_PARTTIME dd 8.50
 

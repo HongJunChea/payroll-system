@@ -7,13 +7,13 @@ perf_menu proc
 
 perf_menu_loop:
     call clear_screen
-    call print_perf_menu_option
+    call print_perf_menu_options
 
     cmp .sel, "1"
-    je list_perf_opt
+    je list_perf_choice
 
     cmp .sel, "2"
-    je add_perf_opt
+    je add_perf_choice
 
     cmp .sel, "3"
     je exit_perf_menu_choice
@@ -22,12 +22,12 @@ perf_menu_loop:
     call press_any_key_to_continue
     jmp perf_menu_loop
 
-list_perf_opt:
+list_perf_choice:
     call clear_screen
     call list_performance
     jmp perf_menu_loop
 
-add_perf_opt:
+add_perf_choice:
     call clear_screen
     call prompt_employee
     jne perf_menu_loop        ; if emp not found
@@ -38,7 +38,7 @@ exit_perf_menu_choice:
     puts EXIT_MSG
     ret
 
-emp_menu endp
+perf_menu endp
 
 
 print_perf_menu_options proc
@@ -49,13 +49,14 @@ print_perf_menu_options proc
 
     puts LIST_PERF_OPT
     puts ADD_PERF_OPT
-    puts EDIT_PERF_OPT
+    puts EXIT_PERF_OPT
 
     putc 10
 
     puts PROMPT_PERF_OPT
 
-    getc .sel
+    input_char
+        mov .sel, al
     ret
 
 print_perf_menu_options endp

@@ -34,7 +34,7 @@ set_cursor_pos proc
 
     pop ax
 
-set_cursor_proc endp
+set_cursor_pos endp
 
 
 ; Scroll down the screen given the number of lines

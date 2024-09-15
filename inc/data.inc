@@ -1,3 +1,5 @@
+include data/common.asm
+include data/emp.asm
 include data/calc/epf.asm
 include data/menu/emp/edit_emp.asm
 include data/menu/emp/emp_menu.asm
@@ -13,5 +15,3 @@ include data/menu/login.asm
 include data/menu/mainmenu.asm
 include data/utils/emp.asm
 include data/utils/float.asm
-include data/common.asm
-include data/emp.asm

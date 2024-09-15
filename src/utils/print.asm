@@ -17,13 +17,35 @@ print endp
 ; Print "$" terminated string
 ; Params
 ;   dx: pointer to the string
-print_string macro
+print_string proc
     push ax
 
     mov ah, 09h
     int 21h
 
     pop ax
+
+print_string endp
+
+
+putc macro char
+    push dx
+
+    mov dl, char
+    call print
+
+    pop dx
+
+endm
+
+
+puts macro string
+    push dx
+
+    lea dx, string
+    call print_string
+
+    pop dx
 
 endm
 
@@ -38,11 +60,20 @@ print_char_repeat proc
 
 print_char_repeat_loop:
     int 21h
-    loop print_num_digits
+    loop print_char_repeat_loop
 
     ret
 
 print_char_repeat endp
+
+
+putc_n macro char, number_of_times
+
+    mov dl, char
+    mov cx, number_of_times
+    call print_char_repeat
+
+endm
 
 
 ; Print out a boolean value as Y or N
@@ -73,11 +104,29 @@ printn_string proc
 printn_string_loop:
     lodsb
     putc al
-    loop print_num_digits
+    loop printn_string_loop
 
     ret
 
 printn_string endp
+
+
+putsn macro string, len
+
+    push cx
+    push dx
+    push si
+
+    xor ch, ch
+    mov cl, len
+    lea si, string
+    call printn_string
+
+    pop si
+    pop dx
+    pop cx
+
+endm
 
 
 ; Print the number in ax
@@ -116,83 +165,6 @@ print_num proc near
 print_num endp
 
 
-; Prints float currently on the top of the stack.
-; *No side effects
-; Params
-;   st(0): float to be printed
-; Returns
-;   none
-print_float proc near
-    push ax
-    push dx
-
-    fld st(0)                ; duplicates top float
-
-    fist .tmp_word           ; load integral part of float
-    mov ax, .tmp_word
-    call print_num_unsigned  ; print integral part
-
-    putc "."                 ; print decimal seperator
-
-    fisub .tmp_word          ; remove integer part of float => 123.4567 -> 0.4567
-    fimul HUNDRED_W           ; move decimal point two space left => 0.4567 -> 456.7
-
-    fistp .tmp_word          ; load integral part
-    mov ax, .tmp_word
-    call print_num_unsigned  ; print integral part
-
-    pop dx
-    pop ax
-    ret
-
-print_float endp
-
-
-; overrides last character input with whitespace.
-; Works by moving cursor back 1 character, printing whitespace, and moving cursor back 1 character again.
-delete_last_char proc
-
-    push dx
-
-    mov ah, 02h
-
-    mov dl, 8  ; \b
-    int 21h
-    mov dl, " "
-    int 21h
-    mov dl, 8  ; \b
-    int 21h
-
-    pop dx
-
-delete_last_char endp
-
-
-;
-; Macros
-;
-putc macro char
-    push dx
-
-    mov dl, char
-    print
-
-    pop dx
-
-endm
-
-
-puts macro string 
-    push dx
-
-    lea dx, string
-    print_string
-
-    pop dx
-
-endm
-
-
 putn macro u_num
 
     push ax
@@ -218,31 +190,36 @@ putn_b macro u_num_b
 endm
 
 
-putsn macro string, len
-
-    push cx
+; Prints float currently on the top of the stack.
+; *No side effects
+; Params
+;   st(0): float to be printed
+; Returns
+;   none
+print_float proc near
+    push ax
     push dx
-    push si
 
-    xor ch, ch
-    mov cl, len
-    lea si, string
-    call printn_string
+    fld st(0)                ; duplicates top float
 
-    pop si
+    fist .tmp_word           ; load integral part of float
+    mov ax, .tmp_word
+    call print_num           ; print integral part
+
+    putc "."                 ; print decimal seperator
+
+    fisub .tmp_word          ; remove integer part of float => 123.4567 -> 0.4567
+    fimul HUNDRED_W          ; move decimal point two space left => 0.4567 -> 456.7
+
+    fistp .tmp_word          ; load integral part
+    mov ax, .tmp_word
+    call print_num           ; print integral part
+
     pop dx
-    pop cx
+    pop ax
+    ret
 
-endm
-
-
-putc_n macro char, number_of_times
-
-    mov dl, char
-    mov cx, number_of_times
-    call print_char_repeat
-
-endm
+print_float endp
 
 
 putf macro float
@@ -252,3 +229,30 @@ putf macro float
     fpop
 
 endm
+
+
+; overrides last character input with whitespace.
+; Works by moving cursor back 1 character, printing whitespace, and moving cursor back 1 character again.
+delete_last_char proc
+
+    push dx
+
+    mov ah, 02h
+
+    mov dl, 8  ; \b
+    int 21h
+    mov dl, " "
+    int 21h
+    mov dl, 8  ; \b
+    int 21h
+
+    pop dx
+
+delete_last_char endp
+
+
+
+
+
+
+

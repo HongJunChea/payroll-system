@@ -27,8 +27,8 @@ prompt_employee_name proc
 
     puts NAME_PROMPT
 
-    lea di, [bx].emp
-    mov ch, 20
+    lea di, [bx].emp_name
+    mov ch, length employee.emp_name
     call input_string
     ret
 

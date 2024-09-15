@@ -1,3 +1,19 @@
+input_char macro
+
+    mov ah, 01h
+    int 21h
+
+endm
+
+
+input_char_no_echo macro
+
+    mov ah, 08h
+    int 21h
+
+endm
+
+
 ; gather string inputs. End the buffer with "$". Does not include "\n" and "\r".
 ; Ctrl + C terminates early and set dl = 1
 ; Params:
@@ -60,7 +76,7 @@ input_string_finish:
     mov dl, 10     ; print newline
     int 21h
 
-    mov [di], "$"  ; terminates string
+    mov byte ptr [di], "$"  ; terminates string
     mov dl, 0
 
     inc ch         ; restore ch
@@ -85,21 +101,3 @@ press_any_key_to_continue proc
     pop ax
 
 press_any_key_to_continue endp
-
-;
-; Macros
-;
-input_char macro
-
-    mov ah, 01h
-    int 21h
-
-endm
-
-
-input_char_no_echo macro 
-
-    mov ah, 08h
-    int 21h
-
-endm

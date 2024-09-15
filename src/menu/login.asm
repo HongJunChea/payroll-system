@@ -10,7 +10,7 @@ login_menu proc
 login_ask_id:    ; loop when fail login
     puts PROMPT_PASS
 
-    mov di, .input_pass
+    lea di, .input_pass
     mov ch, length .input_pass
     call input_password
 
@@ -68,7 +68,7 @@ password_backspace:
     jmp password_loop
 
 password_finish:
-    mov [di], "$"
+    mov byte ptr [di], "$"
 
     inc ch     ; restore ch
     pop ax

@@ -1,3 +1,33 @@
+insert_emp macro name, name_length_b, job_type, orp, pto, has_epf, has_socso, has_eis
+
+    push ax
+
+    call set_emp_id
+
+    strcpy name [bx].emp_name name_length_b
+
+    mov al, job_type
+    mov [bx].job_type, al
+
+    movdw orp [bx].orp
+
+    mov ax, pto
+    mov [bx].pto, pto
+
+    mov al, has_epf
+    mov [bx].has_epf, al
+
+    mov al, has_socso
+    mov [bx].has_socso, al
+
+    mov al, has_eis
+    mov [bx].has_eis, al
+
+    pop ax
+
+endm
+
+
 ; Script to generate example employee datas
 generate_emp_data proc
 
@@ -80,7 +110,7 @@ prompt_employee_loop:
     ret  ; leave
 
 prompt_employee_ctrlc:
-    cmp prompt_emp_id[0], "0"  ; set zf = 1
+    cmp .input_buffer[0], "0"  ; set zf = 1
     ret
 
 not_valid_id:
@@ -93,25 +123,3 @@ emp_not_found:
 
 
 prompt_employee endp
-
-;
-; Macros
-;
-insert_emp macro name, name_length_b, job_type, orp, pto, has_epf, has_socso, has_eis
-
-    call set_emp_id
-
-    mov [bx].emp_name_length
-    strcpy emp_name1 [bx].emp_name name_length_b
-
-    mov [bx].job_type, job_type
-
-    movdw orp [bx].orp
-
-    mov [bx].pto, pto
-
-    mov [bx].has_epf, has_epf
-    mov [bx].has_socso, has_socso
-    mov [bx].has_eis, has_eis
-
-endm

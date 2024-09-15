@@ -11,13 +11,12 @@ accumulate_sum proc
 
     accumulate_sum_loop:
         faddp st(1), st(0)
-        loop loop_calc_earn_total
+        loop accumulate_sum_loop
 
     end_accumulate:
         ret
 
 accumulate_sum endp
-
 
 ;
 ; Macros
@@ -33,16 +32,22 @@ endm
 ; http://www.website.masmforum.com/tutorials/fptute/fpuchap1.htm
 change_rounding macro round_mode
 
+    push ax
+
     ; store current rounding
     fstcw .current_round                        ; store to memory
     fstcw .old_round                            ; store rounding for restoring
 
     ; edit round flag
-    and byte ptr [.current_round], 11110011b    ; clear round control bit
-    or  byte ptr [.current_round], round_mode   ; set round control bit
+    mov ax, .current_round
+    and al, 11110011b    ; clear round control bit
+    or  al, round_mode   ; set round control bit
+    mov .current_round, ax
 
     ; load the new rounding
     fldcw .current_round
+
+    pop ax
 
 endm
 

@@ -1,3 +1,13 @@
+include src/utils/io.asm
+include src/utils/sys.asm
+include src/utils/cursor.asm
+include src/utils/math.asm
+include src/utils/print.asm
+include src/utils/input.asm
+include src/utils/float.asm
+include src/utils/string.asm
+include src/utils/type.asm
+include src/utils/emp.asm
 include src/calc/basic.asm
 include src/calc/eis.asm
 include src/calc/epf.asm
@@ -17,13 +27,3 @@ include src/menu/perf/ls_perf.asm
 include src/menu/perf/per_menu.asm
 include src/menu/login.asm
 include src/menu/mainmenu.asm
-include src/utils/cursor.asm
-include src/utils/emp.asm
-include src/utils/float.asm
-include src/utils/input.asm
-include src/utils/io.asm
-include src/utils/math.asm
-include src/utils/print.asm
-include src/utils/string.asm
-include src/utils/sys.asm
-include src/utils/type.asm

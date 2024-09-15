@@ -24,9 +24,9 @@ compare_string_numbered endp
 compare_string proc
 
 cmp_string_loop:
-    cmp [si], "$"
+    cmp byte ptr [si], "$"
     je cmp_string_terminator
-    cmp [di], "$"
+    cmp byte ptr [di], "$"
     je cmp_string_terminator
 
     cmpsb
@@ -101,22 +101,22 @@ strtof proc
     ret
 
 process_fractional:
-    cmp [si], "."       ; check if the stopped point in on a decimal point
-    jne strtof_error    ; if not, means its something else than "."
+    cmp byte ptr [si], "."  ; check if the stopped point in on a decimal point
+    jne strtof_error        ; if not, means its something else than "."
 
     inc si
-    call strtol         ; read fractional part as integer
+    call strtol             ; read fractional part as integer
     jne strtof_error
 
     push cx
 
     call count_digits
 
-    mov .tmp_word, ax   ; load fractional part as integer
+    mov .tmp_word, ax        ; load fractional part as integer
     fild .tmp_word
 
     xor ch, ch
-    mov cl, dl          ; divide by 10 ^ number of digits
+    mov cl, dl               ; divide by 10 ^ number of digits
     strtof_div_ten:
         fidiv TEN_W
         loop strtof_div_ten

@@ -8,7 +8,7 @@ emp_menu proc
 
 emp_menu_loop:
     call clear_screen
-    call print_emp_menu_option
+    call print_emp_menu_options
 
     cmp .sel, "1"
     je list_emp_choice
@@ -65,7 +65,8 @@ print_emp_menu_options proc
 
     puts PROMPT_OPT
 
-    getc .sel
+    input_char
+    mov .sel, al
     ret
 
 print_emp_menu_options endp

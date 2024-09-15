@@ -1,9 +1,12 @@
 .model big
 
+.386
+
 .stack 100
 
 .data
-include inc/data.inc
+    include inc/data.inc
+    employees employee 20 DUP(<>)
 
 .code
 include inc/src.inc
