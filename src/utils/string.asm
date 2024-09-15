@@ -113,13 +113,7 @@ process_fractional:
     call strtol             ; read fractional part as integer
     jne strtof_error
 
-    putn ax
-
     call count_digits
-
-    putc 10
-
-    putn_b dl
 
     mov .tmp_word, ax        ; load fractional part as integer
     fild .tmp_word
