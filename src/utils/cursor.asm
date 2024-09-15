@@ -60,21 +60,14 @@ scroll_down endp
 
 
 ; Clears the current screen
-; Params:
-;
-; Returns:
-;
 clear_screen proc
 
     push ax
-    push cx
-    push dx
 
-    mov al, 0
-    call scroll_down
+    mov ah, 0
+    mov al, 3
+    int 10h
 
-    pop dx
-    pop cx
     pop ax
 
 clear_screen endp
