@@ -148,6 +148,26 @@ print_float proc near
 print_float endp
 
 
+; overrides last character input with whitespace.
+; Works by moving cursor back 1 character, printing whitespace, and moving cursor back 1 character again.
+delete_last_char proc
+
+    push dx
+
+    mov ah, 02h
+
+    mov dl, 8  ; \b
+    int 21h
+    mov dl, " "
+    int 21h
+    mov dl, 8  ; \b
+    int 21h
+
+    pop dx
+
+delete_last_char endp
+
+
 ;
 ; Macros
 ;
