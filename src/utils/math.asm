@@ -41,7 +41,7 @@ count_digits proc
     faddp st(1), st(0)
 
     fistp .tmp_word     ; floor and store result
-    mov dl, byte ptr [.tmp_word + 1]
+    mov dl, byte ptr [.tmp_word]
 
     ret
 
