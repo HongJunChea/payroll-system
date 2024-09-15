@@ -48,9 +48,7 @@ compare_string endp
 ;   dl: error code (0 - ok, 1 - invalid characters)
 strtol proc
 
-    push ax
     xor ax, ax     ; set ax = 0
-    xor dl, dl     ; set dl = 0
 
 strtol_loop:       ; loop throught each characters
     mov dl, [si]   ; move each char to dl
@@ -59,8 +57,11 @@ strtol_loop:       ; loop throught each characters
     cmp dl, "$"    ; terminate
     je strtol_finish
 
+    push ax        ; is_digit uses al
+    mov al, dl
     call is_digit  ; make sure is digits
     jne strtol_error
+    pop ax
 
     mul ten_b      ; shift previous to the left by 10
 
@@ -70,12 +71,10 @@ strtol_loop:       ; loop throught each characters
     jmp strtol_loop
 
 strtol_finish:
-    pop ax
     mov dl, 0  ; ok
     ret
 
 strtol_error:
-    pop ax
     mov dl, 1  ; error
     ret
 
