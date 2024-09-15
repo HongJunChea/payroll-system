@@ -56,7 +56,9 @@ print_perf_menu_options proc
     puts PROMPT_PERF_OPT
 
     input_char
-        mov .sel, al
+    mov .sel, al
+    putc 10
+
     ret
 
 print_perf_menu_options endp

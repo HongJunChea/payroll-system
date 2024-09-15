@@ -66,6 +66,8 @@ print_main_menu_options PROC
 
     input_char
     mov .sel, al
+    putc 10
+
     ret
 
 print_main_menu_options ENDP
