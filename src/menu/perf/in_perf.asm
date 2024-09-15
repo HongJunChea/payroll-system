@@ -172,7 +172,6 @@ prompt_performance_ph endp
 ; Do
 ;   - take away ot and ph hours from hours worked
 ;   - calculate claimed pto
-;   - add claimed pto onto hours worked
 ; Params
 ;   bx: pointer to employee
 process_employee_performance proc
@@ -197,11 +196,6 @@ no_overflow:
     call min
 
     mov [bx].claimed_pto, ax
-
-    ; Add claimed pto onto hours worked
-    mov ax, [bx].hours_worked
-    add ax, [bx].claimed_pto
-    mov [bx].hours_worked, ax
 
     pop ax
     pop dx
