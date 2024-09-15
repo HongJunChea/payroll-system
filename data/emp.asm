@@ -20,5 +20,6 @@ employee struc
     monthly_leaves     DW ?   ; only used for fulltime
     overtime_hours     DW ?
     holiday_hours      DW ?
-    
+    claimed_pto        DW ?
+
 employee ENDS
