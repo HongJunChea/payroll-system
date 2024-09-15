@@ -13,11 +13,10 @@ include src/menu/pay/list_pay.asm
 include src/menu/pay/pay_menu.asm
 include src/menu/pay/view_pay.asm
 include src/menu/perf/in_perf.asm
-include src/menu/perf/list_perf.asm
-include src/menu/perf/perf_menu.asm
+include src/menu/perf/ls_perf.asm
+include src/menu/perf/per_menu.asm
 include src/menu/login.asm
-include src/menu/main_menu.asm
-include src/menu/pm_emp.asm
+include src/menu/mainmenu.asm
 include src/utils/cursor.asm
 include src/utils/emp.asm
 include src/utils/float.asm

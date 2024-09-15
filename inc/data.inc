@@ -7,11 +7,10 @@ include data/menu/pay/pay_menu.asm
 include data/menu/pay/tmp_pay.asm
 include data/menu/pay/view_pay.asm
 include data/menu/perf/in_perf.asm
-include data/menu/perf/list_perf.asm
-include data/menu/perf/perf_menu.asm
+include data/menu/perf/ls_perf.asm
+include data/menu/perf/per_menu.asm
 include data/menu/login.asm
-include data/menu/main_menu.asm
-include data/menu/pm_emp.asm
+include data/menu/mainmenu.asm
 include data/utils/emp.asm
 include data/utils/float.asm
 include data/common.asm
