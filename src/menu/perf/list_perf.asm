@@ -1,6 +1,11 @@
 ; List all employees monthly performance in a tabular form
 ; Employees without monthly performance will instead have "N/A" shown
-;
+;   - Employee ID
+;   - Employee Name
+;   - Employee Ordinary Rate of Pay
+;   - Employee hours worked
+;   - Employee overtime hours worked
+;   - Employee public holiday hours worked
 list_performance proc
 
     push bx
