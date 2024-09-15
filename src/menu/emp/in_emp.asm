@@ -1,22 +1,24 @@
 ; create information for an employee, appended to the top
-; Params
-;   None
 ; Returns
 ;   bx: pointer to the added employee
 create_employee proc
 
-	; auto calc offset
-	mov al, .number_of_emps
-	mov bl, size employee
-	mul bl
+    push ax
 
+	; auto calc offset
+	mov al, size employee
+	mul .number_of_emps
+
+    ; move to empty employee space
+	inc .number_of_emps
 	lea bx, employees
 	add bx, ax
-	inc .number_of_emps
-	xor ax, ax
+
+	pop ax
 
 	call set_emp_id
     call edit_employee
+    ret
 
 create_employee endp
 
@@ -29,22 +31,24 @@ set_emp_id proc
 	push ax
 	push si
 
-	xor ah, ah
-	mov al, EMP_ID_LEN
-	mov si, ax
+	xor ax, ax
+
+	mov si, 5   ; employee id length
+    dec si      ; zero index it
 
 	mov al, .number_of_emps
-	dec si
 
 	set_emp_id_loop:
 		div TEN_B
-		
-		add ah, "0"
-		mov [bx][si], ah
+
+		add ah, "0"       ; convert to ascii number
+
+		mov [bx][si], ah  ; set to
 		dec si
 
-		xor ah, ah
-		test al, al
+		xor ah, ah        ; clear remainder
+
+		test al, al       ; can still divide 10?
 		jnz set_emp_id_loop
 
 	pop si
