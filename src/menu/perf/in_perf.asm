@@ -50,7 +50,7 @@ prompt_perf_hrs_loop:
     jmp prompt_perf_hrs_loop
 
 prompt_perf_hrs_no_error:
-    mov [bx].pto, ax
+    mov [bx].hours_worked, ax
     ret
 
 prompt_performance_hours endp
@@ -79,7 +79,7 @@ prompt_perf_days_loop:
 
 prompt_perf_days_no_error:
     mul EIGHT_B
-    mov [bx].pto, ax
+    mov [bx].hours_worked, ax
     ret
 
 prompt_performance_days endp
@@ -108,7 +108,7 @@ prompt_perf_leaves_loop:
 
 prompt_perf_leaves_no_error:
     mul EIGHT_B
-    mov [bx].pto, ax
+    mov [bx].monthly_leaves, ax
     ret
 
 prompt_performance_leaves endp
@@ -136,7 +136,7 @@ prompt_perf_ot_loop:
     jmp prompt_perf_ot_loop
 
 prompt_perf_ot_no_error:
-    mov [bx].pto, ax
+    mov [bx].overtime_hours, ax
     ret
 
 prompt_performance_ot endp
@@ -164,7 +164,7 @@ prompt_perf_ph_loop:
     jmp prompt_perf_ph_loop
 
 prompt_perf_ph_no_error:
-    mov [bx].pto, ax
+    mov [bx].holiday_hours, ax
     ret
 
 prompt_performance_ph endp
