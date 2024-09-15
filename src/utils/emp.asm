@@ -68,10 +68,8 @@ find_employee proc
     find_employee_loop:
         add bx, size employee   ; add sets zf, no good
 
-        push si  ; si is consumed by compare_string
-        lea di, [bx].emp_name
+        lea di, [bx].emp_id
         call compare_string
-        pop si
 
         loopne find_employee_loop
 
@@ -103,6 +101,7 @@ prompt_employee_loop:
     jne not_valid_id
 
     ; check can find employee
+    lea si, .input_buffer
     call find_employee
     jne emp_not_found
 
