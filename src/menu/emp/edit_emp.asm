@@ -137,7 +137,6 @@ prompt_employee_pto proc
 input_loop:
     puts PTO_PROMPT
 
-
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
