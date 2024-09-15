@@ -3,7 +3,7 @@
 ;	bx: pointer to the employee
 set_performance proc
 
-    cmp [bx].job_type, "2"
+    cmp [bx].job_type, 2
     je is_ft
 
     call prompt_performance_hours

@@ -7,7 +7,7 @@ edit_employee proc
 	call prompt_employee_type
     call prompt_employee_salary
 
-    cmp [bx].job_type, "2"
+    cmp [bx].job_type, 2
     jne not_ft
 
     call prompt_employee_pto
@@ -61,9 +61,9 @@ prompt_employee_type endp
 ;   bx: pointer to the employee
 prompt_employee_salary proc
 
-    cmp [bx].job_type, "1"
+    cmp [bx].job_type, 1
     je is_pt
-    cmp [bx].job_type, "2"
+    cmp [bx].job_type, 2
     je is_ft
 
     puts EMP_JOB_TYPE_INVALID_MSG
