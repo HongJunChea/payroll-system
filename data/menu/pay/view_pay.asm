@@ -12,11 +12,12 @@ EMP_PAY_EARN_HEADER  DB "Earnings       RM$"
 EMP_PAY_EARN_BASIC   DB "Basic          $"
 EMP_PAY_EARN_OT      DB "Overtime       $"
 EMP_PAY_EARN_PH      DB "Public Holiday $"
-EMP_PAY_TOTAL        DB "Total          $"
+EMP_PAU_EARN_TOTAL   DB "Total          $"
 
 EMP_PAY_DEDUC_HEADER DB "Deductions  RM", 10, "$"
 EMP_PAY_DEDUC_SOCSO  DB "SOCSO       -$"
 EMP_PAY_DEDUC_EPF    DB "EPF         -$"
 EMP_PAY_DEDUC_EIS    DB "EIS         -$"
+EMP_PAY_DEDUC_TOTAL  DB "            -$"
 
 EMP_PAY_NET_TOTAL        DB "Net Total - $"

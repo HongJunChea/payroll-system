@@ -74,12 +74,12 @@ print_pay_employee_details endp
 
 move_right macro
 
-    add dl, 21
+    add dl, 25
     call set_cursor_pos
 
     putc "|"
 
-    add dl, 1
+    add dl, 2
     call set_cursor_pos
 
 endm
@@ -195,7 +195,7 @@ print_pay_ph endp
 ;   payroll.earn_total
 print_pay_earn_subtotal proc
 
-    puts EMP_PAY_TOTAL
+    puts EMP_PAU_EARN_TOTAL
     putf payroll.earn_total
     ret
 
@@ -265,6 +265,7 @@ print_pay_eis endp
 ;   payroll.deduc_total
 print_pay_deduc_subtotal proc
 
+    puts EMP_PAY_DEDUC_TOTAL
     putf payroll.deduc_total
     ret
 
