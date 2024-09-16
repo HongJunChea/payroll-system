@@ -128,7 +128,7 @@ calc_epf:
     push ax
     push dx
 
-    call calculate_epf
+    call lookup_epf
 
     mov .tmp_word, dx
     fild .tmp_word

@@ -35,7 +35,7 @@ calc_socso:
     push bx
     push cx
 
-    call calculate_epf
+    call lookup_socso
 
     mov .tmp_word, dx
     fild .tmp_word
