@@ -64,9 +64,13 @@ endm
 ; https://stackoverflow.com/questions/33755275/compare-instruction-not-working-correctly
 store_fpu_flags macro
 
+    push ax
+
     fstsw ax
     fwait
     sahf      ; store ah flags
+
+    pop ax
 
 endm
 
