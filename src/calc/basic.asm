@@ -10,7 +10,7 @@ calculate_basic proc
 
     fld [bx].orp
 
-    add ax, [bx].hours_worked
+    mov ax, [bx].hours_worked
     add ax, [bx].claimed_pto
 
     ; multiply hours
