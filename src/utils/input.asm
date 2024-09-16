@@ -101,5 +101,6 @@ press_any_key_to_continue proc
 
     pop dx
     pop ax
+    ret
 
 press_any_key_to_continue endp
