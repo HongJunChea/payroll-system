@@ -62,9 +62,16 @@ lookup_epf_above20k proc
 lookup_epf_above20k endp
 
 
+; If below 20k, we use lookup table to find the contribution rate
+; Params
+;   st(0): Earning total
+; Returns
+;   ax: employer contribution
+;   dx: employee contribution
 lookup_epf_below20k proc
 
     push di
+    push bx
 
     xor dx, dx
 
@@ -103,6 +110,7 @@ lookup_epf_below20k_calc:
     mov ax, [bx + di]
     mov dx, [bx + di + 2]
 
+    pop bx
     pop di
     ret
 

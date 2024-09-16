@@ -32,16 +32,16 @@ calculate_eis proc
     ret
 
 calc_eis:
-    push bx
-    push cx
+    push ax
+    push dx
 
     call lookup_eis
 
     mov .tmp_word, dx
     fild .tmp_word
 
-    pop cx
-    pop bx
+    pop dx
+    pop ax
     ret
 
 calculate_eis endp

@@ -32,16 +32,16 @@ calculate_socso proc
     ret
 
 calc_socso:
-    push bx
-    push cx
+    push ax
+    push dx
 
     call lookup_socso
 
     mov .tmp_word, dx
     fild .tmp_word
 
-    pop cx
-    pop bx
+    pop dx
+    pop ax
     ret
 
 calculate_socso endp
