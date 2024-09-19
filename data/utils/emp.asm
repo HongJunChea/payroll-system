@@ -1,5 +1,13 @@
 EMP_NAME1 db "Alice$"
 EMP_NAME2 db "Alex$"
+EMP_NAME3 DB "Bob$"
+EMP_NAME4 DB "Smith$"
+EMP_NAME5 DB "David$"
+EMP_NAME6 DB "Dany$"
+EMP_NAME7 DB "Zuto$"
+EMP_NAME8 DB "Eve$"
+EMP_NAME9 DB "Lee$"
+EMP_NAME10 DB "Max$"
 
 JOB_FULLTIME db 2
 JOB_PARTTIME db 1

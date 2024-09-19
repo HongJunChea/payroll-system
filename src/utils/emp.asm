@@ -37,11 +37,43 @@ generate_emp_data proc
 
     ; call set_emp_id
     inc .number_of_emps
-    insert_emp EMP_NAME1 5 JOB_FULLTIME ORP_FULLTIME 160 TRUE TRUE TRUE
+    insert_emp EMP_NAME1 5 JOB_FULLTIME ORP_FULLTIME 5 TRUE TRUE TRUE
     add bx, size employee
 
     inc .number_of_emps
     insert_emp EMP_NAME2 4 JOB_PARTTIME ORP_PARTTIME 0 FALSE FALSE FALSE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME3 3 JOB_PARTTIME ORP_PARTTIME 0 FALSE FALSE FALSE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME4 5 JOB_FULLTIME ORP_FULLTIME 7 TRUE TRUE TRUE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME5 5 JOB_FULLTIME ORP_FULLTIME 5 TRUE TRUE TRUE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME6 4 JOB_FULLTIME ORP_FULLTIME 5 TRUE TRUE TRUE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME7 4 JOB_PARTTIME ORP_PARTTIME 0 FALSE FALSE FALSE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME8 3 JOB_PARTTIME ORP_PARTTIME 0 FALSE FALSE FALSE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME9 3 JOB_FULLTIME ORP_FULLTIME 10 TRUE TRUE TRUE
+    add bx, size employee
+
+    inc .number_of_emps
+    insert_emp EMP_NAME10 3 JOB_FULLTIME ORP_FULLTIME 8 TRUE TRUE TRUE
     add bx, size employee
 
     pop bx
