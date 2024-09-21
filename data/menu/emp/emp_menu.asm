@@ -1,4 +1,4 @@
-EMP_MENU_HEADER DB "Employee Informations", 10, "$"
+EMP_MENU_HEADER DB "Employee Information", 10, "$"
 
 LIST_EMP_OPT    DB "1 - View all employees information", 10, "$"
 ADD_EMP_OPT     DB "2 - Add a new employee information", 10, "$"
