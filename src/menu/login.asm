@@ -59,7 +59,7 @@ input_password_loop:
 
     ; if input = ctrl c
     cmp al, 3    ; ctrl c
-    je input_string_ctrlc
+    je password_ctrlc
 
     ; if input = \r
     cmp al, 13   ; \r
@@ -92,7 +92,16 @@ password_backspace:
     jmp input_password_loop
 
 password_ctrlc:
-    mov dl, 1
+    mov ah, 02h
+    mov dl, 10    ; print newline
+    int 21h
+
+    mov byte ptr [di], "$"  ; terminates string
+    mov dl, 1     ; leave bad status
+
+    inc ch        ; restore ch
+    pop ax
+    ret
 
 password_finish:
     mov ah, 02h

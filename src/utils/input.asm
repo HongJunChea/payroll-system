@@ -71,7 +71,16 @@ input_string_backspace:
     jmp input_string_loop
 
 input_string_ctrlc:
-    mov dl, 1
+    mov ah, 02h
+    mov dl, 10     ; print newline
+    int 21h
+
+    mov byte ptr [di], "$"  ; terminates string
+    mov dl, 1      ; leave bad status
+
+    inc ch         ; restore ch
+    pop ax
+    ret
 
 input_string_finish:
     mov ah, 02h
