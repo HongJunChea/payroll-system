@@ -5,7 +5,12 @@ FOUR_W            dw 4
 EIGHT_W           dw 8
 TEN_W             dw 10
 TWENTY_W          dw 20
+THIRTY_W          dw 30
+FIFTY_W           dw 50
+SEVENTY_W         dw 70
 HUNDRED_W         dw 100
+HUNDRED_FOURTY_W  dw 140
+TWO_HUNDRED_W     dw 200
 ; THOUSAND_W        dw 1000  ; unused for now
 FIVE_THOUSAND_W   dw 5000
 TWENTY_THOUSAND_W dw 20000
