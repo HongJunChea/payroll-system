@@ -76,8 +76,8 @@ socso_above200:
     div HUNDRED_W
     mul EIGHT_W
 
-    mov dx, 400
-    call min     ; max index is 400 + 4
+    ;mov dx, 400
+    ;call min     ; max index is 400 + 4
 
     mov si, ax
 

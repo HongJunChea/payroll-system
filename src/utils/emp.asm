@@ -38,6 +38,13 @@ generate_emp_data proc
     ; call set_emp_id
     inc .number_of_emps
     insert_emp EMP_NAME1 5 JOB_FULLTIME ORP_FULLTIME 5 TRUE TRUE TRUE
+    mov [bx].filled_performance, 1
+    mov [bx].hours_worked, 160
+    mov [bx].monthly_leaves, 0
+    mov [bx].overtime_hours, 8
+    mov [bx].holiday_hours, 8
+    call process_employee_performance
+
     add bx, size employee
 
     inc .number_of_emps

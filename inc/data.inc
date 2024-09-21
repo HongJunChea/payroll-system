@@ -2,6 +2,7 @@ include data/common.asm
 include data/emp.asm
 include data/calc/epf.asm
 include data/calc/socso.asm
+include data/calc/eis.asm
 include data/menu/emp/edit_emp.asm
 include data/menu/emp/emp_menu.asm
 include data/menu/emp/list_emp.asm
