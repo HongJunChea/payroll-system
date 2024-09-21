@@ -231,32 +231,3 @@ putf macro float
     fpop
 
 endm
-
-
-; overrides last character input with whitespace.
-; Works by moving cursor back 1 character, printing whitespace, and moving cursor back 1 character again.
-delete_last_char proc
-
-    push ax
-    push dx
-
-    mov ah, 02h
-
-    mov dl, 8  ; \b
-    int 21h
-    mov dl, " "
-    int 21h
-    mov dl, 8  ; \b
-    int 21h
-
-    pop dx
-    pop ax
-
-delete_last_char endp
-
-
-
-
-
-
-

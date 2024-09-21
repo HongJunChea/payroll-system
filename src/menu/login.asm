@@ -86,7 +86,7 @@ password_backspace:
     cmp cl, 0     ; make sure have characters to backspace
     jbe input_password_loop
 
-    call delete_last_char
+    puts DELETE_LAST_CHAR
     dec cl
     dec di
     jmp input_password_loop

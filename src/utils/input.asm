@@ -65,7 +65,7 @@ input_string_backspace:
     cmp cl, 0     ; make sure have characters to backspace
     jbe input_string_loop
 
-    call delete_last_char
+    puts DELETE_LAST_CHAR
     dec cl
     dec di
     jmp input_string_loop

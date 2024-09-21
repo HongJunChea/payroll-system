@@ -19,7 +19,7 @@ FALSE db 0
 PRESS_ANY_KEY DB "Press any key to continue", 10, "$"
 DLINE_BORDER  DB "================================", 10, "$"
 SLINE_BORDER  DB "--------------------------------", 10, "$"
-
+DELETE_LAST_CHAR DB 8, ' ', 8, '$'
 
 .tmp_word dw ?
 .input_buffer db 20 dup(?)
