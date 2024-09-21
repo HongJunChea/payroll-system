@@ -10,7 +10,6 @@ create_employee proc
 	mul .number_of_emps
 
     ; move to empty employee space
-	inc .number_of_emps
 	lea bx, employees
 	add bx, ax
 
@@ -18,6 +17,12 @@ create_employee proc
 
 	call set_emp_id
     call edit_employee
+    cmp dl, 1
+    je create_employee_exit
+
+	inc .number_of_emps
+
+create_employee_exit:
     ret
 
 create_employee endp

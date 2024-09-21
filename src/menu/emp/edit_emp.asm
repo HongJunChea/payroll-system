@@ -4,17 +4,26 @@
 edit_employee proc
 
 	call prompt_employee_name
+	cmp dl, 1
+	je edit_emp_exit
+
 	call prompt_employee_type
     call prompt_employee_salary
+    cmp dl, 1
+    je edit_emp_exit
 
     cmp [bx].job_type, 2
     jne edit_emp_not_ft
 
     call prompt_employee_pto
+    cmp dl, 1
+    je edit_emp_exit
 edit_emp_not_ft:
     call prompt_employee_epf
     call prompt_employee_socso
     call prompt_employee_eis
+
+edit_emp_exit:
     ret
 
 edit_employee endp
@@ -86,6 +95,8 @@ prompt_emp_hourly_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je hourly_exit
 
     lea si, .input_buffer
     call strtof
@@ -98,6 +109,7 @@ prompt_emp_hourly_loop:
 
 hourly_no_error:
     fstp [bx].orp
+hourly_exit:
     ret
 
 prompt_employee_hourly endp
@@ -110,6 +122,8 @@ prompt_emp_monthly_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je monthly_exit
 
     lea si, .input_buffer
     call strtof
@@ -123,6 +137,7 @@ prompt_emp_monthly_loop:
 monthly_no_error:
     fidiv HOURS_PER_MONTH
     fstp [bx].orp
+monthly_exit:
     ret
 
 prompt_employee_monthly endp
@@ -141,6 +156,8 @@ prompt_emp_pto_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je pto_exit
 
     lea si, .input_buffer
     call strtof
@@ -153,6 +170,7 @@ prompt_emp_pto_loop:
 
 pto_no_error:
     mov [bx].pto, ax
+pto_exit:
     ret
 
 prompt_employee_pto endp
