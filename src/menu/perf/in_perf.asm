@@ -8,21 +8,34 @@ set_performance proc
 
     ; parttime
     call prompt_performance_hours
+    cmp dl, 1
+    je set_perf_exit
 
     jmp set_perf_continue
 
 set_perf_is_ft:
     call prompt_performance_days
+    cmp dl, 1
+    je set_perf_exit
+
     call prompt_performance_leaves
+    cmp dl, 1
+    je set_perf_exit
 
 set_perf_continue:
 
     call prompt_performance_ot
+    cmp dl, 1
+    je set_perf_exit
+
     call prompt_performance_ph
+    cmp dl, 1
+    je set_perf_exit
 
     call process_employee_performance
     mov [bx].filled_performance, 1
 
+set_perf_exit:
     ret
 
 set_performance endp
@@ -39,6 +52,8 @@ prompt_perf_hrs_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je prompt_perf_hrs_exit
 
     lea si, .input_buffer
     call strtol
@@ -51,6 +66,7 @@ prompt_perf_hrs_loop:
 
 prompt_perf_hrs_no_error:
     mov [bx].hours_worked, ax
+prompt_perf_hrs_exit:
     ret
 
 prompt_performance_hours endp
@@ -67,6 +83,8 @@ prompt_perf_days_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je prompt_perf_days_exit
 
     lea si, .input_buffer
     call strtol
@@ -80,6 +98,7 @@ prompt_perf_days_loop:
 prompt_perf_days_no_error:
     mul EIGHT_B
     mov [bx].hours_worked, ax
+prompt_perf_days_exit:
     ret
 
 prompt_performance_days endp
@@ -96,6 +115,8 @@ prompt_perf_leaves_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je prompt_perf_leaves_exit
 
     lea si, .input_buffer
     call strtol
@@ -109,6 +130,7 @@ prompt_perf_leaves_loop:
 prompt_perf_leaves_no_error:
     mul EIGHT_B
     mov [bx].monthly_leaves, ax
+prompt_perf_leaves_exit:
     ret
 
 prompt_performance_leaves endp
@@ -125,6 +147,8 @@ prompt_perf_ot_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je prompt_perf_ot_exit
 
     lea si, .input_buffer
     call strtol
@@ -137,6 +161,7 @@ prompt_perf_ot_loop:
 
 prompt_perf_ot_no_error:
     mov [bx].overtime_hours, ax
+prompt_perf_ot_exit:
     ret
 
 prompt_performance_ot endp
@@ -153,6 +178,8 @@ prompt_perf_ph_loop:
     lea di, .input_buffer
     mov ch, length .input_buffer
     call input_string
+    cmp dl, 1
+    je prompt_perf_ph_exit
 
     lea si, .input_buffer
     call strtol
@@ -165,6 +192,7 @@ prompt_perf_ph_loop:
 
 prompt_perf_ph_no_error:
     mov [bx].holiday_hours, ax
+prompt_perf_ph_exit:
     ret
 
 prompt_performance_ph endp
