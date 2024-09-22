@@ -45,6 +45,8 @@ link main.obj;
 
 The executable `main.exe` would be compiled into the project directory.
 
+The default and only password for the program is `1234567`
+
 LICENSE
 -------
 
