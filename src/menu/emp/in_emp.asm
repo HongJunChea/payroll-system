@@ -42,6 +42,7 @@ set_emp_id proc
     dec si      ; zero index it
 
 	mov al, .number_of_emps
+	inc al
 
 	set_emp_id_loop:
 		div TEN_B
